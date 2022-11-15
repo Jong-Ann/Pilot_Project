@@ -26,6 +26,9 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc' // Jdbc, Driver
+	implementation 'com.h2database:h2' // h2 : implementation
+
 }
 
 tasks.named('test') {
