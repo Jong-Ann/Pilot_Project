@@ -27,9 +27,9 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Board(String title, String contents, User user) {
+
+    public Board(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.user = user;
     }
 }

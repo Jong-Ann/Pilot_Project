@@ -32,4 +32,9 @@ public class Role {
     public Role(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

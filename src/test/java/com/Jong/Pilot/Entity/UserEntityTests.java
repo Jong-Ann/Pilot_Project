@@ -11,6 +11,8 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
@@ -36,8 +38,6 @@ public class UserEntityTests {
         assertThat(UserJongAnn.getId()).isGreaterThan(0);
 
     }
-
-
     @Test
     public void testMultiRole(){
         User testUser = new User("test","test1");
@@ -51,10 +51,32 @@ public class UserEntityTests {
         User saveTestUser = userRepository.save(testUser);
 
         assertThat(saveTestUser.getId()).isGreaterThan(0);
-
+    }
+    @Test
+    public void testFindEveryUser(){
+        List<User> FindEveryUser = (List<User>) userRepository.findAll();
+        FindEveryUser.forEach(user -> System.out.println(user));
     }
 
+    @Test
+    public void testFindById(){
+        User userJong = userRepository.findById(2).get();
+        System.out.println(userJong);
+    }
+    @Test
+    public void testUpdate(){
+        User userJong = userRepository.findById(1).get();
+        userJong.setUsername("JJong");
+        userJong.setPassword("jongann2");
+        userRepository.save(userJong);
+        System.out.println(userJong);
+    }
 
+    @Test
+    public void testDelete(){
 
+        Integer id = 1;
+        userRepository.deleteById(1);
+    }
 
 }
