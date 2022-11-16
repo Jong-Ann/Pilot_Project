@@ -10,26 +10,26 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Role")
+@Table(name = "roles")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
-    @Column(name = "roleName",length = 255)
-    private String roleName;
+    @Column(length = 50,nullable = false,unique = true)
+    private String name;
 
-    @Column(name = "description" , length = 255)
+    @Column(length = 255 , nullable = false)
     private String description;
 
-    public Role(String roleName, String description) {
-        this.roleName = roleName;
+
+    public Role(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
     public Role(Integer id) {
-        Id = id;
+        this.id = id;
     }
-
 }
