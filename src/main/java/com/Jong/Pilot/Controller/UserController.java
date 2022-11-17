@@ -1,6 +1,8 @@
 package com.Jong.Pilot.Controller;
 
+import com.Jong.Pilot.Entity.Role;
 import com.Jong.Pilot.Entity.User;
+import com.Jong.Pilot.Repository.RoleRepository;
 import com.Jong.Pilot.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/users")
     public String userPage(Model model){
         List<User> ListEveryUser =  userService.findEveryUser();
@@ -27,13 +30,16 @@ public class UserController {
     @GetMapping("/CreateForm")
     public String CreateUser(Model model){
         User user = new User();
+        List<Role> CreateUserRole = userService.findEveryRole();
         model.addAttribute("user",user);
+        model.addAttribute("roleList",CreateUserRole);
         return "CreateUserPage";
     }
 
     @PostMapping("/users/save")
     public String SaveUser(User user){
         System.out.println(user);
+        userService.saveUser(user);
         return "redirect:/users";
 
     }
