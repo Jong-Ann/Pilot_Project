@@ -25,7 +25,12 @@ public class UserService {
     public List<Role> findEveryRole(){
         return (List<Role>) roleRepository.findAll();
     }
+    public void deleteUser(Integer id){
 
+        Integer findByIdUser = userRepository.countById(1);
+        userRepository.deleteById(findByIdUser);
+
+    }
     public void saveUser(User user){
         userRepository.save(user);
     }

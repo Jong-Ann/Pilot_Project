@@ -7,7 +7,9 @@ import com.Jong.Pilot.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -18,12 +20,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/users")
     public String userPage(Model model){
         List<User> ListEveryUser =  userService.findEveryUser();
         model.addAttribute("ListEveryUser",ListEveryUser);
-
         return "UserPage";
     }
 
@@ -41,8 +41,12 @@ public class UserController {
         System.out.println(user);
         userService.saveUser(user);
         return "redirect:/users";
-
     }
 
+    @GetMapping("/users/delete/{id}")
+    public String DeleteUser(@PathVariable(name = "id") Integer id, Model model){
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }
 
 }
