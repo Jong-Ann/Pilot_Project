@@ -22,22 +22,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 50 , nullable = false,unique = true)
+    @Column(length = 50, nullable = false, unique = true)
     private String username;
 
-    @Column(length = 255 , nullable = false)
+    @Column(length = 255, nullable = false)
     private String password;
 
     @ManyToMany
-    @JoinTable(name = "RoleAndUser" , joinColumns = @JoinColumn(name = "user_id") , inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "RoleAndUser", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
 
-    public void addRoles(Role role){
+    public void addRoles(Role role) {
         this.roles.add(role);
     }
-    public void deleteRoles(Role role){
+
+    public void deleteRoles(Role role) {
         this.roles.remove(role);
     }
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;

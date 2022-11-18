@@ -20,16 +20,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
 public class UserEntityTests {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private EntityManager entityManager;
-
-
-    @Autowired
-    private UserService userService;
 
 
 //    @Test
@@ -52,7 +46,6 @@ public class UserEntityTests {
         JongAnn.addRoles(normalRole);
 
         User UserJongAnn = userRepository.save(JongAnn);
-
         assertThat(UserJongAnn.getId()).isGreaterThan(0);
 
     }
@@ -100,17 +93,17 @@ public class UserEntityTests {
         userRepository.deleteById(1);
     }
 
-    @Test
-    public void deleteRoleTests() {
-
-        Role Admin = new Role(1);
-        Integer userNum = 1;
-        User user = userRepository.findById(userNum).get();
-        user.deleteRoles(Admin);
-        userRepository.save(user);
-        System.out.println(user);
-
-    }
+//    @Test
+//    public void deleteRoleTests() {
+//
+//        Role Admin = new Role(2);
+//        Integer userNum = 2;
+//        User user = userRepository.findById(userNum).get();
+//        user.deleteRoles(Admin);
+//        userRepository.save(user);
+//        System.out.println(user);
+//
+//    }
 
     @Test
     public void deleteById() {
@@ -119,17 +112,20 @@ public class UserEntityTests {
         userRepository.delete(findAndDelete);
     }
 
-//    @Test
-//    public void countByIdTest(){
-//
-//        Long countById = userRepository.countById(7);
-//        System.out.println(countById);
-//    }
 
     @Test
-    public void countByIdDeleteByIdTest() {
-        Integer countById = userRepository.countById(8);
-        System.out.println(countById);
+    public void countByIdTest(){
+
+        Integer Count = userRepository.countById(2);
+        System.out.println(Count);
     }
+
+
+    @Test
+    public void updateUserTest(){
+        User user =  userRepository.findById(2).get();
+        System.out.println(user);
+    }
+
 
 }

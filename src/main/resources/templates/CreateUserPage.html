@@ -7,8 +7,10 @@
 </nav>
 
 <div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 400px;">
+    <div th:if="${id != null}">유저 번호 : [[${id}]]</div>
     <div class="text-center">회 원 가 입</div>
     <form th:action="@{/users/save}" method="post" th:object="${user}" style="max-width: 700px; margin : 0 auto;">
+        <input type="hidden" th:if="${id != null}" th:field="*{id}">
         <div class="mb-3">
             <label class="form-label">유저이름</label>
             <input type="text" class="form-control" th:field="*{username}" required minlength="3">
@@ -16,7 +18,10 @@
 
         <div class="mb-3">
             <label class="form-label">비밀번호</label>
-            <input type="password" class="form-control" th:field="*{password}" required minlength="3">
+            <input th:if="${user.id != null}" type="password" class="form-control" th:field="*{password}" minlength="3">
+            <input th:if="${user.id == null}" type="password" class="form-control" th:field="*{password}" required
+                   minlength="3">
+
         </div>
 
         <div class="mb-3">
@@ -28,14 +33,19 @@
             </th:block>
         </div>
         <div class="text-center">
-
             <input type="submit" value="저장" class="btn btn-primary">
-            <button onclick="history.back()" value="취소" class="btn btn-secondary">취소</button>
         </div>
     </form>
+    <div class="array" style="position:relative; left: 375px; bottom: 38px;">
+
+        <a th:href="@{/users}">
+            <button type="button" value="취소" class="btn btn-secondary">취소</button>
+        </a>
+    </div>
 </div>
 
-<div class="text-center" style="padding: 30px;">
+<div class=" text-center
+        " style="padding: 30px;">
     <h3>
         <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
     </h3>
