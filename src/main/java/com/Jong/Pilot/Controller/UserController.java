@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
+@Transactional
 public class UserController {
 
     @Autowired
@@ -78,7 +80,8 @@ public class UserController {
         model.addAttribute("roleList",CreateUserRole);
         model.addAttribute("id",id);
         return "CreateUserPage";
-
     }
+
+
 
 }

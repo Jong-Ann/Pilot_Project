@@ -3,8 +3,10 @@ package com.Jong.Pilot.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +25,9 @@ public class Role {
     @Column(length = 255 , nullable = false)
     private String description;
 
+
+    @CreationTimestamp
+    private Timestamp creationTime;
 
     public Role(String name, String description) {
         this.name = name;

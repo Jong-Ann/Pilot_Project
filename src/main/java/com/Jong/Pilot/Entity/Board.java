@@ -4,8 +4,10 @@ package com.Jong.Pilot.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -27,9 +29,13 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Board(String title, String contents) {
+    @CreationTimestamp
+    private Timestamp creationTime;
+
+    public Board(String title, String contents, User user) {
         this.title = title;
         this.contents = contents;
+        this.user = user;
     }
 
 

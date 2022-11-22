@@ -86,12 +86,12 @@ public class UserEntityTests {
         System.out.println(userJong);
     }
 
-    @Test
-    public void testDelete() {
-
-        Integer id = 1;
-        userRepository.deleteById(1);
-    }
+//    @Test
+//    public void testDelete() {
+//
+//        Integer id = 1;
+//        userRepository.deleteById(1);
+//    }
 
 //    @Test
 //    public void deleteRoleTests() {
@@ -104,13 +104,13 @@ public class UserEntityTests {
 //        System.out.println(user);
 //
 //    }
-
-    @Test
-    public void deleteById() {
-        Integer id = 2;
-        User findAndDelete = userRepository.findById(id).get();
-        userRepository.delete(findAndDelete);
-    }
+//
+//    @Test
+//    public void deleteById() {
+//        Integer id = 2;
+//        User findAndDelete = userRepository.findById(id).get();
+//        userRepository.delete(findAndDelete);
+//    }
 
 
     @Test

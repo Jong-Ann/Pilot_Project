@@ -4,8 +4,12 @@ package com.Jong.Pilot.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +31,9 @@ public class User {
 
     @Column(length = 255, nullable = false)
     private String password;
+
+    @CreationTimestamp
+    private Timestamp creationTime;
 
     @ManyToMany
     @JoinTable(name = "RoleAndUser", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

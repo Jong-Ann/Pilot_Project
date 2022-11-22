@@ -6,26 +6,29 @@
 
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
+
+<div>
+    <a th:href="@{/boardCreate}" style="text-decoration: none;"> <h3>게시글 작성하기</h3></a>
+</div>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">#</th>
         <th scope="col">번호</th>
-        <th scope="col">유저명</th>
-        <th scope="col">역할</th>
-        <th scope="col">가입시간</th>
+        <th scope="col">글제목</th>
+        <th scope="col">작성날짜</th>
         <th scope="col">편집</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${ListEveryUser}">
-        <td></td>
-        <td>[[${user.id}]]</td>
-        <td>[[${user.username}]]</td>
-        <td>[[${user.roles}]]</td>
-        <td>[[${user.creationTime}]]</td>
-        <td><a th:href="@{'/users/edit/' + ${user.id}}">Edit</a> &nbsp <a th:href="@{'/users/delete/' + ${user.id}}">Delete</a></td>
-    </tr>
+
+        <tr th:each="board : ${boardList}">
+            <td></td>
+            <td>[[${board.id}]]</td>
+            <td>[[${board.title}]]</td>
+            <td>[[${board.creationTime}]]</td>
+            <td><a >Edit</a> &nbsp <a>Delete</a></td>
+        </tr>
     </tbody>
 </table>
 
