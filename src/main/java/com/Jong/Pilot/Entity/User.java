@@ -35,17 +35,17 @@ public class User {
     @CreationTimestamp
     private Timestamp creationTime;
 
-    @ManyToMany
-    @JoinTable(name = "RoleAndUser", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Role roles;
 
-    public void addRoles(Role role) {
-        this.roles.add(role);
-    }
+//    public void addRoles(Role role) {
+//        this.roles.add(role);
+//    }
 
-    public void deleteRoles(Role role) {
-        this.roles.remove(role);
-    }
+//    public void deleteRoles(Role role) {
+//        this.roles.remove(role);
+//    }
 
     public User(String username, String password) {
         this.username = username;
