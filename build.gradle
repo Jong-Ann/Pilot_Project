@@ -28,6 +28,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc' // Jdbc, Driver
 	implementation 'com.h2database:h2' // h2 : implementation
+	implementation group: 'org.webjars', name: 'jquery', version: '3.6.1'
+
 	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.7.5'
 //	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
 

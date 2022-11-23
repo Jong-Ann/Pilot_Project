@@ -5,6 +5,7 @@ import com.Jong.Pilot.Entity.User;
 import com.Jong.Pilot.Repository.RoleRepository;
 import com.Jong.Pilot.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
 @Service
 public class UserService {
 
+//    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private UserRepository userRepository;
 
@@ -34,6 +37,9 @@ public class UserService {
     }
 
     public void saveUser(User user) {
+        String rawPassword = user.getPassword();
+//        String encryptPassword = bCryptPasswordEncoder.encode(rawPassword);
+//        user.setPassword(encryptPassword);
         userRepository.save(user);
     }
 

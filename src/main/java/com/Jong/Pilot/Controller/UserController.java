@@ -50,9 +50,11 @@ public class UserController {
             User existingUser = userRepository.findById(user.getId()).get();
             String username = user.getUsername();
             String password = user.getPassword();
+            if(existingUser.getPassword() !=null){
+                existingUser.setUsername(username);
+                existingUser.setPassword(password);
+            }
 
-            existingUser.setUsername(username);
-            existingUser.setPassword(password);
             userService.saveUser(existingUser);
         } catch (NoSuchElementException exception) {
             System.out.println("해당하는 유저가 없습니다. 잘못된 요청입니다.");

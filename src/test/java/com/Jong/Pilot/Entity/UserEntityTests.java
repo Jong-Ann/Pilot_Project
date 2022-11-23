@@ -43,7 +43,7 @@ public class UserEntityTests {
     public void firstUserTest() {
         Role normalRole = entityManager.find(Role.class, 1);
         User JongAnn = new User("JongAnn", "dlwhddksiq95!");
-        JongAnn.addRoles(normalRole);
+        JongAnn.setRoles(normalRole);
 
         User UserJongAnn = userRepository.save(JongAnn);
         assertThat(UserJongAnn.getId()).isGreaterThan(0);
@@ -57,8 +57,8 @@ public class UserEntityTests {
         Role roleAdmin = new Role(1);
         Role roleNormal = new Role(2);
 
-        testUser.addRoles(roleNormal);
-        testUser.addRoles(roleAdmin);
+        testUser.setRoles(roleNormal);
+        testUser.setRoles(roleAdmin);
 
         User saveTestUser = userRepository.save(testUser);
 
