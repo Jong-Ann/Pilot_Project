@@ -8,10 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -113,18 +116,26 @@ public class UserEntityTests {
 //    }
 
 
-    @Test
-    public void countByIdTest(){
-
-        Integer Count = userRepository.countById(2);
-        System.out.println(Count);
-    }
+//    @Test
+//    public void countByIdTest(){
+//
+//        Integer Count = userRepository.countById(2);
+//        System.out.println(Count);
+//    }
 
 
     @Test
     public void updateUserTest(){
         User user =  userRepository.findById(2).get();
         System.out.println(user);
+    }
+
+    @Test
+    public void pagingTest(){
+        int pageNum = 0;
+        int sizeNum = 4;
+        Pageable pageable = (Pageable) PageRequest.of(0,4);
+        System.out.println(pageable);
     }
 
 

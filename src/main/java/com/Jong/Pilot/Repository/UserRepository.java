@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
 
-    Integer countById(Integer id);
     Optional<User> findByUsername(String username);
 
 }

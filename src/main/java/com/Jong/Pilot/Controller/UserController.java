@@ -6,6 +6,7 @@ import com.Jong.Pilot.Repository.RoleRepository;
 import com.Jong.Pilot.Repository.UserRepository;
 import com.Jong.Pilot.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -82,6 +83,18 @@ public class UserController {
         model.addAttribute("roleList",CreateUserRole);
         model.addAttribute("id",id);
         return "CreateUserPage";
+    }
+
+    @GetMapping("/users/page/{pageNumber}")
+    public String pageList(@PathVariable(name = "pageNumber") int pageNumber,Model model){
+        Page<User> userPage = userService.pageUser(pageNumber);
+        List<User> userList = userPage.getContent();
+        model.addAttribute("totalPages",userPage.getTotalPages());
+        model.addAttribute("ListEveryUser",userList);
+        model.addAttribute("pageNow",pageNumber);
+
+        return "UserPage";
+
     }
 
 
