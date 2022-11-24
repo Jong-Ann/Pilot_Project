@@ -32,7 +32,7 @@ public class UserController {
     public String userPage(Model model){
         List<User> ListEveryUser =  userService.findEveryUser();
         model.addAttribute("ListEveryUser",ListEveryUser);
-        return "UserPage";
+        return "redirect:/Home";
     }
 
     @GetMapping("/CreateForm")

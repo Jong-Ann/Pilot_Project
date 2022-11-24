@@ -11,7 +11,7 @@ public class PasswordTest {
     public void PasswordEncodeTest(){
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String rawPassword = "dontgo";
+        String rawPassword = "Sorry";
         String encodePassword = passwordEncoder.encode(rawPassword);
 
         boolean matches = passwordEncoder.matches(rawPassword,encodePassword);
