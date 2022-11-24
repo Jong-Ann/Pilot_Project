@@ -1,9 +1,7 @@
 package com.Jong.Pilot.Entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -36,6 +34,9 @@ public class Board {
         this.title = title;
         this.contents = contents;
         this.user = user;
+    }
+    public Integer getUserId(User user){
+        return user.getId();
     }
 
 

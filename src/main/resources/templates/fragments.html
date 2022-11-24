@@ -26,21 +26,32 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/Home}">홈</a>
                 </li>
 
-
                 <li class="nav-item" sec:authorize="hasAuthority('Admin')">
                     <a class="nav-link" th:href="@{/users/page/1}">회원목록</a>
                 </li>
 
-                <li class="nav-item" >
+                <li class="nav-item" sec:authorize="isAnonymous()">
                     <a class="nav-link" th:href="@{/CreateForm}">회원가입</a>
                 </li>
 
-                <li class="nav-item" sec:isAuthenticated() >
+                <li class="nav-item" sec:isAuthenticated()>
                     <a class="nav-link" th:href="@{/board}">글목록</a>
                 </li>
 
                 <li class="nav-item" sec:isAuthenticated()>
-                    <a class="nav-link"> 로그인한 사용자명 : </a>
+                    <a class="nav-link"></a>
+                </li>
+
+                <li class="nav-item" sec:isAuthenticated()>
+                    <a class="nav-link"> 로그인한 사용자명 및 번호 : </a>
+                </li>
+
+                <li class="nav-item" sec:isAuthenticated()>
+                    <a sec:authentication="principal.Id" class="nav-link"></a>
+                </li>
+
+                <li class="nav-item" sec:isAuthenticated()>
+                    <a class="nav-link"> - </a>
                 </li>
 
                 <li class="nav-item" sec:isAuthenticated()>
