@@ -53,10 +53,18 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    @GetMapping("/board/{boardId}")
+    public String boardDetails(@PathVariable(name = "boardId") Integer id,Model model){
+        Board board = boardService.getBoard(id);
+        model.addAttribute("board",board);
+        return "BoardDetailPage";
+    }
+
     @GetMapping("/board/edit/{boardId}")
     public String boardEdit(@PathVariable(name = "boardId") Integer id,Model model){
         Board board = boardService.getBoard(id);
         model.addAttribute("board",board);
         return "CreateBoardPage";
     }
+
 }
