@@ -6,7 +6,7 @@
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
 
-<div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 400px;">
+<div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 500px;">
   <div class="text-center">글 쓰 기</div>
   <form th:action="@{/board/save}" method="post"  style="max-width: 700px; margin : 0 auto;" th:object="${board}">
     <div class="mb-3">
@@ -25,9 +25,6 @@
     </a>
     </div>
   </form>
-  <div class="array" style="position:relative; left: 375px; bottom: 38px;">
-
-  </div>
 </div>
 
 <div class=" text-center" style="padding: 30px;">
