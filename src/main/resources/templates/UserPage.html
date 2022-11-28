@@ -24,7 +24,7 @@
         <td>[[${user.username}]]</td>
         <td>[[${user.roles}]]</td>
         <td>[[${user.creationTime}]]</td>
-        <td><a th:href="@{'/users/edit/' + ${user.id}}">Edit</a> &nbsp <a class="deleteClass" th:idAttr="${user.id}"
+        <td><a th:href="@{'/users/edit/' + ${user.id}}">Edit</a> &nbsp <a class="deleteClass"
                                                                           th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
         </td>
     </tr>
@@ -39,24 +39,6 @@
     </ul>
 </nav>
 
-
-<div class="modal" tabindex="-1" id="deleteModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">잘 읽어보세요</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>해당하는 아이디를 삭제하시겠습니까?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-                <button type="button" id="Ok" class="btn btn-danger">예</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="text-center">
     <h1>
         <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
@@ -66,8 +48,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $(".deleteClass").on("click",function(e){
-            userId = $(this).attr("idAttr");
-            alert("해당 아이디를 삭제합니다: " + userId);
+            alert("해당 아이디를 삭제합니다: ");
         });
     });
 

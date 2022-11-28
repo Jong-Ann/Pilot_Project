@@ -7,6 +7,7 @@ import com.Jong.Pilot.Repository.BoardRepository;
 import com.Jong.Pilot.Security.PilotUserDetails;
 import com.Jong.Pilot.UserService.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,13 +45,13 @@ public class BoardController {
     @PostMapping("/board/save")
     public String boardSave(Board board, @AuthenticationPrincipal PilotUserDetails pilotUserDetails){
         boardService.boardSave(board,pilotUserDetails);
-        return "redirect:/board";
+        return "redirect:/board/page/1";
     }
 
     @GetMapping("/board/delete/{boardId}")
     public String boardDelete(@PathVariable(name = "boardId") Integer id){
         boardService.deleteBoard(id);
-        return "redirect:/board";
+        return "redirect:/board/page/1";
     }
 
     @GetMapping("/board/{boardId}")
@@ -67,4 +68,14 @@ public class BoardController {
         return "CreateBoardPage";
     }
 
+    @GetMapping("/board/page/{pageNumber}")
+    public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber,Model model) {
+
+        Page<Board> boardList = boardService.boardPage(pageNumber);
+        List<Board> boardContents = boardList.getContent();
+        model.addAttribute("boardList", boardContents);
+        model.addAttribute("totalPages", boardList.getTotalPages());
+        model.addAttribute("pageNumber", pageNumber);
+        return "BoardPage";
+    }
 }

@@ -29,17 +29,7 @@ public class UserEntityTests {
     private EntityManager entityManager;
 
 
-//    @Test
-//    @DisplayName("1번 Admin 2번 Normal")
-//    public void RelationMappingTest(){
-//        User testUser = new User("Relation","TEST");
-//        Role roleAdmin = new Role(1);
-//
-//        testUser.addRoles(roleAdmin);
-//
-//        User saveUser = userRepository.save(testUser);
-//        assertThat(saveUser.getId()).isGreaterThan(0);
-//    }
+
 
     @Test
     @DisplayName("첫번째 유저 생성 테스트입니다.")
@@ -89,6 +79,14 @@ public class UserEntityTests {
         System.out.println(userJong);
     }
 
+    @Test
+    public void pagingTest(){
+        int pageNum = 0;
+        int sizeNum = 4;
+        Pageable pageable = (Pageable) PageRequest.of(0,4);
+        System.out.println(pageable);
+    }
+
 //    @Test
 //    public void testDelete() {
 //
@@ -122,21 +120,19 @@ public class UserEntityTests {
 //        Integer Count = userRepository.countById(2);
 //        System.out.println(Count);
 //    }
+//    @Test
+//    @DisplayName("1번 Admin 2번 Normal")
+//    public void RelationMappingTest(){
+//        User testUser = new User("Relation","TEST");
+//        Role roleAdmin = new Role(1);
+//
+//        testUser.addRoles(roleAdmin);
+//
+//        User saveUser = userRepository.save(testUser);
+//        assertThat(saveUser.getId()).isGreaterThan(0);
+//    }
 
 
-    @Test
-    public void updateUserTest(){
-        User user =  userRepository.findById(2).get();
-        System.out.println(user);
-    }
-
-    @Test
-    public void pagingTest(){
-        int pageNum = 0;
-        int sizeNum = 4;
-        Pageable pageable = (Pageable) PageRequest.of(0,4);
-        System.out.println(pageable);
-    }
 
 
 }
