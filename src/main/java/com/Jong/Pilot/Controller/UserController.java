@@ -65,7 +65,7 @@ public class UserController {
     @PostMapping("/users/save")
     public String SaveUser(User user){
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/users/page/1";
     }
 
     @GetMapping("/users/delete/{id}")
