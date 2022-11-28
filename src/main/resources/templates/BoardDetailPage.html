@@ -17,12 +17,10 @@
       <label class="form-label">내용</label>
       <textarea class="form-control " th:field="*{contents}" rows="5" readonly></textarea>
     </div>
-  </form>
-  <div class="array" style="position:relative; left: 375px; bottom: 38px;">
-    <a th:href="@{/board}">
+    <a th:href="@{/board/page/1}">
       <button type="button" value="취소" class="btn btn-secondary">취소</button>
     </a>
-  </div>
+  </form>
 </div>
 
 <div class=" text-center" style="padding: 30px;">
