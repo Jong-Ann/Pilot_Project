@@ -5,6 +5,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
+
 <div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 400px;">
   <div class="text-center">글 쓰 기</div>
   <form th:action="@{/board/save}" method="post"  style="max-width: 700px; margin : 0 auto;" th:object="${board}">
@@ -17,12 +18,13 @@
       <textarea class="form-control " th:field="*{contents}" rows="5" readonly></textarea>
     </div>
   </form>
-  <div class="text-center">
-    <a th:href="@{/board/page/1}">
+  <div class="array" style="position:relative; left: 375px; bottom: 38px;">
+    <a th:href="@{/board}">
       <button type="button" value="취소" class="btn btn-secondary">취소</button>
     </a>
   </div>
 </div>
+
 <div class=" text-center" style="padding: 30px;">
   <h3>
     <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
