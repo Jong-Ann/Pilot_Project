@@ -9,7 +9,7 @@
 <div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 400px;">
     <div th:if="${id != null}">유저 번호 : [[${id}]]</div>
     <div class="text-center">회 원 가 입</div>
-    <form th:action="@{/users/save}" method="post" th:object="${user}" style="max-width: 700px; margin : 0 auto;">
+    <form th:action="@{/users/save-user}" method="post" th:object="${user}" style="max-width: 700px; margin : 0 auto;">
         <input type="hidden" th:if="${id != null}" th:field="*{id}">
         <div class="mb-3">
             <label class="form-label">유저이름</label>

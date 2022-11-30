@@ -34,6 +34,7 @@
     <ul class="pagination justify-content-center">
 
         <li th:class="${pageNumber > 1} ? 'page-item active' : 'page-item disabled'"><a class="page-link" th:href="@{'/users/page/' + ${pageNow-1}}">이전 페이지</a></li>
+        <li  th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'" th:each="CountBy : ${#numbers.sequence(1,totalPages)}"><a class="page-link" th:href="@{'/users/page/' + ${CountBy}}">[[${CountBy}]]</a></li>
 
         <li th:class="${totalPages > pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/users/page/' + ${pageNow+1}}">다음 페이지</a></li>
     </ul>
