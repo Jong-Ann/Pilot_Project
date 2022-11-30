@@ -31,9 +31,9 @@
         <td>[[${board.creationTime}]]</td>
         <td>
             <th:block>
-                <a th:if="${#authentication.principal.user} == ${board.user}" th:href="@{'/board/edit/' + ${board.id}}"
+                <a th:if="${#authentication.principal.user} == ${board.user}" th:href="@{'/board/edit-board/' + ${board.id}}"
                    style="text-decoration: none;">Edit</a> &nbsp
-                <a th:if="${#authentication.principal.user} == ${board.user}" class="deleteClass" th:href="@{'/board/delete/' + ${board.id}}"
+                <a th:if="${#authentication.principal.user} == ${board.user}" class="deleteClass" th:href="@{'/board/delete-board/' + ${board.id}}"
                    style="text-decoration: none;">Delete</a>
             </th:block>
         </td>
@@ -42,8 +42,11 @@
 </table>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-        <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page/' + ${pageNumber-1}}">이전 페이지</a></li>
-        <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link" th:href="@{'/board/page/' + ${pageNumber+1}}">다음 페이지</a></li>
+        <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1}}">이전 페이지</a></li>
+
+        <li  th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'" th:each="CountBy : ${#numbers.sequence(1,totalPages)}"><a class="page-link" th:href="@{'/board/page-board/' + ${CountBy}}">[[${CountBy}]]</a></li>
+
+        <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber+1}}">다음 페이지</a></li>
     </ul>
 </nav>
 
