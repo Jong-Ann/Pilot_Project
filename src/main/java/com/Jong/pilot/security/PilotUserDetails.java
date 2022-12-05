@@ -3,10 +3,12 @@ package com.Jong.pilot.security;
 import com.Jong.pilot.entity.Role;
 import com.Jong.pilot.entity.User;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 DaoAuthenticationProvider 는 UserDetails의 패스워드 및 아이디를 검사하고
 인증권한을 부여하게 된다.
 * */
-@Data
+@Getter
 public class PilotUserDetails implements UserDetails {
     private User user;
 
@@ -67,10 +69,5 @@ public class PilotUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    public List<Role> returnRole(){
-        return user.getRoles();
-    }
-
 
 }

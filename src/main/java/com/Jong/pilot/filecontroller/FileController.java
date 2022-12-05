@@ -1,4 +1,4 @@
-package com.Jong.pilot.controller;import java.io.File;
+package com.Jong.pilot.filecontroller;import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
@@ -21,7 +21,6 @@ public class FileController {
     @GetMapping("/download/{boardId}")
     public void download(HttpServletResponse response, @PathVariable(name = "boardId") Integer id) throws Exception {
         try {
-
 
             String dirName = "board-photos"; // 경로에 접근할 때 역슬래시('\') 사용
             Path boardPhotosDir = Paths.get(dirName);

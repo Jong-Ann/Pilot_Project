@@ -1,6 +1,7 @@
 package com.Jong.pilot.controller;
 
 
+import com.Jong.pilot.filecontroller.FileService;
 import com.Jong.pilot.entity.Board;
 import com.Jong.pilot.repository.BoardRepository;
 import com.Jong.pilot.security.PilotUserDetails;
@@ -50,7 +51,7 @@ public class BoardController {
             board.setPhotos(fileName);
             Board boardSave = boardService.boardSave(board, pilotUserDetails);
             String uploadDir = "board-photos/" + boardSave.getId();
-            UploadService.saveFile(uploadDir, fileName, multipartFile);
+            FileService.saveFile(uploadDir, fileName, multipartFile);
         }
         return "redirect:/board/page-board/1";
     }

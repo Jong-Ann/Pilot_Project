@@ -31,9 +31,9 @@
         <td>[[${board.creationTime}]]</td>
         <td>
             <th:block>
-                <a th:if="${#authentication.principal.user} == ${board.user}" th:href="@{'/board/edit-board/' + ${board.id}}"
+                <a th:if="${#authentication.principal.user.id} == ${board.user.id}" th:href="@{'/board/edit-board/' + ${board.id}}"
                    style="text-decoration: none;">Edit</a> &nbsp
-                <a th:if="${#authentication.principal.user} == ${board.user}" class="deleteClass" th:href="@{'/board/delete-board/' + ${board.id}}"
+                <a th:if="${#authentication.principal.user.id} == ${board.user.id}" class="deleteClass" th:href="@{'/board/delete-board/' + ${board.id}}"
                    style="text-decoration: none;">Delete</a>
             </th:block>
         </td>
