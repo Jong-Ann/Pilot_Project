@@ -1,4 +1,4 @@
-package com.Jong.pilot.controller;
+package com.Jong.pilot.filecontroller;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public class UploadService {
+public class FileService {
 
     public static void saveFile(String directories, String imageName, MultipartFile multipartFile) throws IOException {
 
