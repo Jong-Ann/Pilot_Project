@@ -1,12 +1,11 @@
 package com.Jong.pilot.security;
 
-import com.Jong.pilot.entity.User;
-import com.Jong.pilot.repository.UserRepository;
+import com.Jong.pilot.user.User;
+import com.Jong.pilot.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 /* UserDetailsService는 DaoAuthenticationProvider가 사용하는 username과 password 및 다른 특성등을
 * 찾는데 사용하게 된다.

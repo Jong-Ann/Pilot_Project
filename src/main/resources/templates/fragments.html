@@ -27,7 +27,7 @@
                 </li>
 
                 <li class="nav-item" sec:authorize="hasAuthority('Admin')">
-                    <a class="nav-link" th:href="@{/users/page/1}">회원목록</a>
+                    <a class="nav-link" th:href="@{/users/page-user/1}">회원목록</a>
                 </li>
 
                 <li class="nav-item" sec:authorize="hasAuthority('Admin')">
@@ -63,7 +63,7 @@
                 </li>
 
                 <li class="nav-item" sec:isAuthenticated()>
-                    <a th:text="${#authentication.principal.authorities}" class="nav-link"></a>
+                    <a th:text="${#authentication.principal.user.Roles}" class="nav-link"></a>
                 </li>
 
             </ul>
