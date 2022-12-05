@@ -1,14 +1,11 @@
 package com.Jong.pilot.security;
 
-import com.Jong.pilot.entity.Role;
-import com.Jong.pilot.entity.User;
-import lombok.Data;
+import com.Jong.pilot.role.Role;
+import com.Jong.pilot.user.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,10 +24,10 @@ public class PilotUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<Role> roles = user.getRoles();
+        List<Role> Roles = user.getRoles();
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        for (Role role : roles) {
+        for (Role role : Roles) {
             authorities.add((GrantedAuthority) () -> role.getName());
         }
         return authorities;

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: header ">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
+</nav>
+
+<div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 800px;">
+  <div th:if="${id != null}">글 번호 : [[${id}]]</div>
+  <div class="text-center">글 쓰 기</div>
+  <form th:action="@{/board/save}" method="post"  style="max-width: 700px; margin : 0 auto;" th:object="${board}">
+    <input type="hidden" th:field="*{id}">
+    <div class="mb-3">
+      <label class="form-label">제목</label>
+      <input type="text" class="form-control" th:field="*{title}" required minlength="3" readonly>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">내용</label>
+      <textarea class="form-control " th:field="*{contents}" rows="5" readonly></textarea>
+    </div>
+    <img th:if="${board.photos != null}" th:src="@{${board.getImagePath}}" style="margin: 0 auto; max-height:400px; max-width: 400px;"></img>
+    <a th:href="@{'/downloadFile/' + ${board.downloadImagePath}}">download</a>
+    <a th:href="@{/board/page-board/1}">
+      <button type="button" value="취소" class="btn btn-secondary">취소</button>
+    </a>
+  </form>
+</div>
+
+<div class=" text-center" style="padding: 30px;">
+  <h3>
+    <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
+  </h3>
+  <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+</html>
