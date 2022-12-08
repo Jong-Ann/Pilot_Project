@@ -20,7 +20,7 @@
       <textarea class="form-control " th:field="*{contents}" rows="5" readonly></textarea>
     </div>
     <img th:if="${board.photos != null}" th:src="@{${board.getImagePath}}" style="margin: 0 auto; max-height:400px; max-width: 400px;"></img>
-    <a th:href="@{'/downloadFile/' + ${board.downloadImagePath}}">download</a>
+    <a th:href="@{'/download/' + ${board.downloadImagePath}}">download</a>
     <a th:href="@{/board/page-board/1}">
       <button type="button" value="취소" class="btn btn-secondary">취소</button>
     </a>
