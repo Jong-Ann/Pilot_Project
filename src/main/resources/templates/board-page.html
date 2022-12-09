@@ -31,10 +31,12 @@
         <td>[[${board.creationTime}]]</td>
         <td>
             <th:block>
-                <a th:if="${#authentication.principal.user.id} == ${board.user.id}" th:href="@{'/board/edit-board/' + ${board.id}}"
-                   style="text-decoration: none;">Edit</a> &nbsp
-                <a th:if="${#authentication.principal.user.id} == ${board.user.id}" class="deleteClass" th:href="@{'/board/delete-board/' + ${board.id}}"
-                   style="text-decoration: none;">Delete</a>
+                <a class="btn btn-primary" th:if="${#authentication.principal.user.id} == ${board.user.id}" th:href="@{'/board/edit-board/' + ${board.id}}"
+                   style="text-decoration: none;">편집</a> &nbsp <br>
+                <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}" id="deleteButton2" class="btn btn-danger" >삭제</button>
+                </form>
             </th:block>
         </td>
     </tr>

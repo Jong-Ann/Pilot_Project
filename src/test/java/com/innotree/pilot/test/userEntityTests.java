@@ -1,6 +1,7 @@
-package com.innotree.pilot.role;
+package com.innotree.pilot.test;
 
 
+import com.innotree.pilot.role.Role;
 import com.innotree.pilot.user.User;
 import com.innotree.pilot.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;

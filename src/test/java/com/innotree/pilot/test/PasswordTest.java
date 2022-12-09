@@ -1,4 +1,4 @@
-package com.innotree.pilot.role;
+package com.innotree.pilot.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

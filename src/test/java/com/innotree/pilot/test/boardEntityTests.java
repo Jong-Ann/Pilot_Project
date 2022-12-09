@@ -1,4 +1,4 @@
-package com.innotree.pilot.role;
+package com.innotree.pilot.test;
 
 import com.innotree.pilot.board.Board;
 import com.innotree.pilot.board.BoardRepository;

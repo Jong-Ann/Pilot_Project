@@ -5,11 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class UserController {
@@ -35,7 +34,7 @@ public class UserController {
         return "create-user-page";
     }
 
-//    @PostMapping("/users/editSave")
+//    @PutMapping("/users/editSave")
 //    public String EditUserSave(User user) {
 //
 //        try {
@@ -59,7 +58,13 @@ public class UserController {
         return "redirect:/users/page-user/1";
     }
 
-    @GetMapping("/users/delete-user/{id}")
+    @PutMapping("/users/save-user")
+    public String SaveEditUser(User user){
+        userService.saveUser(user);
+        return "redirect:/users/page-user/1";
+    }
+
+    @DeleteMapping("/users/delete-user/{id}")
     public String DeleteUser(@PathVariable(name = "id") Integer id, Model model){
         userService.deleteUser(id);
         return "redirect:/users/page-user/1";
@@ -73,7 +78,7 @@ public class UserController {
         model.addAttribute("user",user);
         model.addAttribute("roleList", createUserRole);
         model.addAttribute("id",id);
-        return "create-user-page";
+        return "edit-user-page";
     }
 
     @GetMapping("/users/page-user/{pageNumber}")
