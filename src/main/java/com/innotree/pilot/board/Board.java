@@ -23,7 +23,6 @@ public class Board {
 
     @Lob
     private String contents;
-
     private String photos;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -31,6 +30,9 @@ public class Board {
 
     @CreationTimestamp
     private Timestamp creationTime;
+
+    @Enumerated(EnumType.STRING)
+    private BoarderType boarderType;
 
     public Board(String title, String contents, User user) {
         this.title = title;
@@ -47,6 +49,10 @@ public class Board {
         return this.photos;
     }
 
-
-
+    public BoarderType getBoarderType() {
+        return boarderType;
+    }
+    public void setBoarderType(BoarderType boarderType) {
+        this.boarderType = boarderType;
+    }
 }

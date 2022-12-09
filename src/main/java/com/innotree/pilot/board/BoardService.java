@@ -22,4 +22,5 @@ public interface BoardService {
 
     Page<Board> boardPage(Integer boardPageNum);
 
+
 }

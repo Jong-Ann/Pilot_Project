@@ -1,6 +1,8 @@
-package com.innotree.pilot.role;
+package com.innotree.pilot.test;
 
 
+import com.innotree.pilot.role.Role;
+import com.innotree.pilot.role.RoleRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

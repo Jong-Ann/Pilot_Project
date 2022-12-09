@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,9 +23,10 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+
     @GetMapping("/board")
     public String viewBoard(Model model) {
-
+        List<BoarderType> boarderTypes = new ArrayList<>();
         List<Board> boardList = boardService.boardList();
         model.addAttribute("boardList", boardList);
         return "board-page";
@@ -45,7 +47,6 @@ public class BoardController {
         Board board = new Board();
         model.addAttribute("board", board);
         return "create-board-page";
-
     }
 
     @PostMapping("/board/save-board")
@@ -61,9 +62,21 @@ public class BoardController {
         }
         return "redirect:/board/page-board/1";
     }
+    @PutMapping("/board/save-board")
+    public String boardEditSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails) throws Exception {
+        if (!multipartFile.isEmpty()) {
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            System.out.println(multipartFile);
+            board.setPhotos(fileName);
+            boardService.boardSave(board, pilotUserDetails);
+            String uploadDir = "board-photos/";
+            FileService.saveFile(uploadDir, fileName, multipartFile);
+        }
+        return "redirect:/board/page-board/1";
+    }
 
 
-    @GetMapping("/board/delete-board/{boardId}")
+    @DeleteMapping("/board/delete-board/{boardId}")
     public String boardDelete(@PathVariable(name = "boardId") Integer id) {
         boardService.deleteBoard(id);
         return "redirect:/board/page-board/1";
