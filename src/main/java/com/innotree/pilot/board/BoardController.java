@@ -34,7 +34,7 @@ public class BoardController {
     }
 
     @GetMapping("/testPost")
-    public String postTest(@RequestParam(name = "id") String id, @RequestParam(name = "pwd") String pwd, Model model) {
+    public String postTest(String id,String pwd, Model model) {
         model.addAttribute("id", id);
         model.addAttribute("pwd", pwd);
 
@@ -42,10 +42,11 @@ public class BoardController {
     }
 
 
-    @GetMapping("/boardCreate")
+    @GetMapping("/board-create")
     public String boardCreate(Model model) {
         Board board = new Board();
         model.addAttribute("board", board);
+        model.addAttribute("boarderType", BoarderType.values());
         return "create-board-page";
     }
 
@@ -56,7 +57,8 @@ public class BoardController {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             System.out.println(multipartFile);
             board.setPhotos(fileName);
-            boardService.boardSave(board, pilotUserDetails);
+            Board saveBoard = boardService.boardSave(board, pilotUserDetails);
+            System.out.println(saveBoard.getBoarderType());
             String uploadDir = "board-photos/";
             FileService.saveFile(uploadDir, fileName, multipartFile);
         }
