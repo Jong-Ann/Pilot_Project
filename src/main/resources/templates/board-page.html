@@ -10,6 +10,26 @@
 <div>
     <a th:href="@{/board-create}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
 </div>
+
+<div th:if="${message!=null}" class="alert alert-primary text-center" th:text="${message}">
+</div>
+
+<div> 글 분류:
+    <th:block>
+<!--        <select onchange="window.open(value,'_blank');">-->
+<!--            <option th:value="@{/board-create}">공지사항(Notice)</option>-->
+<!--            <option th:value="@{/board-create}">자주묻는질문(Faq)</option>-->
+<!--            <option th:value="@{/board-create}">질문과답변(Qna)</option>-->
+<!--        </select>-->
+        <select onchange="if(this.value) location.href=(this.value);">
+            <option>글분류 선택</option>
+            <option th:value="@{'/board/' + '?boardType=Notice'}">공지사항(Notice)</option>
+            <option th:value="@{'/board/' + '?boardType=FAQ'}">자주묻는질문(Faq)</option>
+            <option th:value="@{'/board/' + '?boardType=QNA'}">질문과답변(Qna)</option>
+        </select>
+    </th:block>
+</div>
+
 <table class="table">
     <thead>
     <tr>
@@ -22,7 +42,6 @@
     </tr>
     </thead>
     <tbody>
-
     <tr th:each="board : ${boardList}">
         <td></td>
         <td>[[${board.id}]]</td>

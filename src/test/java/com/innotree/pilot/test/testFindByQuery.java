@@ -1,0 +1,33 @@
+package com.innotree.pilot.test;
+
+import com.innotree.pilot.board.Board;
+import com.innotree.pilot.board.BoardRepository;
+import com.innotree.pilot.board.BoarderType;
+import com.innotree.pilot.user.User;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.Rollback;
+
+import java.util.List;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback(value = false)
+public class testFindByQuery {
+
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @Test
+    public void testSearchBoarderType() {
+        List<Board> boardList = boardRepository.findBoardListByBoarderType(BoarderType.Notice);
+        boardList.forEach(board -> System.out.println(board.getBoarderType()));
+    }
+
+
+}

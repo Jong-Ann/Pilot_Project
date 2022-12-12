@@ -7,12 +7,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum BoarderType {
 
-    Notice("공지사항"),
-    FAQ("자주하는질문"),
-    QNA("질문과답변");
+    Notice("Notice"),
+    FAQ("FAQ"),
+    QNA("QNA");
     private String name;
 
     BoarderType(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

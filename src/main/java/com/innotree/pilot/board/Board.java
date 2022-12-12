@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,7 +31,7 @@ public class Board {
     private User user;
 
     @CreationTimestamp
-    private Timestamp creationTime;
+    private LocalDate creationTime;
 
     @Enumerated(EnumType.STRING)
     private BoarderType boarderType;
@@ -56,5 +58,18 @@ public class Board {
 
     public void setBoarderType(BoarderType boarderType) {
         this.boarderType = boarderType;
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", contents='" + contents + '\'' +
+                ", photos='" + photos + '\'' +
+                ", user=" + user +
+                ", creationTime=" + creationTime +
+                ", boarderType=" + boarderType +
+                '}';
     }
 }
