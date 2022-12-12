@@ -49,9 +49,11 @@ public class Board {
         return this.photos;
     }
 
+
     public BoarderType getBoarderType() {
         return boarderType;
     }
+
     public void setBoarderType(BoarderType boarderType) {
         this.boarderType = boarderType;
     }
