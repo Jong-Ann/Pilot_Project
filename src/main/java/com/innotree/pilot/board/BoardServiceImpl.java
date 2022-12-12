@@ -53,5 +53,6 @@ public class BoardServiceImpl implements BoardService {
         Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
         return boardRepository.findAll(pageable);
     }
+
 }
 
