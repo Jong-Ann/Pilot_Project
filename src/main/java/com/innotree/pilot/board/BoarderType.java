@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum BoarderType {
 
-    Notice("Notice"),
+    NOTICE("NOTICE"),
     FAQ("FAQ"),
     QNA("QNA");
     private String name;
@@ -20,4 +20,5 @@ public enum BoarderType {
     public String toString() {
         return this.name;
     }
+
 }

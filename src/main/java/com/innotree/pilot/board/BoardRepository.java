@@ -11,7 +11,12 @@ import java.util.List;
 @Repository
 public interface BoardRepository extends JpaRepository<Board,Integer> {
 
-    //@Query("select b from Board b where b.boarderType = 'Notice'")
-    List<Board> findBoardListByBoarderType(BoarderType boarderType);
+    @Query("select b from Board b where b.boarderType = 'NOTICE'")
+    Page<Board> findNOTICEBoard(Pageable pageable);
+    @Query("select b from Board b where b.boarderType = 'QNA'")
+    Page<Board> findQNABoard(Pageable pageable);
+    @Query("select b from Board b where b.boarderType = 'FAQ'")
+    Page<Board> findFAQBoard(Pageable pageable);
+
 
 }

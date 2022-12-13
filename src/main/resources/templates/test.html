@@ -5,8 +5,38 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">번호</th>
+    <th scope="col">글제목</th>
+    <th scope="col">작성자</th>
+    <th scope="col">작성날짜</th>
+    <th scope="col">편집</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="board : ${boardList}">
+    <td></td>
+    <td>[[${board.id}]]</td>
+    <td><a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a></td>
+    <td>[[${board.user}]]</td>
+    <td>[[${board.creationTime}]]</td>
+    <td>
+      <th:block>
+        <a class="btn btn-primary" th:if="${#authentication.principal.user.id} == ${board.user.id}" th:href="@{'/board/edit-board/' + ${board.id}}"
+           style="text-decoration: none;">편집</a>
+        <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">
+          <input type="hidden" name="_method" value="delete"/>
+          <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}" id="deleteButton2" class="btn btn-danger">삭제</button>
+        </form>
+      </th:block>
+    </td>
+  </tr>
+  </tbody>
+</table>
 <div class="text-center">
-  <h2 th:text="${noticeBoard}"></h2>
   <h1>
     <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
   </h1>
