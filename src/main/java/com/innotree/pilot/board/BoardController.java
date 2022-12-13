@@ -2,6 +2,7 @@ package com.innotree.pilot.board;
 
 
 import com.innotree.pilot.file.FileService;
+import com.innotree.pilot.reply.Reply;
 import com.innotree.pilot.security.PilotUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -90,8 +91,10 @@ public class BoardController {
     @GetMapping("/board/{boardId}")
     public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model) {
         Board board = boardService.getBoard(id);
+        List<Reply> replyList = board.getReplyList();
         model.addAttribute("board", board);
         model.addAttribute("id", board.getId());
+        model.addAttribute("replyList", replyList);
         return "board-detail-page";
     }
 

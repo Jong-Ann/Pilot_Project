@@ -19,13 +19,35 @@
       <label class="form-label">내용</label>
       <textarea class="form-control " th:field="*{contents}" rows="5" readonly></textarea>
     </div>
-    <img th:if="${board.photos != null}" th:src="@{${board.getImagePath}}" style="margin: 0 auto; max-height:400px; max-width: 400px;"></img>
-    <a th:href="@{'/download/' + ${board.downloadImagePath}}">download</a>
+    <img th:if="${board.photos != null}" th:src="@{${board.getImagePath}}" style="margin: 0 auto; max-height:400px; max-width: 400px;"></img><br>
+    <a th:href="@{'/download/' + ${board.downloadImagePath}}" class="btn btn-primary">download</a>
     <a th:href="@{/board/page-board/1}">
-      <button type="button" value="취소" class="btn btn-secondary">취소</button>
+      <button type="button" value="뒤로가기" class="btn btn-secondary">뒤로가기</button>
     </a>
   </form>
 </div>
+<div class="card" style="margin: 0 auto; width:800px; height: 500px;">
+  <div class="card-header">댓글 리스트</div>
+  <ul id="comment--box" class="list-group">
+    <th:block th:each="reply : ${replyList}">
+      <li id="comment--1" class="list-group-item d-flex justify-content-between">
+        <div class="d-flex">
+          <div>[[${reply.contents}]]</div>
+          <div class="font-italic"> - [[${reply.user.username}]]</div>
+          <div>- 작성날짜 : [[${reply.createDate}]]</div>
+          <form th:action="@{/}" method="post">
+            <input type="hidden" name="replyId" th:value="${reply.id}">
+            <div th:if="${#authentication.principal.user.id} == ${reply.user.id}">
+              &nbsp <button type="submit" class="btn btn-danger">삭제</button>
+            </div>
+          </form>
+        </div>
+      </li>
+    </th:block>
+  </ul>
+</div>
+
+
 
 <div class=" text-center" style="padding: 30px;">
   <h3>
