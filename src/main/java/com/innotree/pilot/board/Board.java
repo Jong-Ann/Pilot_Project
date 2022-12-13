@@ -1,6 +1,7 @@
 package com.innotree.pilot.board;
 
 
+import com.innotree.pilot.reply.Reply;
 import com.innotree.pilot.user.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,6 +31,9 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "board")
+    private List<Reply> replyList;
 
     @CreationTimestamp
     private LocalDate creationTime;
@@ -58,6 +63,15 @@ public class Board {
 
     public void setBoarderType(BoarderType boarderType) {
         this.boarderType = boarderType;
+    }
+
+
+    public List<Reply> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<Reply> replyList) {
+        this.replyList = replyList;
     }
 
     @Override

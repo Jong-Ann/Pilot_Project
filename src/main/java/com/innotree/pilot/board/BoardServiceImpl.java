@@ -1,5 +1,7 @@
 package com.innotree.pilot.board;
 
+import com.innotree.pilot.reply.Reply;
+import com.innotree.pilot.reply.ReplyRepository;
 import com.innotree.pilot.security.PilotUserDetails;
 import com.innotree.pilot.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Override
     public List<Board> boardList() {
@@ -52,6 +57,11 @@ public class BoardServiceImpl implements BoardService {
     public Page<Board> boardPage(Integer boardPageNum) {
         Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
         return boardRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Reply> replyList() {
+        return replyRepository.findAll();
     }
 
 }
