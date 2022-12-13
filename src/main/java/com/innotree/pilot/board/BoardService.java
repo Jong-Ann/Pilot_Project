@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface BoardService {
 
-
     List<Board> boardList();
 
     Board boardSave(Board board, @AuthenticationPrincipal PilotUserDetails pilotUserDetails);
@@ -21,6 +20,8 @@ public interface BoardService {
     void deleteBoard(Integer id);
 
     Page<Board> boardPage(Integer boardPageNum);
+
+
 
 
 }

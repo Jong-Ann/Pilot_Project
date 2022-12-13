@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -25,8 +26,14 @@ public class testFindByQuery {
 
     @Test
     public void testSearchBoarderType() {
-        List<Board> boardList = boardRepository.findBoardListByBoarderType(BoarderType.Notice);
-        boardList.forEach(board -> System.out.println(board.getBoarderType()));
+        Pageable pageable = PageRequest.of(0, 4);
+        Page<Board> findNoticeBoard = boardRepository.findNOTICEBoard(pageable);
+        Page<Board> findQNABoard = boardRepository.findQNABoard(pageable);
+        Page<Board> findFAQBoard = boardRepository.findFAQBoard(pageable);
+
+        for (Board board : findNoticeBoard) {
+            System.out.println(board.getBoarderType());
+        }
     }
 
 

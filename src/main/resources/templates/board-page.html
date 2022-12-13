@@ -3,17 +3,13 @@
 <head th:replace="fragments :: header ">
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
-
 <div>
     <a th:href="@{/board-create}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
 </div>
-
 <div th:if="${message!=null}" class="alert alert-primary text-center" th:text="${message}">
 </div>
-
 <div> 글 분류:
     <th:block>
 <!--        <select onchange="window.open(value,'_blank');">-->
@@ -22,10 +18,10 @@
 <!--            <option th:value="@{/board-create}">질문과답변(Qna)</option>-->
 <!--        </select>-->
         <select onchange="if(this.value) location.href=(this.value);">
-            <option>글분류 선택</option>
-            <option th:value="@{'/board/' + '?boardType=Notice'}">공지사항(Notice)</option>
-            <option th:value="@{'/board/' + '?boardType=FAQ'}">자주묻는질문(Faq)</option>
-            <option th:value="@{'/board/' + '?boardType=QNA'}">질문과답변(Qna)</option>
+            <option th:value="0">글분류 선택</option>
+            <option th:value="@{'/board' + '/notice-board/1'}">공지사항(Notice)</option>
+            <option th:value="@{'/board' + '/faq-board/1'}">자주묻는질문(Faq)</option>
+            <option th:value="@{'/board' + '/qna-board/1'}">질문과답변(Qna)</option>
         </select>
     </th:block>
 </div>
@@ -35,6 +31,7 @@
     <tr>
         <th scope="col">#</th>
         <th scope="col">번호</th>
+        <th scope="col">글분류</th>
         <th scope="col">글제목</th>
         <th scope="col">작성자</th>
         <th scope="col">작성날짜</th>
@@ -45,6 +42,7 @@
     <tr th:each="board : ${boardList}">
         <td></td>
         <td>[[${board.id}]]</td>
+        <td>[[${board.boarderType}]]</td>
         <td><a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a></td>
         <td>[[${board.user}]]</td>
         <td>[[${board.creationTime}]]</td>
@@ -54,19 +52,19 @@
                    style="text-decoration: none;">편집</a>
                 <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">
                     <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}" id="deleteButton2" class="btn btn-danger">삭제</button>
+                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}" id="deleteButton" class="btn btn-danger">삭제</button>
                 </form>
             </th:block>
         </td>
+
+
     </tr>
     </tbody>
 </table>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1}}">이전 페이지</a></li>
-
         <li  th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'" th:each="CountBy : ${#numbers.sequence(1,totalPages)}"><a class="page-link" th:href="@{'/board/page-board/' + ${CountBy}}">[[${CountBy}]]</a></li>
-
         <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber+1}}">다음 페이지</a></li>
     </ul>
 </nav>

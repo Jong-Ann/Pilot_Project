@@ -5,6 +5,8 @@ import com.innotree.pilot.file.FileService;
 import com.innotree.pilot.security.PilotUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -61,19 +63,20 @@ public class BoardController {
             System.out.println(saveBoard.getBoarderType());
             String uploadDir = "board-photos/";
             FileService.saveFile(uploadDir, fileName, multipartFile);
-            redirectAttributes.addFlashAttribute("message", "글번호 :" + saveBoard.getId() + "이 생성되었습니다.");
+            redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
         }
         return "redirect:/board/page-board/1";
     }
     @PutMapping("/board/save-board")
-    public String boardEditSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails) throws Exception {
+    public String boardEditSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails,RedirectAttributes redirectAttributes) throws Exception {
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             System.out.println(multipartFile);
             board.setPhotos(fileName);
-            boardService.boardSave(board, pilotUserDetails);
+            Board editBoard = boardService.boardSave(board, pilotUserDetails);
             String uploadDir = "board-photos/";
             FileService.saveFile(uploadDir, fileName, multipartFile);
+            redirectAttributes.addFlashAttribute("message", "글번호 :" + editBoard.getId() + "가 수정되었습니다.");
         }
         return "redirect:/board/page-board/1";
     }
@@ -101,7 +104,7 @@ public class BoardController {
         return "create-board-page";
     }
     @GetMapping("/board/page-board/{pageNumber}")
-    public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model ,@Param(value = "search") String search) {
+    public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model) {
 
         Page<Board> boardList = boardService.boardPage(pageNumber);
         List<Board> boardContents = boardList.getContent();
@@ -109,23 +112,39 @@ public class BoardController {
         model.addAttribute("boardList", boardContents);
         model.addAttribute("totalPages", boardList.getTotalPages());
         model.addAttribute("pageNumber", pageNumber);
-        model.addAttribute("search", search);
         return "board-page";
     }
 
-    @GetMapping("/board/")
-    public String noticePage(Model model,@RequestParam(name = "boarderType") BoarderType boarderType) {
-        List<Board> noticeBoard = boardRepository.findBoardListByBoarderType(BoarderType.Notice);
-        model.addAttribute("noticeBoard", noticeBoard);
+    @GetMapping("/board/notice-board/{pageNumber}")
+    public String noticePage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
+        Pageable pageable = PageRequest.of(0, 4);
+        Page<Board> pageBoard = boardRepository.findNOTICEBoard(pageable);
+        List<Board> boardList = pageBoard.getContent();
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("totalPages", pageBoard.getTotalPages());
+        model.addAttribute("pageNumber", pageNumber);
         return "board-page";
     }
-    @GetMapping("/board/qna-board")
-    public String qnaPage(Model model) {
-        return "test";
+
+    @GetMapping("/board/faq-board/{pageNumber}")
+    public String faqPage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
+        Pageable pageable = PageRequest.of(0, 4);
+        Page<Board> pageBoard = boardRepository.findFAQBoard(pageable);
+        List<Board> boardList = pageBoard.getContent();
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("totalPages", pageBoard.getTotalPages());
+        model.addAttribute("pageNumber", pageNumber);
+        return "board-page";
     }
-    @GetMapping("/board/faq-board")
-    public String faqPage(Model model) {
-        return "test";
+    @GetMapping("/board/qna-board/{pageNumber}")
+    public String qnaPage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
+        Pageable pageable = PageRequest.of(0, 4);
+        Page<Board> pageBoard = boardRepository.findQNABoard(pageable);
+        List<Board> boardList = pageBoard.getContent();
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("totalPages", pageBoard.getTotalPages());
+        model.addAttribute("pageNumber", pageNumber);
+        return "board-page";
     }
 
 }
