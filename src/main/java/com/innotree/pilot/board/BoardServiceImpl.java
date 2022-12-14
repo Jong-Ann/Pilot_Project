@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +65,12 @@ public class BoardServiceImpl implements BoardService {
         return replyRepository.findAll();
     }
 
+    @Override
+    public Reply saveReply(Reply reply,int boardId,PilotUserDetails pilotUserDetails) {
+        Board board = boardRepository.findById(boardId).get();
+        Reply saveReply = replyRepository.save(reply);
+        saveReply.setUser(pilotUserDetails.getUser());
+        return saveReply;
+    }
 }
 
