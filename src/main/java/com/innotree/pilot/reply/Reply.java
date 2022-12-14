@@ -22,7 +22,7 @@ public class Reply {
     private Integer id;
 
     @Column(nullable = false)
-    private String contents;
+    private String comments;
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
@@ -34,8 +34,8 @@ public class Reply {
     @CreationTimestamp
     private LocalDate createDate;
 
-    public Reply(String contents, Board board, User user) {
-        this.contents = contents;
+    public Reply(String comments, Board board, User user) {
+        this.comments = comments;
         this.board = board;
         this.user = user;
     }
@@ -43,7 +43,7 @@ public class Reply {
     @Override
     public String toString() {
         return "Reply{" +
-                "contents='" + contents + '\'' +
+                "contents='" + comments + '\'' +
                 '}';
     }
 }

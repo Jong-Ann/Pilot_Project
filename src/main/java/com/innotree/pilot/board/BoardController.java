@@ -89,11 +89,12 @@ public class BoardController {
     }
 
     @GetMapping("/board/{boardId}")
-    public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model) {
+    public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model ,Reply reply) {
         Board board = boardService.getBoard(id);
         List<Reply> replyList = board.getReplyList();
         model.addAttribute("board", board);
         model.addAttribute("id", board.getId());
+        model.addAttribute("reply", reply);
         model.addAttribute("replyList", replyList);
         return "board-detail-page";
     }

@@ -26,4 +26,8 @@ public interface BoardService extends ReplyService {
 
     @Override
     List<Reply> replyList();
+
+    @Override
+    Reply saveReply(Reply reply, int boardId, PilotUserDetails pilotUserDetails);
+
 }
