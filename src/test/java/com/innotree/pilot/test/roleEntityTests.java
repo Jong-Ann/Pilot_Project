@@ -24,7 +24,6 @@ public class roleEntityTests {
     @Test
     @DisplayName("관리자 역할 생성 테스트")
     public void firstRoleTest(){
-
         Role Admin = new Role("Admin","Admin User manage everything");
         Role adminRole = roleRepository.save(Admin);
         assertThat(adminRole.getId()).isNotNull();
@@ -33,7 +32,6 @@ public class roleEntityTests {
     @Test
     @DisplayName("일반 역할 생성 테스트")
     public void secondRoleTest(){
-
         Role Normal = new Role("Normal","This user has a normal privilege");
         Role normalRole = roleRepository.save(Normal);
         assertThat(normalRole.getName()).isEqualTo("Normal");

@@ -15,14 +15,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ReplyController {
-
     @Autowired
     private BoardService boardService;
-
     @PostMapping("/create-reply")
-    public String replyCreate(Reply reply, @Param("boardId") Integer boardId, @AuthenticationPrincipal PilotUserDetails pilotUserDetails) {
-        boardService.saveReply(reply, boardId,pilotUserDetails);
-        return "redirect:/board/page-board/1";
+    public String replyCreate(Reply reply, @RequestParam(name = "boardId") Integer boardId, @AuthenticationPrincipal PilotUserDetails pilotUserDetails) {
+        boardService.saveReply(reply,boardId,pilotUserDetails);
+        return "redirect:/board/" + boardId;
     }
 
 }

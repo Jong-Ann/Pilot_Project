@@ -27,32 +27,24 @@ public class userEntityTests {
     private UserRepository userRepository;
     @Autowired
     private EntityManager entityManager;
-
-
     @Test
     @DisplayName("첫번째 유저 생성 테스트입니다.")
     public void firstUserTest() {
         Role normalRole = entityManager.find(Role.class, 1);
         User JongAnn = new User("JongAnn", "dlwhddksiq95!");
 //        JongAnn.setRoles(normalRole);
-
         User userJongAnn = userRepository.save(JongAnn);
         assertThat(userJongAnn.getId()).isGreaterThan(0);
-
     }
 
     @Test
     public void testMultiRole() {
         User testUser = new User("test", "test1");
-
         Role roleAdmin = new Role(1);
         Role roleNormal = new Role(2);
-
 //        testUser.setRoles(roleNormal);
 //        testUser.setRoles(roleAdmin);
-
         User saveTestUser = userRepository.save(testUser);
-
         assertThat(saveTestUser.getId()).isGreaterThan(0);
     }
 
@@ -87,7 +79,6 @@ public class userEntityTests {
 
     @Test
     public void UpdateUserTest() {
-
         Role roleNumOne = entityManager.find(Role.class, 2);
         User userJong = userRepository.findById(1).get();
 //        userJong.setRoles("JJong");
@@ -141,6 +132,4 @@ public class userEntityTests {
 //        User saveUser = userRepository.save(testUser);
 //        assertThat(saveUser.getId()).isGreaterThan(0);
 //    }
-
-
 }

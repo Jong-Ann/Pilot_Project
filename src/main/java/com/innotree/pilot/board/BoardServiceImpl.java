@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -68,9 +69,11 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Reply saveReply(Reply reply,int boardId,PilotUserDetails pilotUserDetails) {
         Board board = boardRepository.findById(boardId).get();
+        reply.setBoard(board);
+        reply.setUser(pilotUserDetails.getUser());
         Reply saveReply = replyRepository.save(reply);
-        saveReply.setUser(pilotUserDetails.getUser());
         return saveReply;
     }
+
 }
 

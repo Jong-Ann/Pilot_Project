@@ -31,10 +31,8 @@ public class ReplyEntityTest {
         Board board = entityManager.find(Board.class, 34);
         User user = entityManager.find(User.class, 2);
         Reply reply = new Reply("안녕하세요 테스트입니다.",board ,user);
-
         Reply saveReply = repo.save(reply);
         assertThat(saveReply.getId()).isGreaterThan(0);
-
     }
 
     @Test
