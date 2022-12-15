@@ -4,11 +4,13 @@ import com.innotree.pilot.role.Role;
 import com.innotree.pilot.user.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /* UserDetails는 UserDetailsService에 의해 Return 되게 된다.
 DaoAuthenticationProvider 는 UserDetails의 패스워드 및 아이디를 검사하고
@@ -17,22 +19,19 @@ DaoAuthenticationProvider 는 UserDetails의 패스워드 및 아이디를 검�
 @Getter
 public class PilotUserDetails implements UserDetails {
     private User user;
-
     public PilotUserDetails(User user) {
         this.user = user;
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<Role> Roles = user.getRoles();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-
-        for (Role role : Roles) {
-            authorities.add((GrantedAuthority) () -> role.getName());
-        }
-        return authorities;
+        return user.getRoles().stream().map(Role::getName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+//        List<Role> Roles = user.getRoles();
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        for (Role role : Roles) {
+//            authorities.add((GrantedAuthority) () -> role.getName());
+//        }
+//        return authorities;
     }
-
     public Integer getId(){
         return user.getId();
     }

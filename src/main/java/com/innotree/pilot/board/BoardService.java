@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.List;
 
-public interface BoardService extends ReplyService {
+public interface  BoardService extends ReplyService {
 
     List<Board> boardList();
 
@@ -29,5 +29,6 @@ public interface BoardService extends ReplyService {
 
     @Override
     Reply saveReply(Reply reply, int boardId, PilotUserDetails pilotUserDetails);
+
 
 }

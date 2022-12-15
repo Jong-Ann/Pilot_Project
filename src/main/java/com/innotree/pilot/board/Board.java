@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -28,6 +29,8 @@ public class Board {
     @Lob
     private String contents;
     private String photos;
+
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -36,7 +39,7 @@ public class Board {
     private List<Reply> replyList;
 
     @CreationTimestamp
-    private LocalDate creationTime;
+    private Date creationTime;
 
     @Enumerated(EnumType.STRING)
     private BoarderType boarderType;

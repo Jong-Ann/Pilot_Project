@@ -32,8 +32,6 @@
 
         <div class="form-group">
             <label>분류 : </label>
-
-
             <th:block >
                 <select th:field="*{boarderType}" >
                     <option th:each="boarderType : ${boarderType}" th:value="${boarderType}">[[${boarderType.name}]]</option>
