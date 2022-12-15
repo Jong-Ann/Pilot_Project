@@ -44,17 +44,11 @@
         <td></td>
         <td>[[${board.id}]]</td>
         <td>[[${board.boarderType}]]</td>
-        <th:block th:if="${board.creationTime.after(#dates.createToday())}">
-            <td><img th:src="@{/img/New.png}" style="width:50px; height:45px;"><a style="text-decoration: none;"
-                                                                                  th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a>
-            </td>
-        </th:block>
-
-        <th:block th:if="${board.creationTime.before(#dates.createToday())}">
-            <td><a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a></td>
-
-        </th:block>
-
+        <td>
+            <th:block th:if="${board.creationTime.after(#dates.createToday())}">
+                <div><img th:src="@{/img/New.png}" style="width:50px; height:45px;"></div>
+            </th:block>
+            <a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a></td>
         <td>[[${board.user}]]</td>
         <td>[[${board.creationTime}]]</td>
 
