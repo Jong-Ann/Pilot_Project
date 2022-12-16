@@ -6,7 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -53,20 +56,24 @@ public class UserController {
 //        return "redirect:/users";
 //    }
     @PostMapping("/users/save-user")
-    public String SaveUser(User user){
+    public String SaveUser(User user,RedirectAttributes redirectAttributes){
         userService.saveUser(user);
+        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 생성되었습니다.");
         return "redirect:/users/page-user/1";
     }
 
     @PutMapping("/users/save-user")
-    public String SaveEditUser(User user){
-        userService.saveUser(user);
+    public String SaveEditUser(User user, RedirectAttributes redirectAttributes){
+        user.setCreationTime(LocalDateTime.now());
+        User editSave = userService.saveUser(user);
+        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 수정되었습니다.");
         return "redirect:/users/page-user/1";
     }
 
     @DeleteMapping("/users/delete-user/{id}")
-    public String DeleteUser(@PathVariable(name = "id") Integer id, Model model){
+    public String DeleteUser(@PathVariable(name = "id") Integer id, Model model,RedirectAttributes redirectAttributes){
         userService.deleteUser(id);
+        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 삭제되었습니다.");
         return "redirect:/users/page-user/1";
     }
 
@@ -74,7 +81,6 @@ public class UserController {
     public String EditUser(@PathVariable(name = "id") Integer id,Model model){
         User user = userService.getUser(id);
         List<Role> createUserRole = userService.findEveryRole();
-
         model.addAttribute("user",user);
         model.addAttribute("roleList", createUserRole);
         model.addAttribute("id",id);

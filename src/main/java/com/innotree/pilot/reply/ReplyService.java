@@ -13,5 +13,7 @@ public interface ReplyService {
 
     Reply saveReply(Reply reply,int boardId,@AuthenticationPrincipal PilotUserDetails pilotUserDetails);
 
+    void deleteReply(Integer replyId);
+
 
 }

@@ -7,7 +7,10 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -28,7 +31,7 @@ public class User {
     private String password;
 
     @CreationTimestamp
-    private Timestamp creationTime;
+    private LocalDateTime creationTime;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Role_and_User")
