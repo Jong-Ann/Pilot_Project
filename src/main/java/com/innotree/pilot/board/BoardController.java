@@ -15,7 +15,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.expression.Dates;
 
+import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,13 +25,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BoardController {
+
+
     @Autowired
     private BoardRepository boardRepository;
     @Autowired
     private BoardService boardService;
+
+
     @GetMapping("/board")
     public String viewBoard(Model model) {
         List<BoarderType> boarderTypes = new ArrayList<>();
@@ -52,15 +59,18 @@ public class BoardController {
         return "create-board-page";
     }
     @PostMapping("/board/save-board")
-    public String boardSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails, RedirectAttributes redirectAttributes) throws Exception {
+    public String boardSave(Model model,Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails, RedirectAttributes redirectAttributes) throws Exception {
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            Date now = Calendar.getInstance().getTime();
             System.out.println(multipartFile);
             board.setPhotos(fileName);
+            board.setCreationTime(now);
             Board saveBoard = boardService.boardSave(board, pilotUserDetails);
             System.out.println(saveBoard.getBoarderType());
             String uploadDir = "board-photos/";
             FileService.saveFile(uploadDir, fileName, multipartFile);
+            model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
         }
         return "redirect:/board/page-board/1";
@@ -79,8 +89,9 @@ public class BoardController {
 //        return "redirect:/board/page-board/1";
 //    }
     @DeleteMapping("/board/delete-board/{boardId}")
-    public String boardDelete(@PathVariable(name = "boardId") Integer id) {
+    public String boardDelete(@PathVariable(name = "boardId") Integer id,RedirectAttributes redirectAttributes) {
         boardService.deleteBoard(id);
+        redirectAttributes.addFlashAttribute("글" + id + "이 삭제되었습니다.");
         return "redirect:/board/page-board/1";
     }
 
@@ -107,54 +118,84 @@ public class BoardController {
     public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model) {
         Page<Board> boardList = boardService.boardPage(pageNumber);
         List<Board> boardContents = boardList.getContent();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-//        cal.add(Calendar.DAY_OF_MONTH,-7);
-        Date nowDay = cal.getTime();
-        model.addAttribute("nowDay", nowDay);
-        model.addAttribute("boarderType", BoarderType.values());
+        model.addAttribute("BoarderType", BoarderType.values());
         model.addAttribute("boardList", boardContents);
         model.addAttribute("totalPages", boardList.getTotalPages());
         model.addAttribute("pageNumber", pageNumber);
         return "board-page";
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DAY_OF_MONTH,-7);
+//        Date nowDay = cal.getTime();
+//        model.addAttribute("nowDay", nowDay);
     }
 
-    @GetMapping("/board/notice-board/{pageNumber}")
-    public String noticePage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
+    @GetMapping("/board/search-board/{pageNumber}/{keyword}")
+    public String keywordBoard(@RequestParam(name = "keyword") String keyword,Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
         Pageable pageable = PageRequest.of(0, 4);
-        Page<Board> pageBoard = boardRepository.findNOTICEBoard(pageable);
-        List<Board> boardList = pageBoard.getContent();
-        BoarderType NoticeBoarderType= BoarderType.NOTICE;
-        model.addAttribute("NoticeBoarderType", NoticeBoarderType);
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("totalPages", pageBoard.getTotalPages());
+        Page<Board> boardList = boardRepository.findContents(keyword,pageable);
+        List<Board> boardContents = boardList.getContent();
+        model.addAttribute("BoarderType", BoarderType.values());
+        model.addAttribute("boardList", boardContents);
+        model.addAttribute("totalPages", boardList.getTotalPages());
         model.addAttribute("pageNumber", pageNumber);
-        return "board-page";
+        return "redirect:/board/page-board/1";
+
     }
 
-    @GetMapping("/board/faq-board/{pageNumber}")
-    public String faqPage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
-        Pageable pageable = PageRequest.of(0, 4);
-        Page<Board> pageBoard = boardRepository.findFAQBoard(pageable);
-        List<Board> boardList = pageBoard.getContent();
-        BoarderType FAQBoarderType= BoarderType.FAQ;
-        model.addAttribute("FAQBoarderType", FAQBoarderType);
+    @GetMapping("/board/page-board/{pageNumber}/{BoarderType}")
+    public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType,Model model) {
+        Page<Board> boarderTypePage = boardService.boarderTypePage(pageNumber, boarderType);
+        List<Board> boardList = boarderTypePage.getContent();
         model.addAttribute("boardList", boardList);
-        model.addAttribute("totalPages", pageBoard.getTotalPages());
+        model.addAttribute("BoarderType", boarderType);
         model.addAttribute("pageNumber", pageNumber);
-        return "board-page";
+        model.addAttribute("totalPages", boarderTypePage.getTotalPages());
+
+        return "board-page-boarderType";
+
+//        String result = listBoarderType.stream().map(String::valueOf).collect(Collectors.joining());
+//        String result2 = org.thymeleaf.util.StringUtils.join(listBoarderType, ",");
+//        return result2;
+
     }
-    @GetMapping("/board/qna-board/{pageNumber}")
-    public String qnaPage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
-        Pageable pageable = PageRequest.of(0, 6);
-        Page<Board> pageBoard = boardRepository.findQNABoard(pageable);
-        List<Board> boardList = pageBoard.getContent();
-        BoarderType QNABoarderType= BoarderType.QNA;
-        model.addAttribute("QNABoarderType", QNABoarderType);
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("totalPages", pageBoard.getTotalPages());
-        model.addAttribute("pageNumber", pageNumber);
-        return "board-page";
-    }
+
+
+
+//
+//    @GetMapping("/board/notice-board/{pageNumber}")
+//    public String noticePage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
+//        Page<Board> noticePage = boardService.noticePage(pageNumber);
+//        List<Board> boardList = noticePage.getContent();
+//        BoarderType NoticeBoarderType= BoarderType.NOTICE;
+//        model.addAttribute("NoticeBoarderType", NoticeBoarderType);
+//        model.addAttribute("boardList", boardList);
+//        model.addAttribute("totalPages", noticePage.getTotalPages());
+//        model.addAttribute("pageNumber", pageNumber);
+//        return "board-page";
+//    }
+//
+//    @GetMapping("/board/faq-board/{pageNumber}")
+//    public String faqPage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
+//        Page<Board> faqPage = boardService.faqPage(pageNumber);
+//        List<Board> boardList = faqPage.getContent();
+//        BoarderType FAQBoarderType= BoarderType.FAQ;
+//        model.addAttribute("FAQBoarderType", FAQBoarderType);
+//        model.addAttribute("boardList", boardList);
+//        model.addAttribute("totalPages", faqPage.getTotalPages());
+//        model.addAttribute("pageNumber", pageNumber);
+//        return "board-page";
+//    }
+//    @GetMapping("/board/qna-board/{pageNumber}")
+//    public String qnaPage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
+//        Page<Board> faqPage = boardService.qnaPage(pageNumber);
+//        List<Board> boardList = faqPage.getContent();
+//        BoarderType QNABoarderType= BoarderType.QNA;
+//        model.addAttribute("QNABoarderType", QNABoarderType);
+//        model.addAttribute("boardList", boardList);
+//        model.addAttribute("totalPages", faqPage.getTotalPages());
+//        model.addAttribute("pageNumber", pageNumber);
+//        return "board-page";
+//    }
 
 }

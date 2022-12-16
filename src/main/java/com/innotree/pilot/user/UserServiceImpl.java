@@ -51,11 +51,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         String rawPassword = user.getPassword();
         String encryptPassword = passwordEncoder.encode(rawPassword);
         user.setPassword(encryptPassword);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

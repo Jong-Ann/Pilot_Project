@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -45,6 +43,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Board getBoard(Integer id) {
         return boardRepository.findById(id).get();
     }
@@ -56,17 +55,19 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Board> boardPage(Integer boardPageNum) {
         Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
         return boardRepository.findAll(pageable);
     }
-
     @Override
+    @Transactional(readOnly = true)
     public List<Reply> replyList() {
         return replyRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Reply saveReply(Reply reply,int boardId,PilotUserDetails pilotUserDetails) {
         Board board = boardRepository.findById(boardId).get();
         reply.setBoard(board);
@@ -75,5 +76,41 @@ public class BoardServiceImpl implements BoardService {
         return saveReply;
     }
 
+    @Override
+    @Transactional
+    public Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType) {
+        Pageable pageable = PageRequest.of(boardPageNum-1, 4);
+        return boardRepository.findByBoarderType(boarderType,pageable);
+    }
+
+    @Override
+    @Transactional
+    public void deleteReply(Integer replyId) {
+        replyRepository.deleteById(replyId);
+    }
+
+    @Override
+    public void deleteReplyAll() {
+        replyRepository.deleteAll();
+    }
+
+    @Deprecated
+    @Override
+    public Page<Board> noticePage(Integer boardPageNum) {
+        Pageable pageable = PageRequest.of(boardPageNum - 1, 4);
+        return boardRepository.findNOTICEBoard(pageable);
+    }
+    @Deprecated
+    @Override
+    public Page<Board> faqPage(Integer boardPageNum) {
+        Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+        return boardRepository.findFAQBoard(pageable);
+    }
+    @Deprecated
+    @Override
+    public Page<Board> qnaPage(Integer boardPageNum) {
+        Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+        return boardRepository.findQNABoard(pageable);
+    }
 }
 

@@ -21,8 +21,10 @@ public interface  BoardService extends ReplyService {
 
     void deleteBoard(Integer id);
 
-    Page<Board> boardPage(Integer boardPageNum);
+    void deleteReplyAll();
 
+    Page<Board> boardPage(Integer boardPageNum);
+    Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType);
 
     @Override
     List<Reply> replyList();
@@ -30,5 +32,11 @@ public interface  BoardService extends ReplyService {
     @Override
     Reply saveReply(Reply reply, int boardId, PilotUserDetails pilotUserDetails);
 
+    @Deprecated
+    Page<Board> noticePage(Integer boardPageNum);
+    @Deprecated
+    Page<Board> faqPage(Integer boardPageNum);
+    @Deprecated
+    Page<Board> qnaPage(Integer boardPageNum);
 
 }

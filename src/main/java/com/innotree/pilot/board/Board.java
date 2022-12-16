@@ -35,7 +35,7 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board" ,cascade = CascadeType.REMOVE)
     private List<Reply> replyList;
 
     @CreationTimestamp

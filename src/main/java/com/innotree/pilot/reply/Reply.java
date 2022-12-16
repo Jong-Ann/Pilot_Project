@@ -10,6 +10,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -32,7 +34,7 @@ public class Reply {
     private User user;
 
     @CreationTimestamp
-    private LocalDate createDate;
+    private LocalDateTime createDate;
 
     public Reply(String comments, Board board, User user) {
         this.comments = comments;
