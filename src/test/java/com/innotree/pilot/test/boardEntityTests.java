@@ -55,8 +55,10 @@ public class boardEntityTests {
     }
     @Test
     public void searchTest() {
+        Pageable pageable = PageRequest.of(0, 4);
         String title = "이선희";
-        Page<Board> board = boardRepository.findContents(title);
-        System.out.println("board = " + board);
+        Page<Board> board = boardRepository.findContentsAndTitle(title,pageable);
+        board.getContent();
+        System.out.println("board = " + board.getContent());
     }
 }

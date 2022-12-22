@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,11 +47,12 @@ public class BoardController {
     }
 
     @GetMapping("/testPost")
-    public String postTest(String id,String pwd, Model model) {
+    public String postTest(String id, String pwd, Model model) {
         model.addAttribute("id", id);
         model.addAttribute("pwd", pwd);
         return "test";
     }
+
     @GetMapping("/board-create")
     public String boardCreate(Model model) {
         Board board = new Board();
@@ -58,8 +60,9 @@ public class BoardController {
         model.addAttribute("boarderType", BoarderType.values());
         return "create-board-page";
     }
+
     @PostMapping("/board/save-board")
-    public String boardSave(Model model,Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails, RedirectAttributes redirectAttributes) throws Exception {
+    public String boardSave(Model model, Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails, RedirectAttributes redirectAttributes) throws Exception {
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             Date now = Calendar.getInstance().getTime();
@@ -75,7 +78,8 @@ public class BoardController {
         }
         return "redirect:/board/page-board/1";
     }
-//    @PutMapping("/board/save-board")
+
+    //    @PutMapping("/board/save-board")
 //    public String boardEditSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails,RedirectAttributes redirectAttributes) throws Exception {
 //        if (!multipartFile.isEmpty()) {
 //            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -89,14 +93,14 @@ public class BoardController {
 //        return "redirect:/board/page-board/1";
 //    }
     @DeleteMapping("/board/delete-board/{boardId}")
-    public String boardDelete(@PathVariable(name = "boardId") Integer id,RedirectAttributes redirectAttributes) {
+    public String boardDelete(@PathVariable(name = "boardId") Integer id, RedirectAttributes redirectAttributes) {
         boardService.deleteBoard(id);
         redirectAttributes.addFlashAttribute("글" + id + "이 삭제되었습니다.");
         return "redirect:/board/page-board/1";
     }
 
     @GetMapping("/board/{boardId}")
-    public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model ,Reply reply) {
+    public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model, Reply reply) {
         Board board = boardService.getBoard(id);
         List<Reply> replyList = board.getReplyList();
         model.addAttribute("board", board);
@@ -114,8 +118,22 @@ public class BoardController {
         model.addAttribute("boarderType", BoarderType.values());
         return "create-board-page";
     }
+
+    @GetMapping("/board/search-board/{pageNumber}")
+    public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model, @RequestParam("word") String word) {
+        System.out.println(word);
+        Page<Board> boardList = boardService.boardPage(pageNumber, word);
+        List<Board> boardContents = boardList.getContent();
+        model.addAttribute("BoarderType", BoarderType.values());
+        model.addAttribute("boardList", boardContents);
+        model.addAttribute("totalPages", boardList.getTotalPages());
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("word", word);
+        return "board-page";
+    }
+
     @GetMapping("/board/page-board/{pageNumber}")
-    public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model) {
+    public String noneWordBoardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model) {
         Page<Board> boardList = boardService.boardPage(pageNumber);
         List<Board> boardContents = boardList.getContent();
         model.addAttribute("BoarderType", BoarderType.values());
@@ -123,28 +141,17 @@ public class BoardController {
         model.addAttribute("totalPages", boardList.getTotalPages());
         model.addAttribute("pageNumber", pageNumber);
         return "board-page";
+    }
+
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //        Calendar cal = Calendar.getInstance();
 //        cal.add(Calendar.DAY_OF_MONTH,-7);
 //        Date nowDay = cal.getTime();
 //        model.addAttribute("nowDay", nowDay);
-    }
 
-    @GetMapping("/board/search-board/{pageNumber}/{keyword}")
-    public String keywordBoard(@RequestParam(name = "keyword") String keyword,Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
-        Pageable pageable = PageRequest.of(0, 4);
-        Page<Board> boardList = boardRepository.findContents(keyword,pageable);
-        List<Board> boardContents = boardList.getContent();
-        model.addAttribute("BoarderType", BoarderType.values());
-        model.addAttribute("boardList", boardContents);
-        model.addAttribute("totalPages", boardList.getTotalPages());
-        model.addAttribute("pageNumber", pageNumber);
-        return "redirect:/board/page-board/1";
-
-    }
 
     @GetMapping("/board/page-board/{pageNumber}/{BoarderType}")
-    public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType,Model model) {
+    public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType, Model model) {
         Page<Board> boarderTypePage = boardService.boarderTypePage(pageNumber, boarderType);
         List<Board> boardList = boarderTypePage.getContent();
         model.addAttribute("boardList", boardList);
@@ -159,7 +166,6 @@ public class BoardController {
 //        return result2;
 
     }
-
 
 
 //
