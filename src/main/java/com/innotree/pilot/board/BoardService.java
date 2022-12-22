@@ -23,6 +23,7 @@ public interface  BoardService extends ReplyService {
 
     void deleteReplyAll();
 
+    Page<Board> boardPage(Integer boardPageNum,String word);
     Page<Board> boardPage(Integer boardPageNum);
     Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType);
 

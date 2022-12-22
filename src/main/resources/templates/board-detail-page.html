@@ -33,6 +33,9 @@
         <th:block th:each="reply : ${replyList}">
             <li id="comment--1" class="list-group-item d-flex justify-content-between">
                 <div class="d-flex">
+                <th:block th:if="${reply.createDate.after(#dates.createToday())}">
+                    <div><img th:src="@{/img/New.png}" style="width:25px; height:15px;"></div>
+                </th:block>
                     <div>[[${reply.comments}]]</div>
                     <div class="font-weight-bold"> - [[${reply.user.username}]]</div>
                     <div>- 작성날짜 : [[${reply.createDate}]]</div>

@@ -8,14 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 
 @Service
 public class BoardServiceImpl implements BoardService {
+
+
 
     @Autowired
     private BoardRepository boardRepository;
@@ -56,10 +60,22 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional(readOnly = true)
+    public Page<Board> boardPage(Integer boardPageNum, String word) {
+        if (word != null) {
+            Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+            return boardRepository.findContentsAndTitle(word, pageable);
+        } else {
+            Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+            return boardRepository.findAll(pageable);
+        }
+    }
+
+    @Override
     public Page<Board> boardPage(Integer boardPageNum) {
         Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
         return boardRepository.findAll(pageable);
     }
+
     @Override
     @Transactional(readOnly = true)
     public List<Reply> replyList() {
@@ -75,7 +91,6 @@ public class BoardServiceImpl implements BoardService {
         Reply saveReply = replyRepository.save(reply);
         return saveReply;
     }
-
     @Override
     @Transactional
     public Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType) {
