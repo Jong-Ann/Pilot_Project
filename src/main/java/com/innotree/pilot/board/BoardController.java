@@ -65,10 +65,10 @@ public class BoardController {
     public String boardSave(Model model, Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails, RedirectAttributes redirectAttributes) throws Exception {
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            Date now = Calendar.getInstance().getTime();
             System.out.println(multipartFile);
+//            Date now = Calendar.getInstance().getTime();
+//            board.setCreationTime(now);
             board.setPhotos(fileName);
-            board.setCreationTime(now);
             Board saveBoard = boardService.boardSave(board, pilotUserDetails);
             System.out.println(saveBoard.getBoarderType());
             String uploadDir = "board-photos/";

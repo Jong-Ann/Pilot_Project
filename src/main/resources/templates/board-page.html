@@ -19,10 +19,9 @@
         <!--        </select>-->
         <select onchange="if(this.value) location.href=(this.value);">
 <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
-            <option value="0">글분류</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE'}">공지사항(Notice)</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/FAQ'}">자주묻는질문(Faq)</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/QNA'}">질문과답변(Qna)</option>
+            <option th:if="@{'/board' + '/page-board/1' + '/NOTICE'}" th:selected th:value="@{'/board' + '/page-board/1' + '/NOTICE'}">공지사항(Notice)</option>
+            <option th:if="@{'/board' + '/page-board/1' + '/FAQ'}" th:selected th:value="@{'/board' + '/page-board/1' + '/FAQ'}">자주묻는질문(Faq)</option>
+            <option th:if="@{'/board' + '/page-board/1' + '/QNA'}" th:selected th:value="@{'/board' + '/page-board/1' + '/QNA'}">질문과답변(Qna)</option>
         </select>
     </th:block>
 </div>
@@ -53,9 +52,9 @@
         <td>[[${board.id}]]</td>
         <td>[[${board.boarderType}]]</td>
         <td>
-            <th:block th:if="${board.creationTime.after(#dates.createToday())}">
-                <div><img th:src="@{/img/New.png}" style="width:50px; height:20px;"></div>
-            </th:block>
+<!--            <th:block th:if="${board.creationTime.isAfter(#temporals.createNow())}">-->
+<!--                <div><img th:src="@{/img/New.png}" style="width:50px; height:20px;"></div>-->
+<!--            </th:block>-->
             <a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a></td>
         <td>[[${board.user}]]</td>
         <td>[[${board.creationTime}]]</td>
