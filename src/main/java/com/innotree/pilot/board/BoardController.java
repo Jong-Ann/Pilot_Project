@@ -143,12 +143,12 @@ public class BoardController {
         return "board-page";
     }
 
+
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //        Calendar cal = Calendar.getInstance();
 //        cal.add(Calendar.DAY_OF_MONTH,-7);
 //        Date nowDay = cal.getTime();
 //        model.addAttribute("nowDay", nowDay);
-
 
     @GetMapping("/board/page-board/{pageNumber}/{BoarderType}")
     public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType, Model model) {

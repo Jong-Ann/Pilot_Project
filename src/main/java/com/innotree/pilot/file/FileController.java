@@ -1,30 +1,56 @@
 package com.innotree.pilot.file;
 
+import com.innotree.pilot.Response.Message;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 @RestController
 public class FileController {
 
-    @GetMapping("/download/{imageName}")
-    public ResponseEntity<?> downloadFile(@PathVariable("imageName") String imageName) throws IOException {
-        DownloadService download = new DownloadService();
 
+    @GetMapping("/delete/{imageName}/boardId")
+    public ResponseEntity<?> deleteFile(@PathVariable("imageName") String imageName, @RequestParam("boardId") Integer boardId) throws IOException {
+        FileResource download = new FileResource();
         Resource resource = null;
         try {
-             resource = download.findResource(imageName);
+            resource = download.findResource(imageName);
+            if (resource == null) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (IOException e) {
+            throw new IOException("해당 하는 파일이 존재하지 않습니다.", e);
+        }
+
+            File resourceFile = resource.getFile();
+            resourceFile.delete();
+            Message message = new Message();
+            message.setMessage("해당 하는 파일이 삭제되었습니다.");
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(URI.create("/"));
+            return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
+
+    @GetMapping("/download/{imageName}")
+    public ResponseEntity<?> downloadFile(@PathVariable("imageName") String imageName) throws IOException {
+        FileResource imagePath = new FileResource();
+        Resource resource = null;
+        try {
+            resource = imagePath.findResource(imageName);
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();
         }
-
         if (resource == null) {
             return new ResponseEntity<>("해당하는 파일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
         }
@@ -33,10 +59,7 @@ public class FileController {
         String head = "attachment; filename=\"" + resource.getFilename() + "\"";
 
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(conType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, head)
-                .body(resource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(conType)).header(HttpHeaders.CONTENT_DISPOSITION, head).body(resource);
     }
 }
 //    @Autowired

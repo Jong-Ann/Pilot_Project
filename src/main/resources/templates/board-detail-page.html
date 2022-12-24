@@ -6,7 +6,7 @@
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
 
-<div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 800px;">
+<div class="border border-dark" style="margin: 0 auto; padding: 25px; max-width: 700px; max-height: 1000px;">
     <div th:if="${id != null}">글 번호 : [[${id}]]</div>
     <div class="text-center">글 쓰 기</div>
     <form th:action="@{/board/save}" method="post" style="max-width: 700px; margin : 0 auto;" th:object="${board}">
@@ -19,9 +19,10 @@
             <label class="form-label">내용</label>
             <textarea class="form-control " th:field="*{contents}" rows="5" readonly></textarea>
         </div>
-        <img th:if="${board.photos != null}" th:src="@{${board.getImagePath}}" id="boardImg"
-             style="height:400px; max-width: 400px;"></img><br>
-        <a th:href="@{'/download/' + ${board.downloadImagePath}}" class="btn btn-primary m-3">download</a>
+        <img th:src="@{${board.getImagePath}}" id="boardImg"
+             style="height:400px; width: 400px;" ></img><br>
+        <a th:href="@{'/download/' + ${board.downloadImagePath}}" class="btn btn-primary m-3">다운로드</a>
+        <a th:href="@{'/delete/' + ${board.downloadImagePath}}" class="btn btn-danger m-3">삭제</a>
         <a th:href="@{/board/page-board/1}">
             <button type="button" value="뒤로가기" class="btn btn-secondary">뒤로가기</button>
         </a>
