@@ -34,7 +34,7 @@ public class Reply {
     private User user;
 
     @CreationTimestamp
-    private Date createDate;
+    private LocalDateTime createDate;
 
     public Reply(String comments, Board board, User user) {
         this.comments = comments;

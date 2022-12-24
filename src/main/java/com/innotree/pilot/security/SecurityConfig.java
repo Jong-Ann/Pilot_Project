@@ -39,6 +39,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
+                .antMatchers("/delete-reply/**").hasAnyAuthority("Admin","Normal")
                 .antMatchers("/users/**").hasAuthority("Admin").anyRequest()
                 .authenticated()
                 .and()
