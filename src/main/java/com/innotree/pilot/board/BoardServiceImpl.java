@@ -109,6 +109,14 @@ public class BoardServiceImpl implements BoardService {
         replyRepository.deleteAll();
     }
 
+    @Override
+    @Transactional
+    public Integer replySize(Integer id) {
+        Board board = boardRepository.findById(id).get();
+        List<Reply> replyList = board.getReplyList();
+        int replySize = replyList.size();
+        return replySize;
+    }
     @Deprecated
     @Override
     public Page<Board> noticePage(Integer boardPageNum) {
@@ -127,5 +135,6 @@ public class BoardServiceImpl implements BoardService {
         Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
         return boardRepository.findQNABoard(pageable);
     }
+
 }
 

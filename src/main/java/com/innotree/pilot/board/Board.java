@@ -28,6 +28,7 @@ public class Board {
 
     @Lob
     private String contents;
+
     private String photos;
 
 
@@ -39,7 +40,7 @@ public class Board {
     private List<Reply> replyList;
 
     @CreationTimestamp
-    private Date creationTime;
+    private LocalDateTime creationTime;
 
     @Enumerated(EnumType.STRING)
     private BoarderType boarderType;
