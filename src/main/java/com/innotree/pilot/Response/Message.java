@@ -9,8 +9,8 @@ public class Message {
     private Object data;
 
     public Message() {
-        this.status = StatusEnum.BAD_REQUEST;
-        this.data = null;
-        this.message = null;
+        this.status = status;
+        this.data = data;
+        this.message = message;
     }
 }

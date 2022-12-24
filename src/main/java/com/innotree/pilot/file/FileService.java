@@ -1,7 +1,8 @@
 package com.innotree.pilot.file;
 
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -25,6 +26,8 @@ public class FileService {
             throw new IOException("해당 하는 파일을 저장할 수 없습니다.",ex);
         }
     }
+
+
 
 
 }
