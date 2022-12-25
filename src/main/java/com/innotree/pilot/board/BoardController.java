@@ -53,7 +53,7 @@ public class BoardController {
         return "test";
     }
 
-    @GetMapping("/board-create")
+    @GetMapping("/create-board")
     public String boardCreate(Model model) {
         Board board = new Board();
         model.addAttribute("board", board);
@@ -75,6 +75,11 @@ public class BoardController {
             FileService.saveFile(uploadDir, fileName, multipartFile);
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
+        } else {
+            Board saveBoard = boardService.boardSave(board, pilotUserDetails);
+            model.addAttribute(BoarderType.values());
+            redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
+
         }
         return "redirect:/board/page-board/1";
     }

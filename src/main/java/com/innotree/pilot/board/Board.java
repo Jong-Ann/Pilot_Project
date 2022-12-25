@@ -29,6 +29,7 @@ public class Board {
     @Lob
     private String contents;
 
+    @Column(nullable = true)
     private String photos;
 
 
@@ -52,17 +53,14 @@ public class Board {
     }
     @Transient
     public String getImagePath(){
-        if (photos == null) {
-            return "/img/Innotree.png";
+        if (this.photos == null) {
+            return "/img/innotree.png";
         }
         return "/board-photos" + "/"+ this.photos;
     }
 
     @Transient
     public String downloadImagePath(){
-        if (photos == null) {
-            return "/img/Innotree.png";
-        }
         return this.photos;
     }
 

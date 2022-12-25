@@ -27,4 +27,5 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
     @Query("select b from Board b WHERE b.contents LIKE %?1% or b.title LIKE %?1%")
     Page<Board> findContentsAndTitle(String search,Pageable pageable);
 
+
 }
