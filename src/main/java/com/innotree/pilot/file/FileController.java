@@ -1,6 +1,8 @@
 package com.innotree.pilot.file;
 
 import com.innotree.pilot.Response.Message;
+import com.innotree.pilot.board.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
@@ -14,31 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 
 @RestController
 public class FileController {
 
+    @Autowired
+    private BoardService boardService;
 
-    @GetMapping("/delete/{imageName}/boardId")
-    public ResponseEntity<?> deleteFile(@PathVariable("imageName") String imageName, @RequestParam("boardId") Integer boardId) throws IOException {
+
+    @GetMapping("/delete/{imageName}/{boardId}")
+    public ResponseEntity<?> deleteFile(@PathVariable("imageName") String imageName, @PathVariable("boardId") Integer boardId) throws IOException {
         FileResource download = new FileResource();
         Resource resource = null;
-        try {
             resource = download.findResource(imageName);
-            if (resource == null) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
-        } catch (IOException e) {
-            throw new IOException("해당 하는 파일이 존재하지 않습니다.", e);
-        }
+            InputStream inputStream = resource.getInputStream();
+            if (inputStream == null) {
 
+            }
             File resourceFile = resource.getFile();
             resourceFile.delete();
             Message message = new Message();
             message.setMessage("해당 하는 파일이 삭제되었습니다.");
             HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(URI.create("/"));
+            headers.setLocation(URI.create("/board/" + boardId));
             return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 

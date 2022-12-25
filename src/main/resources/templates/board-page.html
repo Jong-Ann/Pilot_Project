@@ -6,7 +6,7 @@
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
 <div>
-    <a th:href="@{/board-create}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
+    <a th:href="@{/create-board}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
 </div>
 <div th:if="${message!=null}" class="alert alert-primary text-center" th:text="${message}">
 </div>
