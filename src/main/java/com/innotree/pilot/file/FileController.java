@@ -1,30 +1,59 @@
 package com.innotree.pilot.file;
 
+import com.innotree.pilot.Response.Message;
+import com.innotree.pilot.board.Board;
+import com.innotree.pilot.board.BoardRepository;
+import com.innotree.pilot.board.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 
 @RestController
 public class FileController {
 
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @GetMapping("/delete/{imageName}/{boardId}")
+    public ResponseEntity<?> deleteFile(@PathVariable("imageName") String imageName, @PathVariable("boardId") Integer boardId) throws IOException {
+        FileResource download = new FileResource();
+        Resource resource = null;
+
+        resource = download.findResource(imageName);
+        File resourceFile = resource.getFile();
+        resourceFile.delete();
+        Board getBoardPhoto = boardRepository.findById(boardId).get();
+        getBoardPhoto.setImageNull();
+        boardRepository.save(getBoardPhoto);
+//        Message message = new Message();
+//        message.setMessage("해당 하는 파일이 삭제되었습니다.");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/board/" + boardId));
+        return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
+
     @GetMapping("/download/{imageName}")
     public ResponseEntity<?> downloadFile(@PathVariable("imageName") String imageName) throws IOException {
-        DownloadService download = new DownloadService();
-
+        FileResource imagePath = new FileResource();
         Resource resource = null;
         try {
-             resource = download.findResource(imageName);
+            resource = imagePath.findResource(imageName);
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();
         }
-
         if (resource == null) {
             return new ResponseEntity<>("해당하는 파일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
         }
@@ -33,10 +62,7 @@ public class FileController {
         String head = "attachment; filename=\"" + resource.getFilename() + "\"";
 
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(conType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, head)
-                .body(resource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(conType)).header(HttpHeaders.CONTENT_DISPOSITION, head).body(resource);
     }
 }
 //    @Autowired

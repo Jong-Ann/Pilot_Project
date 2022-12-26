@@ -24,7 +24,7 @@
         <td>[[${user.id}]]</td>
         <td>[[${user.username}]]</td>
         <td>[[${user.Roles}]]</td>
-        <td>[[${user.creationTime}]]</td>
+        <td>[[${#temporals.format(user.creationTime, 'yyyy-MM-dd HH:mm:ss')}]]</td>
 
         <td>
             <a class="btn btn-primary" th:href="@{'/users/edit-user/' + ${user.id}}"

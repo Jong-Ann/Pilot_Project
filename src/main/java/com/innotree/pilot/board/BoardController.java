@@ -53,7 +53,7 @@ public class BoardController {
         return "test";
     }
 
-    @GetMapping("/board-create")
+    @GetMapping("/create-board")
     public String boardCreate(Model model) {
         Board board = new Board();
         model.addAttribute("board", board);
@@ -65,16 +65,27 @@ public class BoardController {
     public String boardSave(Model model, Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails, RedirectAttributes redirectAttributes) throws Exception {
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            Date now = Calendar.getInstance().getTime();
             System.out.println(multipartFile);
-            board.setPhotos(fileName);
+            System.out.println(fileName);
+            Date now = Calendar.getInstance().getTime();
             board.setCreationTime(now);
+            board.setPhotos(fileName);
             Board saveBoard = boardService.boardSave(board, pilotUserDetails);
             System.out.println(saveBoard.getBoarderType());
             String uploadDir = "board-photos/";
             FileService.saveFile(uploadDir, fileName, multipartFile);
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
+        } else {
+            Date now = Calendar.getInstance().getTime();
+            board.setCreationTime(now);
+            board.setTitle(board.getTitle());
+            board.setUser(board.getUser());
+            board.setImageNull();
+            Board saveBoard = boardService.boardSave(board, pilotUserDetails);
+            model.addAttribute(BoarderType.values());
+            redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
+
         }
         return "redirect:/board/page-board/1";
     }
@@ -92,12 +103,20 @@ public class BoardController {
 //        }
 //        return "redirect:/board/page-board/1";
 //    }
-    @DeleteMapping("/board/delete-board/{boardId}")
+//    @DeleteMapping("/board/delete-board/{boardId}")
+//    public String boardDelete(@PathVariable(name = "boardId") Integer id, RedirectAttributes redirectAttributes) {
+//        boardService.deleteBoard(id);
+//        redirectAttributes.addFlashAttribute("글" + id + "이 삭제되었습니다.");
+//        return "redirect:/board/page-board/1";
+//    }
+
+    @GetMapping("/board/delete-board/{boardId}")
     public String boardDelete(@PathVariable(name = "boardId") Integer id, RedirectAttributes redirectAttributes) {
         boardService.deleteBoard(id);
         redirectAttributes.addFlashAttribute("글" + id + "이 삭제되었습니다.");
         return "redirect:/board/page-board/1";
     }
+
 
     @GetMapping("/board/{boardId}")
     public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model, Reply reply) {
@@ -124,6 +143,7 @@ public class BoardController {
         System.out.println(word);
         Page<Board> boardList = boardService.boardPage(pageNumber, word);
         List<Board> boardContents = boardList.getContent();
+
         model.addAttribute("BoarderType", BoarderType.values());
         model.addAttribute("boardList", boardContents);
         model.addAttribute("totalPages", boardList.getTotalPages());
@@ -136,6 +156,7 @@ public class BoardController {
     public String noneWordBoardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model) {
         Page<Board> boardList = boardService.boardPage(pageNumber);
         List<Board> boardContents = boardList.getContent();
+
         model.addAttribute("BoarderType", BoarderType.values());
         model.addAttribute("boardList", boardContents);
         model.addAttribute("totalPages", boardList.getTotalPages());
@@ -143,12 +164,12 @@ public class BoardController {
         return "board-page";
     }
 
+
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //        Calendar cal = Calendar.getInstance();
 //        cal.add(Calendar.DAY_OF_MONTH,-7);
 //        Date nowDay = cal.getTime();
 //        model.addAttribute("nowDay", nowDay);
-
 
     @GetMapping("/board/page-board/{pageNumber}/{BoarderType}")
     public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType, Model model) {
@@ -166,6 +187,7 @@ public class BoardController {
 //        return result2;
 
     }
+
 
 
 //
