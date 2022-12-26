@@ -6,8 +6,9 @@
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
 
-<div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 800px;">
+<div class="border border-dark" style="margin: 0 auto; padding: 25px; max-width: 700px; max-height: 1000px;">
     <div th:if="${id != null}">글 번호 : [[${id}]]</div>
+    <input type="hidden" th:value="${board.id}" name="boardId">
     <div class="text-center">글 쓰 기</div>
     <form th:action="@{/board/save}" method="post" style="max-width: 700px; margin : 0 auto;" th:object="${board}">
         <input type="hidden" th:field="*{id}">
@@ -19,34 +20,40 @@
             <label class="form-label">내용</label>
             <textarea class="form-control " th:field="*{contents}" rows="5" readonly></textarea>
         </div>
+
         <img th:if="${board.photos != null}" th:src="@{${board.getImagePath}}"
-             style="height:400px; max-width: 400px;"></img><br>
-        <a th:href="@{'/download/' + ${board.downloadImagePath}}" class="btn btn-primary m-3">download</a>
-        <a th:href="@{/board/page-board/1}">
-            <button type="button" value="뒤로가기" class="btn btn-secondary">뒤로가기</button>
-        </a>
+             style="height:400px; width: 400px;" ></img>
+        <img th:if="${board.photos == null}" th:src="@{/img/Innotree.png}"
+             style="height:400px; width: 400px;" ></img>
+        <br>
+        <a th:href="@{'/download/' + ${board.downloadImagePath}}" class="btn btn-primary m-3">다운로드</a>
+        <a th:href="@{'/delete/' + ${board.downloadImagePath} + '/' +${boardId}}" th:if="${board.photos!=null}" class="btn btn-danger m-3">삭제</a>
+        <button type="button" id="backButton" value="뒤로가기" class="btn btn-secondary">뒤로가기</button>
     </form>
 </div>
+
+
 <div class="card" style="margin: 0 auto; width:900px; ">
     <div class="card-header">댓글 리스트</div>
     <ul id="comment--box" class="list-group">
         <th:block th:each="reply : ${replyList}">
             <li id="comment--1" class="list-group-item d-flex justify-content-between">
                 <div class="d-flex">
-                <th:block th:if="${reply.createDate.after(#dates.createToday())}">
-                    <div><img th:src="@{/img/New.png}" style="width:25px; height:15px;"></div>
-                </th:block>
+                    <th:block th:if="${reply.createDate.after(#dates.createToday())}">
+                        <div><img th:src="@{/img/New.png}" style="width:25px; height:15px;"></div>
+                    </th:block>
                     <div>[[${reply.comments}]]</div>
                     <div class="font-weight-bold"> - [[${reply.user.username}]]</div>
-                    <div>- 작성날짜 : [[${reply.createDate}]]</div>
+                    <div>- 작성날짜 : [[${#dates.format(reply.createDate, 'yyyy-MM-dd HH:mm:ss')}]]</div>
                     &nbsp
-<!--                    <form th:action="@{'/reply/delete-reply/' + ${reply.id}}" method="POST" onsubmit="return deleteAlert()" >-->
-<!--                        <input type="hidden" name="_method" value="DELETE"/>-->
+                    <!--                    <form th:action="@{'/reply/delete-reply/' + ${reply.id}}" method="POST" onsubmit="return deleteAlert()" >-->
+                    <!--                        <input type="hidden" name="_method" value="DELETE"/>-->
+                    <input type="hidden" name="replyId" th:value="${reply.id}" id="replyId">
                     <th:block th:if="${#authentication.principal.user.id} == ${reply.user.id}">
-                        <input type="hidden" name="replyId" th:value="${reply.id}" id="replyId">
                         <button type="button" id="btn-reply-delete" class="btn btn-danger" value="삭제">삭제</button>
                     </th:block>
-<!--                    </form>-->
+
+                    <!--                    </form>-->
                 </div>
             </li>
         </th:block>
@@ -68,7 +75,14 @@
     <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
 </div>
 
-<script type="text/javascript" th:src="@{/js/reply.js}"></script>
+<script type="text/javascript">
+    	$(function() {
+		$("#boardImg").click(function() {
+			$(this).remove();
+		});
+	});
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>

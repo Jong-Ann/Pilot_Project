@@ -28,6 +28,8 @@ public class Board {
 
     @Lob
     private String contents;
+
+    @Column(nullable = true)
     private String photos;
 
 
@@ -51,6 +53,9 @@ public class Board {
     }
     @Transient
     public String getImagePath(){
+        if (photos == null) {
+            return "/img/Innotree.png";
+        }
         return "/board-photos" + "/"+ this.photos;
     }
 
@@ -59,6 +64,15 @@ public class Board {
         return this.photos;
     }
 
+    @Transient
+    public void setImageNull() {
+        this.photos = null;
+    }
+
+    @Transient
+    public Integer getReplySize() {
+        return replyList.size();
+    }
 
     public BoarderType getBoarderType() {
         return boarderType;

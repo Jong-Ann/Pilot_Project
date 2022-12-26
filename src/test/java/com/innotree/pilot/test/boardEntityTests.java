@@ -2,12 +2,17 @@ package com.innotree.pilot.test;
 
 import com.innotree.pilot.board.Board;
 import com.innotree.pilot.board.BoardRepository;
+import com.innotree.pilot.board.BoardService;
 import com.innotree.pilot.board.BoarderType;
+import com.innotree.pilot.reply.Reply;
 import com.innotree.pilot.user.User;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +29,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
 public class boardEntityTests {
+
     @Autowired
     private BoardRepository boardRepository;
+
     @Autowired
     private EntityManager entityManager;
     @Test
@@ -61,4 +68,23 @@ public class boardEntityTests {
         board.getContent();
         System.out.println("board = " + board.getContent());
     }
+
+    @Test
+    public void getBoardReplyTest(){
+        Integer id = 66;
+        Board listboard = boardRepository.findById(id).get();
+        List<Reply> list = listboard.getReplyList();
+        int replyCount = list.size();
+        System.out.println(replyCount);
+    }
+
+    @Test
+    public void setBoardPhotoNull() {
+        Integer id = 21;
+        Board board = boardRepository.findById(id).get();
+        board.setImageNull();
+        System.out.println(board.getPhotos());
+    }
+
+
 }

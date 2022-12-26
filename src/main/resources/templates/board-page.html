@@ -6,7 +6,7 @@
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
 <div>
-    <a th:href="@{/board-create}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
+    <a th:href="@{/create-board}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
 </div>
 <div th:if="${message!=null}" class="alert alert-primary text-center" th:text="${message}">
 </div>
@@ -18,22 +18,28 @@
         <!--            <option th:value="@{/board-create}">질문과답변(Qna)</option>-->
         <!--        </select>-->
         <select onchange="if(this.value) location.href=(this.value);">
-<!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
+            <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
             <option value="0">글분류</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE'}">공지사항(Notice)</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/FAQ'}">자주묻는질문(Faq)</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/QNA'}">질문과답변(Qna)</option>
+            <option th:if="@{'/board' + '/page-board/1' + '/NOTICE'}" th:selected
+                    th:value="@{'/board' + '/page-board/1' + '/NOTICE'}">공지사항(Notice)
+            </option>
+            <option th:if="@{'/board' + '/page-board/1' + '/FAQ'}" th:selected
+                    th:value="@{'/board' + '/page-board/1' + '/FAQ'}">자주묻는질문(Faq)
+            </option>
+            <option th:if="@{'/board' + '/page-board/1' + '/QNA'}" th:selected
+                    th:value="@{'/board' + '/page-board/1' + '/QNA'}">질문과답변(Qna)
+            </option>
         </select>
     </th:block>
 </div>
 <div>
-<div align="right">
-<form th:action="@{'/board/search-board/' + ${pageNumber}}" class="form-inline m-3;" >
-    검색 :
-    <input type="search" name="word" th:value="${word}">
-    <input type="submit" class="btn btn-primary" value="검색">
-</form>
-</div>
+    <div align="right">
+        <form th:action="@{'/board/search-board/' + ${pageNumber}}" class="form-inline m-3;">
+            검색 :
+            <input type="search" name="word" th:value="${word}">
+            <input type="submit" class="btn btn-primary" value="검색">
+        </form>
+    </div>
 </div>
 <table class="table">
     <thead>
@@ -54,42 +60,82 @@
         <td>[[${board.boarderType}]]</td>
         <td>
             <th:block th:if="${board.creationTime.after(#dates.createToday())}">
-                <div><img th:src="@{/img/New.png}" style="width:50px; height:20px;"></div>
+                <div><img th:src="@{/img/New.png}" style="width:25px; height:15px;"></div>
             </th:block>
-            <a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a></td>
+            <a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a> [
+            [[${board.getReplySize()}]] ]
+        </td>
         <td>[[${board.user}]]</td>
-        <td>[[${board.creationTime}]]</td>
+        <td>[[${#dates.format(board.creationTime, 'yyyy-MM-dd HH:mm:ss')}]]</td>
         <td>
             <th:block>
                 <a class="btn btn-primary" th:if="${#authentication.principal.user.id} == ${board.user.id}"
                    th:href="@{'/board/edit-board/' + ${board.id}}"
                    style="text-decoration: none;">편집</a>
-                <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post" onsubmit="return deleteAlert()">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}"
-                            id="deleteButton" class="btn btn-danger">삭제
-                    </button>
-                </form>
+
+                <!--                <a th:href="@{'/board/delete-board/' + ${board.id}}">-->
+                <a class="btn btn-danger btn-delete" th:href="@{'/board/delete-board/' + ${board.id}}" th:boardId="${board.id}"
+                   th:if="${#authentication.principal.user.id} == ${board.user.id}">삭제</a></a>
+                <!--                <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">-->
+                <!--                    <input type="hidden" name="_method" value="delete"/>-->
+                <!--                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}"-->
+                <!--                            id="btn-delete" class="btn btn-danger">삭제-->
+                <!--                    </button>-->
+                <!--                </form>-->
             </th:block>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="Title"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="Text"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-danger" href="" id="okButton">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <th:block th:if="${totalPages>0}">
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1}}">이전
-            페이지</a></li>
-        <li th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'" th:each="CountBy : ${#numbers.sequence(1,totalPages)}">
-            <a class="page-link" th:href="@{'/board/page-board/' + ${CountBy}}">[[${CountBy}]]</a>
-        </li>
-        <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber+1}}">다음
-            페이지</a></li>
-    </ul>
-</nav>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link"
+                                                                                             th:href="@{'/board/page-board/' + ${pageNumber-1}}">이전
+                페이지</a></li>
+            <li th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'"
+                th:each="CountBy : ${#numbers.sequence(1,totalPages)}">
+                <a class="page-link" th:href="@{'/board/page-board/' + ${CountBy}}">[[${CountBy}]]</a>
+            </li>
+            <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link"
+                                                                                                      th:href="@{'/board/page-board/' + ${pageNumber+1}}">다음
+                페이지</a></li>
+        </ul>
+    </nav>
 
 </th:block>
+
+<div class="text-center">
+    <h1>
+        <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
+    </h1>
+    <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+</html>
 <!--<th:block th:if="${NoticeBoarderType} != null">-->
 <!--    <nav aria-label="Page navigation example">-->
 <!--        <ul class="pagination justify-content-center">-->
@@ -131,17 +177,3 @@
 <!--        </ul>-->
 <!--    </nav>-->
 <!--</th:block>-->
-
-
-<div class="text-center">
-    <h1>
-        <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
-    </h1>
-    <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-</body>
-</html>

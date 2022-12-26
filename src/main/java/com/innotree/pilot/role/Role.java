@@ -1,10 +1,13 @@
 package com.innotree.pilot.role;
 
+import com.innotree.pilot.user.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,6 +29,12 @@ public class Role {
 
     @CreationTimestamp
     private Timestamp creationTime;
+
+    @ManyToMany(mappedBy = "Roles",cascade = CascadeType.REMOVE)
+    private List<User> user = new ArrayList<>();
+
+
+
 
     public Role(String name, String description) {
         this.name = name;
