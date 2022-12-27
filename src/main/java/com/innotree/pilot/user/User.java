@@ -1,6 +1,7 @@
 package com.innotree.pilot.user;
 
 
+import com.innotree.pilot.reply.Reply;
 import com.innotree.pilot.role.Role;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -36,6 +37,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Role_and_User")
     private List<Role> Roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    private List<Reply> replyList;
 
     public void addRoles(Role role) {
         this.Roles.add(role);

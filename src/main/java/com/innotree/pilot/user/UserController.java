@@ -70,10 +70,10 @@ public class UserController {
         return "redirect:/users/page-user/1";
     }
 
-    @GetMapping("/users/delete-user/{id}")
+    @DeleteMapping("/users/delete-user/{id}")
     public String DeleteUser(@PathVariable(name = "id") Integer id, Model model,RedirectAttributes redirectAttributes){
         userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 삭제되었습니다.");
+        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디" + id +" 삭제되었습니다.");
         return "redirect:/users/page-user/1";
     }
 
