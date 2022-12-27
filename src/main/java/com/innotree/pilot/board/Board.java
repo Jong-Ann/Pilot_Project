@@ -53,12 +53,11 @@ public class Board {
     }
     @Transient
     public String getImagePath(){
-        if (photos == null) {
+        if (this.photos == null) {
             return "/img/Innotree.png";
         }
         return "/board-photos" + "/"+ this.photos;
     }
-
     @Transient
     public String downloadImagePath(){
         return this.photos;
