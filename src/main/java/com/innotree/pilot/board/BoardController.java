@@ -81,7 +81,6 @@ public class BoardController {
             board.setCreationTime(now);
             board.setTitle(board.getTitle());
             board.setUser(board.getUser());
-            board.setImageNull();
             Board saveBoard = boardService.boardSave(board, pilotUserDetails);
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");

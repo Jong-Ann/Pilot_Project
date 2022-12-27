@@ -25,8 +25,8 @@ public class ReplyRestController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/delete-reply/{id}")
-    public ResponseEntity<Message> deleteReply(@PathVariable(name = "id") Integer replyId) {
+    @GetMapping("/delete-reply/{boardId}/{replyId}")
+    public ResponseEntity<Message> deleteReply(Reply reply, @PathVariable(name = "boardId") Integer boardId, @PathVariable(name = "replyId") Integer replyId) {
         boardService.deleteReply(replyId);
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();

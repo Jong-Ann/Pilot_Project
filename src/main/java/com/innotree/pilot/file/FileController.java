@@ -4,6 +4,7 @@ import com.innotree.pilot.Response.Message;
 import com.innotree.pilot.board.Board;
 import com.innotree.pilot.board.BoardRepository;
 import com.innotree.pilot.board.BoardService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.query.Param;
@@ -27,6 +28,7 @@ public class FileController {
     @Autowired
     private BoardRepository boardRepository;
 
+    @ApiOperation(value = "hello, world api", notes = "hellow world swagger check")
     @GetMapping("/delete/{imageName}/{boardId}")
     public ResponseEntity<?> deleteFile(@PathVariable("imageName") String imageName, @PathVariable("boardId") Integer boardId) throws IOException {
         FileResource download = new FileResource();
@@ -45,6 +47,7 @@ public class FileController {
         return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
+    @ApiOperation(value = "hello, world api", notes = "hellow world swagger check")
     @GetMapping("/download/{imageName}")
     public ResponseEntity<?> downloadFile(@PathVariable("imageName") String imageName) throws IOException {
         FileResource imagePath = new FileResource();
@@ -57,11 +60,8 @@ public class FileController {
         if (resource == null) {
             return new ResponseEntity<>("해당하는 파일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
         }
-
         String conType = "application/octet-stream";
         String head = "attachment; filename=\"" + resource.getFilename() + "\"";
-
-
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(conType)).header(HttpHeaders.CONTENT_DISPOSITION, head).body(resource);
     }
 }
