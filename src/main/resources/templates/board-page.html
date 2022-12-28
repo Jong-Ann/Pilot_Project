@@ -20,14 +20,11 @@
         <select onchange="if(this.value) location.href=(this.value);">
             <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
             <option value="0">글분류</option>
-            <option th:if="@{'/board' + '/page-board/1' + '/NOTICE'}" th:selected
-                    th:value="@{'/board' + '/page-board/1' + '/NOTICE'}">공지사항(Notice)
+            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}">공지사항(Notice)
             </option>
-            <option th:if="@{'/board' + '/page-board/1' + '/FAQ'}" th:selected
-                    th:value="@{'/board' + '/page-board/1' + '/FAQ'}">자주묻는질문(Faq)
+            <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}">자주묻는질문(Faq)
             </option>
-            <option th:if="@{'/board' + '/page-board/1' + '/QNA'}" th:selected
-                    th:value="@{'/board' + '/page-board/1' + '/QNA'}">질문과답변(Qna)
+            <option th:value="@{'/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}">질문과답변(Qna)
             </option>
         </select>
     </th:block>
@@ -37,6 +34,8 @@
         <form th:action="@{'/board/search-board/' + ${pageNumber}}" class="form-inline m-3;">
             검색 :
             <input type="search" name="word" th:value="${word}">
+            <input type="hidden" th:value="${value}" name="value">
+            <input type="hidden" th:value="${direction}" name="direction">
             <input type="submit" class="btn btn-primary" value="검색">
         </form>
     </div>
@@ -114,13 +113,13 @@
 <th:block th:if="${totalPages>0}">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1}}">이전
+            <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1} + '?value='+${value} + '&direction=' + ${direction} }">이전
                 페이지</a></li>
             <li th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'"
                 th:each="CountBy : ${#numbers.sequence(1,totalPages)}">
-                <a class="page-link" th:href="@{'/board/page-board/' + ${CountBy}}">[[${CountBy}]]</a>
+                <a class="page-link" th:href="@{'/board/page-board/' + ${CountBy} + '?value=' + ${value} + '&direction=' + ${direction}}">[[${CountBy}]]</a>
             </li>
-            <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link"  th:href="@{'/board/page-board/' + ${pageNumber+1}}">다음 페이지</a></li>
+            <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link"  th:href="@{'/board/page-board/' + ${pageNumber+1} + '?value=' + ${value} + '&direction=' + ${direction}}">다음 페이지</a></li>
         </ul>
     </nav>
 </th:block>

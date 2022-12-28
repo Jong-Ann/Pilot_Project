@@ -1,7 +1,7 @@
 function replyDelete(boardId,replyId) {
         alert("boardId: " + boardId + 'replyId: '+ replyId)
           $.ajax({
-            type: "GET",
+            type: "DELETE",
             url: `/delete-reply/${boardId}/${replyId}`,
             dataType: "json"
         }).done(function(resp){

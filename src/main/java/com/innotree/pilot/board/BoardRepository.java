@@ -3,6 +3,7 @@ package com.innotree.pilot.board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,7 +26,7 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
 
     Page<Board> findByBoarderType(BoarderType boarderType,Pageable pageable);
     @Query("select b from Board b WHERE b.contents LIKE %?1% or b.title LIKE %?1%")
-    Page<Board> findContentsAndTitle(String search,Pageable pageable);
+    Page<Board> findContentsAndTitle(String search, Pageable pageable);
 
 
 }
