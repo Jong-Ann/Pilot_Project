@@ -1,6 +1,7 @@
 package com.innotree.pilot.user;
 
 
+import com.innotree.pilot.board.Board;
 import com.innotree.pilot.reply.Reply;
 import com.innotree.pilot.role.Role;
 import lombok.*;
@@ -41,12 +42,15 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Reply> replyList;
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    private List<Board> boards = new ArrayList<>();
+
     public void addRoles(Role role) {
         this.Roles.add(role);
     }
 
-    public void deleteRoles(Role role) {
-        this.Roles.remove(role);
+    public void deleteRoles(List<Role> role) {
+        this.Roles.removeAll(role);
     }
 
     public User(String username, String password) {

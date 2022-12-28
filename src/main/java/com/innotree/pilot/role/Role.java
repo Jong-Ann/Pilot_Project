@@ -30,7 +30,7 @@ public class Role {
     @CreationTimestamp
     private Timestamp creationTime;
 
-    @ManyToMany(mappedBy = "Roles",cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "Roles",cascade = CascadeType.ALL)
     private List<User> user = new ArrayList<>();
 
 

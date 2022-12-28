@@ -31,12 +31,33 @@
                style="text-decoration: none;">편집</a> &nbsp
             <form th:action="@{'/users/delete-user/' + ${user.id}}" method="post">
                 <input type="hidden" name="_method" value="delete"/>
-                <button type="submit" id="deleteButton" class="btn btn-danger">삭제</button>
+                <button type="submit" id="deleteButton" class="btn btn-danger .btn-delete">삭제</button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="Title"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="Text"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <a type="button" class="btn btn-danger" href="" id="okButton">삭제</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
 
@@ -53,6 +74,9 @@
             페이지</a></li>
     </ul>
 </nav>
+
+
+
 
 <div class="text-center">
     <h1>

@@ -36,7 +36,7 @@
                 </li>
 
                 <li class="nav-item" sec:isAuthenticated()>
-                    <a class="nav-link" th:href="@{'/board/page-board/1'}">글목록</a>
+                    <a class="nav-link" th:href="@{/board/page-board/1?value=id&direction=descending}">글목록</a>
                 </li>
 
                 <li class="nav-item" sec:isAuthenticated()>

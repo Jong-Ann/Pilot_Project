@@ -16,10 +16,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,5 +88,17 @@ public class boardEntityTests {
         System.out.println(board.getPhotos());
     }
 
+    @Test
+    public void boardPageableSortTest() {
+
+        Sort sort = Sort.by("id").descending();
+        Pageable pageable = PageRequest.of(0, 4, sort);
+
+        Page<Board> boardIterator = boardRepository.findAll(pageable);
+
+        for (Board board : boardIterator) {
+            System.out.println("board = " + board.getId());
+        }
+    }
 
 }

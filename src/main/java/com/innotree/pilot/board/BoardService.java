@@ -5,6 +5,7 @@ import com.innotree.pilot.reply.ReplyService;
 import com.innotree.pilot.user.User;
 import com.innotree.pilot.security.PilotUserDetails;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.List;
@@ -23,11 +24,14 @@ public interface  BoardService extends ReplyService {
 
     void deleteReplyAll();
 
-    Page<Board> boardPage(Integer boardPageNum,String word);
+    Page<Board> boardPage(Integer boardPageNum,String word, String orderValue , String orderDirection);
 
     Page<Board> boardPage(Integer boardPageNum);
 
-    Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType);
+    Page<Board> noneWordBoardPageSort(Integer boardPageNum, String orderValue ,String orderDirection);
+
+
+    Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType,String orderValue, String orderDirection);
 
     @Override
     List<Reply> replyList();

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,16 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public Page<Board> noneWordBoardPageSort(Integer boardPageNum,String orderValue ,String orderDirection) {
+        Sort orders = Sort.by(orderValue);
+        if (orderDirection.equals("descending")) {
+            orders = orders.descending();
+        }
+        Pageable pageable = PageRequest.of(boardPageNum - 1, 10 , orders);
+        return boardRepository.findAll(pageable);
+    }
+
+    @Override
     @Transactional
     public Board boardEditSave(Board board, User user) {
         board.setUser(user);
@@ -58,14 +69,19 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.deleteById(id);
     }
 
+
     @Override
     @Transactional(readOnly = true)
-    public Page<Board> boardPage(Integer boardPageNum, String word) {
+    public Page<Board> boardPage(Integer boardPageNum, String word, String orderValue, String orderDirection) {
+        Sort orders = Sort.by(orderValue);
         if (word != null) {
-            Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+            if (orderDirection.equals("descending")) {
+                orders = orders.descending();
+            }
+            Pageable pageable = PageRequest.of(boardPageNum - 1, 10 , orders);
             return boardRepository.findContentsAndTitle(word, pageable);
         } else {
-            Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+            Pageable pageable = PageRequest.of(boardPageNum - 1, 10 , orders);
             return boardRepository.findAll(pageable);
         }
     }
@@ -93,8 +109,12 @@ public class BoardServiceImpl implements BoardService {
     }
     @Override
     @Transactional
-    public Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType) {
-        Pageable pageable = PageRequest.of(boardPageNum-1, 4);
+    public Page<Board> boarderTypePage(Integer boardPageNum,BoarderType boarderType,String orderValue, String orderDirection) {
+        Sort orders = Sort.by(orderValue);
+        if (orderDirection.equals("descending")) {
+            orders = orders.descending();
+        }
+        Pageable pageable = PageRequest.of(boardPageNum - 1, 4 , orders);
         return boardRepository.findByBoarderType(boarderType,pageable);
     }
 
