@@ -81,6 +81,7 @@ public class BoardController {
             board.setCreationTime(now);
             board.setTitle(board.getTitle());
             board.setUser(board.getUser());
+            board.setImageNull();
             Board saveBoard = boardService.boardSave(board, pilotUserDetails);
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
@@ -113,7 +114,7 @@ public class BoardController {
     public String boardDelete(@PathVariable(name = "boardId") Integer id, RedirectAttributes redirectAttributes) {
         boardService.deleteBoard(id);
         redirectAttributes.addFlashAttribute("글" + id + "이 삭제되었습니다.");
-        return "redirect:/board/page-board/1";
+        return "redirect:/board/page-board/1?value=id&direction=descending";
     }
 
 

@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .antMatchers("/delete/**").authenticated()
                 .antMatchers("/users/**").hasAuthority("Admin").anyRequest()
                 .authenticated()
-                .and()
+                .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("username")

@@ -10,8 +10,36 @@ $(document).ready(function(){
         $("#Text").text("해당 하는 게시글 " + boardId +" (을)를 삭제하시겠습니까?");
         $("#Modal").modal("show");
         $("#okButton").attr("href",attach.attr("href"));
-  });
+     });
+
+
+
+//    var status = $('#test option:selected').attr('value');
+//    alert(status.val())
+//     $("#test").val(test).prop("selected",true);
+//     $("#test").val(test).prop("selected",true);
+//    $("#testBox").change(function(){
+//        testvalue = $("#testBox").val($(this).val()).prop("selected", true);
+//        console.log(testvalue.val())
+//        var langSelect = document.getElementById("testBox");
+//        var selectText = langSelect.options[langSelect.selectedIndex].text;
+//        alert(selectText);
+//        selectText.prop("selected",true);
+//         testvalue1 = $("#testBox").val();
+//         alert(testvalue1);
+//         testvalue1.prop("selected", true);
+            $("#test").change(function(){
+//                testvalue = $("#test").val($(this).val()).prop("selected", true);
+//                $("#test").attr("value",attach.attr("value"));
+                var status = $('#test option:selected').attr('value');
+                alert(status)
+                $("option").attr("href",status);
+            });
+//
+
+
 });
+
 
 function deleteAlert(){
     alert("해당 내용을 삭제합니다.");
