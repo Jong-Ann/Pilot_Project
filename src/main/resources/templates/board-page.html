@@ -12,19 +12,23 @@
 </div>
 <div> 글 분류:
     <th:block>
-        <!--        <select onchange="window.open(value,'_blank');">-->
-        <!--            <option th:value="@{/board-create}">공지사항(Notice)</option>-->
-        <!--            <option th:value="@{/board-create}">자주묻는질문(Faq)</option>-->
-        <!--            <option th:value="@{/board-create}">질문과답변(Qna)</option>-->
-        <!--        </select>-->
-        <select onchange="if(this.value) location.href=(this.value);">
+<!--        <select>-->
+<!--            <option value="0"> 글분류</option>-->
+<!--            <option th:each="boarderType : ${BoarderType}" th:value="${boarderType.}">[[${boarderType}]]</option>-->
+
+<!--&lt;!&ndash;            <option th:value="${BoarderType == 'NOTICE' ? 'A' : 'B'}">[[${BoarderType[0].name}]]</option>&ndash;&gt;-->
+<!--&lt;!&ndash;            <option th:value="${BoarderType == 'FAQ'}">[[${BoarderType[1].name}]]</option>&ndash;&gt;-->
+<!--&lt;!&ndash;            <option th:value="${BoarderType == 'QNA'}">[[${BoarderType[2].name}]]</option>&ndash;&gt;-->
+<!--        </select>-->
+<!--        <select onchange="if(this.value) location.href=(this.value);">-->
+        <select id="test">
             <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
             <option value="0">글분류</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}">공지사항(Notice)
+            <option th:value="@{'http://localhost:8080/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}" th:href="">공지사항(Notice)
             </option>
-            <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}">자주묻는질문(Faq)
+            <option th:value="@{'http://localhost:8080/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}">자주묻는질문(Faq)
             </option>
-            <option th:value="@{'/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}">질문과답변(Qna)
+            <option th:value="@{'http://localhost:8080/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}">질문과답변(Qna)
             </option>
         </select>
     </th:block>

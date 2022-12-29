@@ -21,7 +21,6 @@ public class ReplyRestController {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BoardService boardService;
 
