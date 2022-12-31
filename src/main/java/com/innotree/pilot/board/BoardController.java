@@ -186,7 +186,8 @@ public class BoardController {
         String boardValue = "id";
         String boardDirection = "descending";
         model.addAttribute("boardList", boardList);
-        model.addAttribute("BoarderType", boarderType);
+        model.addAttribute("BoarderType", boarderType.values());
+        model.addAttribute("selectedBoarderType", boarderType.getName());
         model.addAttribute("pageNumber", pageNumber);
         model.addAttribute("totalPages", boarderTypePage.getTotalPages());
         model.addAttribute("direction", boardDirection);

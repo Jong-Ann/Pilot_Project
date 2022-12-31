@@ -13,7 +13,6 @@ $(document).ready(function(){
      });
 
 
-
 //    var status = $('#test option:selected').attr('value');
 //    alert(status.val())
 //     $("#test").val(test).prop("selected",true);
@@ -28,13 +27,15 @@ $(document).ready(function(){
 //         testvalue1 = $("#testBox").val();
 //         alert(testvalue1);
 //         testvalue1.prop("selected", true);
+//         $("#test").val('http://localhost:8080/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending').trigger('change');
+
             $("#test").change(function(){
 //                testvalue = $("#test").val($(this).val()).prop("selected", true);
 //                $("#test").attr("value",attach.attr("value"));
                 var status = $('#test option:selected').attr('value');
                 alert(status)
                 $("option").attr("href",status);
-            });
+//            });
 //
 
 

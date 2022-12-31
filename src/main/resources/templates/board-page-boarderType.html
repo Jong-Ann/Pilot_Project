@@ -20,11 +20,11 @@
         <select onchange="if(this.value) location.href=(this.value);">
             <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
             <option value="0">글분류</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}">공지사항(Notice)
+            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'NOTICE'">공지사항(Notice)
             </option>
-            <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}">자주묻는질문(Faq)
+            <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'FAQ'">자주묻는질문(Faq)
             </option>
-            <option th:value="@{'/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}">질문과답변(Qna)
+            <option th:value="@{'/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'QNA'">질문과답변(Qna)
             </option>
         </select>
     </th:block>
