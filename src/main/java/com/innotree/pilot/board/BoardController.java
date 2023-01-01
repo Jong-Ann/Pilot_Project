@@ -76,17 +76,10 @@ public class BoardController {
             FileService.saveFile(uploadDir, fileName, multipartFile);
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
-        } else {
-            Date now = Calendar.getInstance().getTime();
-            board.setCreationTime(now);
-            board.setTitle(board.getTitle());
-            board.setUser(board.getUser());
-            board.setImageNull();
-            Board saveBoard = boardService.boardSave(board, pilotUserDetails);
-            model.addAttribute(BoarderType.values());
-            redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
+        } else if(multipartFile.isEmpty()){
 
         }
+
         return "redirect:/board/page-board/1" + "?value=id" + "&direction=descending";
     }
 

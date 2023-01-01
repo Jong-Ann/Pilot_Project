@@ -29,7 +29,7 @@
 
         <a th:href="@{'/download/' + ${board.downloadImagePath}}" class="btn btn-primary m-3">다운로드</a>
         <span th:if="${#authentication.principal.user.id} == ${board.user.id}">
-            <a th:href="@{'/delete/' + ${board.downloadImagePath} + '/' +${boardId}}" th:if="${board.photos!=null}"
+            <a th:href="@{'/delete/' + ${board.downloadImagePath} + '/' +${boardId}}" th:if="${board.photos!=''}"
                class="btn btn-danger m-3">삭제</a>
         </span>
         <button type="button" id="backButton" value="뒤로가기" class="btn btn-secondary">뒤로가기</button>
