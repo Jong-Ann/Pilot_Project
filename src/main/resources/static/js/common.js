@@ -10,8 +10,18 @@ $(document).ready(function(){
         $("#Text").text("해당 하는 게시글 " + boardId +" (을)를 삭제하시겠습니까?");
         $("#Modal").modal("show");
         $("#okButton").attr("href",attach.attr("href"));
-     });
+     }),
+    $("[pattern]").on("keyup",function(e) {
+        var regExp = new RegExp($(this).attr("pattern"));
+        if(!regExp.test(e.key)){
+        e.preventDefault();
+        }
+    });
+});
 
+function deleteAlert(){
+    alert("해당 내용을 삭제합니다.");
+}
 
 //    var status = $('#test option:selected').attr('value');
 //    alert(status.val())
@@ -29,21 +39,11 @@ $(document).ready(function(){
 //         testvalue1.prop("selected", true);
 //         $("#test").val('http://localhost:8080/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending').trigger('change');
 
-            $("#test").change(function(){
-//                testvalue = $("#test").val($(this).val()).prop("selected", true);
-//                $("#test").attr("value",attach.attr("value"));
-                var status = $('#test option:selected').attr('value');
-                alert(status)
-                $("option").attr("href",status);
-//            });
+//            $("#test").change(function(){
+////                testvalue = $("#test").val($(this).val()).prop("selected", true);
+////                $("#test").attr("value",attach.attr("value"));
+//                var status = $('#test option:selected').attr('value');
+//                alert(status)
+//                $("option").attr("href",status);
+////            });
 //
-
-
-});
-
-
-function deleteAlert(){
-    alert("해당 내용을 삭제합니다.");
-}
-
-
