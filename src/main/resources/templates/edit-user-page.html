@@ -8,7 +8,7 @@
 
 <div class="border border-dark" style="margin: 0 auto; padding: 25px; width: 700px; height: 500px;">
   <div th:if="${id != null}">유저 번호 : [[${id}]]</div>
-  <div class="text-center">회 원 가 입</div>
+  <div class="text-center">회 원 수 정</div>
   <form th:action="@{/users/save-user}" method="post" th:object="${user}" style="max-width: 700px; margin : 0 auto;">
     <input type="hidden" th:if="${id != null}" th:field="*{id}">
     <input type="hidden" name="_method" value="put"/>
@@ -32,7 +32,7 @@
     <div class="text-center">
       <input type="submit" value="저장" class="btn btn-primary">
     </div>
-    <div class="array" style="position:relative; left: 375px; bottom: 51px;">
+    <div class="array" style="position:relative; left: 375px; bottom: 38px;">
       <button type="button" id="backButton"value="취소" class="btn btn-secondary">취소</button>
     </div>
   </form>
