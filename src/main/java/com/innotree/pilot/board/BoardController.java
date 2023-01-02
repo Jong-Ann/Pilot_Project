@@ -76,14 +76,26 @@ public class BoardController {
             FileService.saveFile(uploadDir, fileName, multipartFile);
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
-        } else if(multipartFile.isEmpty()){
-
         }
-
+        if(multipartFile.isEmpty()) {
+            if (board.getPhotos() == null) {
+                System.out.println("파일이 없는 상태");
+                Date now = Calendar.getInstance().getTime();
+                board.setCreationTime(now);
+                Board saveBoard = boardService.boardSave(board, pilotUserDetails);
+                System.out.println(saveBoard.getBoarderType());
+            } else {
+                System.out.println("파일이 존재 하는 상태");
+                Date now = Calendar.getInstance().getTime();
+                board.setPhotos(board.getPhotos());
+                board.setCreationTime(now);
+                Board saveBoard = boardService.boardSave(board, pilotUserDetails);
+            }
+        }
         return "redirect:/board/page-board/1" + "?value=id" + "&direction=descending";
     }
 
-    //    @PutMapping("/board/save-board")
+//    @PutMapping("/board/save-board")
 //    public String boardEditSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails,RedirectAttributes redirectAttributes) throws Exception {
 //        if (!multipartFile.isEmpty()) {
 //            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
