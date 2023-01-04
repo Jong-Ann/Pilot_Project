@@ -1,13 +1,20 @@
 package com.innotree.pilot.user;
 
+import com.innotree.pilot.Response.Message;
+import com.innotree.pilot.Response.StatusEnum;
 import com.innotree.pilot.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -71,11 +78,23 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete-user/{id}")
-    public String DeleteUser(@PathVariable(name = "id") Integer id, Model model,RedirectAttributes redirectAttributes){
+    public ResponseEntity<Message> deleteUser(@PathVariable(name = "id") Integer id , Model model , RedirectAttributes redirectAttributes) {
         userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디" + id +" 삭제되었습니다.");
-        return "redirect:/users/page-user/1";
+        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디" + id + " 삭제되었습니다");
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
+        message.setMessage("해당 하는 아이디가 삭제 되었습니다");
+        message.setStatus(StatusEnum.OK);
+        return new ResponseEntity<Message>(message,headers,HttpStatus.OK);
     }
+
+//    @DeleteMapping("/users/delete-user/{id}")
+//    public String DeleteUser(@PathVariable(name = "id") Integer id, Model model,RedirectAttributes redirectAttributes){
+//        userService.deleteUser(id);
+//        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디" + id +" 삭제되었습니다.");
+//        return "redirect:/users/page-user/1";
+//    }
 
     @GetMapping("/users/edit-user/{id}")
     public String EditUser(@PathVariable(name = "id") Integer id,Model model){
