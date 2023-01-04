@@ -207,7 +207,6 @@ public class BoardController {
     }
 
 
-
 //
 //    @GetMapping("/board/notice-board/{pageNumber}")
 //    public String noticePage(Model model,@PathVariable(name = "pageNumber") Integer pageNumber) {
