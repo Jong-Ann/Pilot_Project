@@ -62,12 +62,24 @@ public class UserController {
 //        }
 //        return "redirect:/users";
 //    }
-    @PostMapping("/users/save-user")
-    public String SaveUser(User user,RedirectAttributes redirectAttributes){
-        userService.saveUser(user);
-        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 생성되었습니다.");
-        return "redirect:/users/page-user/1";
-    }
+//    @PostMapping("/users/save-user")
+//    public String SaveUser(User user,RedirectAttributes redirectAttributes){
+//        userService.saveUser(user);
+//        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 생성되었습니다.");
+//        return "redirect:/users/page-user/1";
+//    }
+
+//    @PostMapping("/users/save-user")
+//    public ResponseEntity<Message> SaveUser(@RequestBody User user,RedirectAttributes redirectAttributes){
+//        User savedUser = userService.saveUser(user);
+//        Message message = new Message();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
+//        message.setMessage("해당하는 아이디가 생성되었습니다.");
+//        message.setStatus(StatusEnum.OK);
+//        message.setData(user);
+//        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+//    }
 
     @PutMapping("/users/save-user")
     public String SaveEditUser(User user, RedirectAttributes redirectAttributes){
@@ -77,17 +89,7 @@ public class UserController {
         return "redirect:/users/page-user/1";
     }
 
-    @DeleteMapping("/users/delete-user/{id}")
-    public ResponseEntity<Message> deleteUser(@PathVariable(name = "id") Integer id , Model model , RedirectAttributes redirectAttributes) {
-        userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디" + id + " 삭제되었습니다");
-        Message message = new Message();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        message.setMessage("해당 하는 아이디가 삭제 되었습니다");
-        message.setStatus(StatusEnum.OK);
-        return new ResponseEntity<Message>(message,headers,HttpStatus.OK);
-    }
+
 
 //    @DeleteMapping("/users/delete-user/{id}")
 //    public String DeleteUser(@PathVariable(name = "id") Integer id, Model model,RedirectAttributes redirectAttributes){
