@@ -19,7 +19,9 @@ let index = {
             dataType:"json"
         }).done(function(resp){
             alert("해당하는 댓글 생성 완료");
-            location.reload()
+//            location.href=`/board/ + ${data.boardId}`
+            location.reload();
+
         }).fail(function(error){
             alert(JSON.stringify(error));
         });
@@ -35,6 +37,7 @@ function replyDelete(boardId,replyId) {
         }).done(function(resp){
             alert("삭제가 완료되었습니다.");
             location.reload();
+//            location.href=`/board/ + ${data.boardId}`
         }).fail(function(error){
             alert(JSON.stringify(error));
         });
