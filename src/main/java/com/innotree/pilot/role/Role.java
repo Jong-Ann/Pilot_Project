@@ -30,8 +30,10 @@ public class Role {
     @CreationTimestamp
     private Timestamp creationTime;
 
-    @ManyToMany(mappedBy = "Roles",cascade = CascadeType.ALL)
-    private List<User> user = new ArrayList<>();
+//    @ManyToMany(mappedBy = "Roles",cascade = CascadeType.ALL)
+//    private List<User> user = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
 
 
 

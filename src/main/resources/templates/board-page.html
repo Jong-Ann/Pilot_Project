@@ -8,6 +8,11 @@
 <div>
     <a th:href="@{/create-board}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
 </div>
+
+<button type="button" id="testAlert">테스트<</button>
+<script type="text/javascript">
+
+</script>
 <div th:if="${message!=null}" class="alert alert-primary text-center" th:text="${message}">
 </div>
 <div> 글 분류:
@@ -128,6 +133,20 @@
         </ul>
     </nav>
 </th:block>
+<button type="button" id="test">테스트</button>
+<script>
+$("#test").on("click",()=>{
+    this.getDataTest();
+});
+
+function getDataTest(){
+    alert(test);
+    $.ajax("/board/",function(data){
+        $.each(data,function(){
+            alert(data);
+    });
+});
+</script>
 <div class="text-center">
     <h1>
         <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>

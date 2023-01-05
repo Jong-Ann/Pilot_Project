@@ -40,6 +40,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .antMatchers("/delete-reply/**").hasAnyAuthority("Admin","Normal")
+                .antMatchers("/testGet").permitAll()
                 .antMatchers("/delete/**").authenticated()
                 .antMatchers("/users/**").hasAuthority("Admin").anyRequest()
                 .authenticated()

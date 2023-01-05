@@ -20,8 +20,8 @@ let index = {
         }).done(function(resp){
             alert("해당하는 댓글 생성 완료");
 //            location.href=`/board/ + ${data.boardId}`
-            location.reload();
-
+//            location.reload();
+               history.go(0);
         }).fail(function(error){
             alert(JSON.stringify(error));
         });

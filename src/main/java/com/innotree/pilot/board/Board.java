@@ -33,7 +33,7 @@ public class Board {
     private String photos;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -80,7 +80,6 @@ public class Board {
     public void setBoarderType(BoarderType boarderType) {
         this.boarderType = boarderType;
     }
-
 
     public List<Reply> getReplyList() {
         return replyList;

@@ -13,19 +13,22 @@
 <div> 글 분류:
     <th:block>
         <!--        <select onchange="window.open(value,'_blank');">-->
-        <!--            <option th:value="@{/board-create}">공지사항(Notice)</option>-->
-        <!--            <option th:value="@{/board-create}">자주묻는질문(Faq)</option>-->
-        <!--            <option th:value="@{/board-create}">질문과답변(Qna)</option>-->
+<!--                    <option th:value="@{/board-create}">공지사항(Notice)</option>-->
+<!--                    <option th:value="@{/board-create}">자주묻는질문(Faq)</option>-->
+<!--                    <option th:value="@{/board-create}">질문과답변(Qna)</option>-->
         <!--        </select>-->
-        <select onchange="if(this.value) location.href=(this.value);">
+        <select id="aioConceptName">
             <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
-            <option value="0">글분류</option>
-            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'NOTICE'">공지사항(Notice)
-            </option>
-            <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'FAQ'">자주묻는질문(Faq)
-            </option>
-            <option th:value="@{'/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'QNA'">질문과답변(Qna)
-            </option>
+            <option th:value="@{/board/page-board/1?value=id&direction=descending}">글분류</option>
+                <option th:href="@{/board/page-board/1/NOTICE?value=id&direction=descending}">공지사항(Notice)</option>
+                <option th:href="@{/board/page-board/1/FAQ?value=id&direction=descending}">자주묻는질문(Faq)</option>
+                <option th:href="@{/board/page-board/1/QNA?value=id&direction=descending}">질문과답변(Qna)</option>
+<!--            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'NOTICE'">공지사항(Notice)-->
+<!--            </option>-->
+<!--            <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'FAQ'">자주묻는질문(Faq)-->
+<!--            </option>-->
+<!--            <option th:value="@{'/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'QNA'">질문과답변(Qna)-->
+<!--            </option>-->
         </select>
     </th:block>
 </div>
@@ -83,16 +86,17 @@
 <th:block th:if="${totalPages>0}">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1} +'/' +${BoarderType} + '?value='+${value} + '&direction=' + ${direction} }">이전
+            <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1} +'/' +${selectedBoarderType} + '?value='+${value} + '&direction=' + ${direction} }">이전
                 페이지</a></li>
             <li th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'"
                 th:each="CountBy : ${#numbers.sequence(1,totalPages)}">
-                <a class="page-link" th:href="@{'/board/page-board/' + ${CountBy} +'/' +${BoarderType} + '?value=' + ${value} + '&direction=' + ${direction}}">[[${CountBy}]]</a>
+                <a class="page-link" th:href="@{'/board/page-board/' + ${CountBy} +'/' +${selectedBoarderType} + '?value=' + ${value} + '&direction=' + ${direction}}">[[${CountBy}]]</a>
             </li>
-            <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link"  th:href="@{'/board/page-board/' + ${pageNumber+1} +'/' +${BoarderType} + '?value=' + ${value} + '&direction=' + ${direction}}">다음 페이지</a></li>
+            <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link"  th:href="@{'/board/page-board/' + ${pageNumber+1} +'/' +${selectedBoarderType} + '?value=' + ${value} + '&direction=' + ${direction}}">다음 페이지</a></li>
         </ul>
     </nav>
 </th:block>
+
 <!--<th:block th:if="${NoticeBoarderType} != null">-->
 <!--    <nav aria-label="Page navigation example">-->
 <!--        <ul class="pagination justify-content-center">-->
@@ -142,7 +146,20 @@
     </h1>
     <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
 </div>
-
+<script type="text/javascript">
+$("#aioConceptName").on("change",function(){
+    var conceptName = $('#aioConceptName').find(":selected").val();
+    console.log(conceptName);
+    $(location).attr("href","http://localhost:8080/board/page-board/1" + conceptName})
+<!--     $("#aioConceptName").attr("value",conceptName);-->
+<!--     $("#aioConceptName option:eq(1)").prop("selected",true);-->
+<!--     console.log(conceptName);-->
+});
+<!--$("#aioConceptName").attr("value",attach.attr("href"));-->
+<!--$("#aioConceptName").on("change",function(){-->
+<!--    $("#aioConceptName option:eq(1)").prop("selected",true);-->
+<!--});-->
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>

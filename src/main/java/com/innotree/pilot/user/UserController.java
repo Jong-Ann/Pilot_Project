@@ -81,14 +81,13 @@ public class UserController {
 //        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
 //    }
 
-    @PutMapping("/users/save-user")
-    public String SaveEditUser(User user, RedirectAttributes redirectAttributes){
-        user.setCreationTime(LocalDateTime.now());
-        User editSave = userService.saveUser(user);
-        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 수정되었습니다.");
-        return "redirect:/users/page-user/1";
-    }
-
+//    @PutMapping("/users/save-user")
+//    public String SaveEditUser(User user, RedirectAttributes redirectAttributes){
+//        user.setCreationTime(LocalDateTime.now());
+//        User editSave = userService.saveUser(user);
+//        redirectAttributes.addFlashAttribute("message", "해당 하는 아이디가 수정되었습니다.");
+//        return "redirect:/users/page-user/1";
+//    }
 
 
 //    @DeleteMapping("/users/delete-user/{id}")

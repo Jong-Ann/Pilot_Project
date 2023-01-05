@@ -46,12 +46,12 @@ public class BoardController {
         return "board-page";
     }
 
-    @GetMapping("/testPost")
-    public String postTest(String id, String pwd, Model model) {
-        model.addAttribute("id", id);
-        model.addAttribute("pwd", pwd);
-        return "test";
-    }
+//    @GetMapping("/testGet")
+//    public String postTest(String id, String pwd, Model model) {
+//        model.addAttribute("id", id);
+//        model.addAttribute("pwd", pwd);
+//        return "test";
+//    }
 
     @GetMapping("/create-board")
     public String boardCreate(Model model) {
