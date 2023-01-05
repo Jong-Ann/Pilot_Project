@@ -35,23 +35,26 @@ public class User {
     @CreationTimestamp
     private LocalDateTime creationTime;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "Role_and_User")
-    private List<Role> Roles = new ArrayList<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "Role_and_User")
+//    private List<Role> Roles = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
-    private List<Reply> replyList;
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+//    private List<Reply> replyList;
+//
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+//    private List<Board> boards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
-    private List<Board> boards = new ArrayList<>();
-
-    public void addRoles(Role role) {
-        this.Roles.add(role);
-    }
-
-    public void deleteRoles(List<Role> role) {
-        this.Roles.removeAll(role);
-    }
+//    public void addRoles(Role role) {
+//        this.Roles.add(role);
+//    }
+//
+//    public void deleteRoles(List<Role> role) {
+//        this.Roles.removeAll(role);
+//    }
 
     public User(String username, String password) {
         this.username = username;

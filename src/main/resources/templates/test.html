@@ -3,51 +3,22 @@
 <head th:replace="fragments :: header ">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
-</nav>
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">번호</th>
-    <th scope="col">글제목</th>
-    <th scope="col">작성자</th>
-    <th scope="col">작성날짜</th>
-    <th scope="col">편집</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="board : ${boardList}">
-    <td></td>
-    <td>[[${board.id}]]</td>
-    <td><a style="text-decoration: none;" th:href="@{'/board/' + ${board.id}}">[[${board.title}]]</a></td>
-    <td>[[${board.user}]]</td>
-    <td>[[${board.creationTime}]]</td>
-    <td>
-      <th:block>
-        <a class="btn btn-primary" th:if="${#authentication.principal.user.id} == ${board.user.id}" th:href="@{'/board/edit-board/' + ${board.id}}"
-           style="text-decoration: none;">편집</a>
-        <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">
-          <input type="hidden" name="_method" value="delete"/>
-          <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}" id="deleteButton2" class="btn btn-danger">삭제</button>
-        </form>
-      </th:block>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<div class="text-center">
-  <h1>
-    <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
-  </h1>
-</div>
-<div class="text-center">
-  <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
-</div>
+
+<script>
+    const request = new XMLHttpRequest();
+    request.open('GET','https://restcountries.com/v2/name/korea');
+    request.send();
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+    request.addEventListener('load',function(){
+        console.log(this.responseText);
+        const data = JSON.parse(this.responseText);
+        console.log(data);
+
+        const html = `
+
+        `;
+    });
+</script>
 </body>
 </html>

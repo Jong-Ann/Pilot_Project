@@ -2,6 +2,24 @@ $(document).ready(function(){
     $("#backButton").on("click",function(){
         history.back();
     }),
+
+    url = "/testGet"
+       $("#testAlert").on("click",function(){
+          $.ajax({
+               type: 'GET',
+                url: '/testGet',
+                dataType: 'json',
+               success: function(list) {
+
+                // ** 자바스크립트 forEach, 제이쿼리 each
+                $(list).each(function(index, item) {
+                    $('#m3').append('<div>' + item.id + ', '
+                    + item.title + ', ' +'</div>');
+                });
+
+            },
+            });
+});
      $(".btn-delete").on("click", function (e) {
         e.preventDefault();
         attach = $(this);

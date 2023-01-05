@@ -11,8 +11,8 @@ public interface UserService {
 
     Page<User> pageUser(int number);
 
-    List<Role> findEveryRole();
-
+        List<Role> findEveryRole();
+//    Role findRole();
     void deleteUser(Integer id);
 
     User saveUser(User user);

@@ -83,7 +83,7 @@ public class userEntityTests {
         User userJong = userRepository.findById(1).get();
 //        userJong.setRoles("JJong");
 //        userJong.setPassword("jongann2");
-        userJong.addRoles(roleNumOne);
+//        userJong.addRoles(roleNumOne);
         userRepository.save(userJong);
         System.out.println(userJong);
     }

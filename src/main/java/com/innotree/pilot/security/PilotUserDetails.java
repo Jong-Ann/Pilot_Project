@@ -24,13 +24,14 @@ public class PilotUserDetails implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream().map(Role::getName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-//        List<Role> Roles = user.getRoles();
-//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        return user.getRoles().stream().map(Role::getName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        Role Roles = user.getRole();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add((GrantedAuthority) () -> Roles.getName());
 //        for (Role role : Roles) {
 //            authorities.add((GrantedAuthority) () -> role.getName());
 //        }
-//        return authorities;
+        return authorities;
     }
     public Integer getId(){
         return user.getId();
