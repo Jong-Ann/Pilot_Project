@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class BoardRestController {
@@ -22,6 +23,9 @@ public class BoardRestController {
     @ResponseBody
     public ResponseEntity<?> BoardTest(){
         List<Board> boardList = boardRepository.findAll();
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<ResponseBoard> result = boardList.stream()
+        .map(ResponseBoard::from)
+        .collect(Collectors.toList());
+        return ResponseEntity.ok(result);
     }
 }

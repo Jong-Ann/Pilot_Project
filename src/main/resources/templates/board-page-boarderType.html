@@ -19,10 +19,14 @@
         <!--        </select>-->
         <select id="aioConceptName">
             <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
-            <option th:value="@{/board/page-board/1?value=id&direction=descending}">글분류</option>
-                <option th:href="@{/board/page-board/1/NOTICE?value=id&direction=descending}">공지사항(Notice)</option>
-                <option th:href="@{/board/page-board/1/FAQ?value=id&direction=descending}">자주묻는질문(Faq)</option>
-                <option th:href="@{/board/page-board/1/QNA?value=id&direction=descending}">질문과답변(Qna)</option>
+                <option>공지사항(Notice)</option>
+                <option>자주묻는질문(Faq)
+                </option>
+                <option>질문과답변(Qna)
+                </option>
+<!--                <option th:href="@{/board/page-board/1/NOTICE?value=id&direction=descending}">공지사항(Notice)</option>-->
+<!--                <option th:href="@{/board/page-board/1/FAQ?value=id&direction=descending}">자주묻는질문(Faq)</option>-->
+<!--                <option th:href="@{/board/page-board/1/QNA?value=id&direction=descending}">질문과답변(Qna)</option>-->
 <!--            <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'NOTICE'">공지사항(Notice)-->
 <!--            </option>-->
 <!--            <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'FAQ'">자주묻는질문(Faq)-->
@@ -83,6 +87,7 @@
     </tr>
     </tbody>
 </table>
+
 <th:block th:if="${totalPages>0}">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
