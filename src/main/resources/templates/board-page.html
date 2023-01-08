@@ -8,35 +8,27 @@
 <div>
     <a th:href="@{/create-board}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
 </div>
-
-<button type="button" id="testAlert">테스트<</button>
-<script type="text/javascript">
-
-</script>
 <div th:if="${message!=null}" class="alert alert-primary text-center" th:text="${message}">
 </div>
 <div> 글 분류:
     <th:block>
-<!--        <select>-->
-<!--            <option value="0"> 글분류</option>-->
-<!--            <option th:each="boarderType : ${BoarderType}" th:value="${boarderType.}">[[${boarderType}]]</option>-->
+        <!--        <select>-->
+        <!--            <option th:each="boarderType : ${BoarderType}" th:value="${boarderType.}">[[${boarderType}]]</option>-->
 
-<!--&lt;!&ndash;            <option th:value="${BoarderType == 'NOTICE' ? 'A' : 'B'}">[[${BoarderType[0].name}]]</option>&ndash;&gt;-->
-<!--&lt;!&ndash;            <option th:value="${BoarderType == 'FAQ'}">[[${BoarderType[1].name}]]</option>&ndash;&gt;-->
-<!--&lt;!&ndash;            <option th:value="${BoarderType == 'QNA'}">[[${BoarderType[2].name}]]</option>&ndash;&gt;-->
-<!--        </select>-->
-<!--            <option th:each="boarderType :${BoarderType}" th:selected="${selectedBoarderType} == ${boarderType}">[[${boarderType}]]</option>-->
-            <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
-            <select onchange="if(this.value) location.href=(this.value);">
-                <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
-                <option value="0">글분류</option>
-                <option th:value="@{'/board' + '/page-board/1' + '/NOTICE' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'NOTICE'">공지사항(Notice)
-                </option>
-                <option th:value="@{'/board' + '/page-board/1' + '/FAQ' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'FAQ'">자주묻는질문(Faq)
-                </option>
-                <option th:value="@{'/board' + '/page-board/1' + '/QNA' + '?value=id&direction=descending'}" th:selected="${selectedBoarderType} == 'QNA'">질문과답변(Qna)
-                </option>
-            </select>
+        <!--&lt;!&ndash;            <option th:value="${BoarderType == 'NOTICE' ? 'A' : 'B'}">[[${BoarderType[0].name}]]</option>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <option th:value="${BoarderType == 'FAQ'}">[[${BoarderType[1].name}]]</option>&ndash;&gt;-->
+        <!--&lt;!&ndash;            <option th:value="${BoarderType == 'QNA'}">[[${BoarderType[2].name}]]</option>&ndash;&gt;-->
+        <!--        </select>-->
+        <!--            <option th:each="boarderType :${BoarderType}" th:selected="${selectedBoarderType} == ${boarderType}">[[${boarderType}]]</option>-->
+        <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
+        <!--            <select onchange="if(this.value) location.href=(this.value);">-->
+        <!--            <option th:each="BoarderType : ${BoarderType}" th:value="${BoarderType}"></option>-->
+        <select id="aioConceptName">
+            <option value="0">글분류</option>
+            <option value="/board/page-board/test"><a id="uxgjs" href="test.html">공지사항(Notice)</a></option>
+            <option value="/board/page-board/test"><a href="http://uxgjs.tistory.com">자주묻는질문(Faq)</a></option>
+            <option value="/board/page-board/test"><a href="http://uxgjs.tistory.com">질문과답변(Qna)</a></option>
+        </select>
     </th:block>
 </div>
 <div>
@@ -64,7 +56,6 @@
     </thead>
     <tbody>
     <tr th:each="board : ${boardList}">
-        <td></td>
         <td>[[${board.id}]]</td>
         <td>[[${board.boarderType}]]</td>
         <td>
@@ -82,20 +73,20 @@
                    th:href="@{'/board/edit-board/' + ${board.id}}"
                    style="text-decoration: none;">편집</a>
 
-<!--                <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">-->
-<!--                    <input type="hidden" name="_method" value="delete"/>-->
-<!--                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}" th:boardId="${board.id}"-->
-<!--                            id="btn-delete" class="btn btn-danger btn-delete">삭제-->
-<!--                    </button>-->
-<!--                </form>-->
-                <a class="btn btn-danger btn-delete" th:href="@{'/board/delete-board/' + ${board.id}}" th:boardId="${board.id}"
-                   th:if="${#authentication.principal.user.id} == ${board.user.id}">삭제</a>
                 <!--                <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">-->
                 <!--                    <input type="hidden" name="_method" value="delete"/>-->
-                <!--                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}"-->
-                <!--                            id="btn-delete" class="btn btn-danger">삭제-->
+                <!--                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}" th:boardId="${board.id}"-->
+                <!--                            id="btn-delete" class="btn btn-danger btn-delete">삭제-->
                 <!--                    </button>-->
                 <!--                </form>-->
+                <!--                <a class="btn btn-danger btn-delete" th:href="@{'/board/delete-board/' + ${board.id}}" th:boardId="${board.id}"-->
+                <!--                   th:if="${#authentication.principal.user.id} == ${board.user.id}">삭제</a>-->
+                <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}"
+                            id="btn-delete" class="btn btn-danger">삭제
+                    </button>
+                </form>
             </th:block>
         </td>
     </tr>
@@ -123,36 +114,34 @@
 <th:block th:if="${totalPages>0}">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link" th:href="@{'/board/page-board/' + ${pageNumber-1} + '?value='+${value} + '&direction=' + ${direction} }">이전
+            <li th:class="${1 != pageNumber ? 'page-item active' : 'page-item disabled'}"><a class="page-link"
+                                                                                             th:href="@{'/board/page-board/' + ${pageNumber-1} + '?value='+${value} + '&direction=' + ${direction} }">이전
                 페이지</a></li>
             <li th:class="${CountBy==pageNumber} ? 'page-item active' : 'page-item'"
                 th:each="CountBy : ${#numbers.sequence(1,totalPages)}">
-                <a class="page-link" th:href="@{'/board/page-board/' + ${CountBy} + '?value=' + ${value} + '&direction=' + ${direction}}">[[${CountBy}]]</a>
+                <a class="page-link"
+                   th:href="@{'/board/page-board/' + ${CountBy} + '?value=' + ${value} + '&direction=' + ${direction}}">[[${CountBy}]]</a>
             </li>
-            <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link"  th:href="@{'/board/page-board/' + ${pageNumber+1} + '?value=' + ${value} + '&direction=' + ${direction}}">다음 페이지</a></li>
+            <li th:class="${totalPages == pageNumber ? 'page-item disabled' : 'page-item active'}"><a class="page-link"
+                                                                                                      th:href="@{'/board/page-board/' + ${pageNumber+1} + '?value=' + ${value} + '&direction=' + ${direction}}">다음
+                페이지</a></li>
         </ul>
     </nav>
 </th:block>
-<button type="button" id="test">테스트</button>
-<script>
-$("#test").on("click",()=>{
-    this.getDataTest();
-});
-
-function getDataTest(){
-    alert(test);
-    $.ajax("/board/",function(data){
-        $.each(data,function(){
-            alert(data);
-    });
-});
-</script>
 <div class="text-center">
     <h1>
         <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
     </h1>
     <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+
+})
+    $("#uxgjs").get(0).click();
+</script>
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>

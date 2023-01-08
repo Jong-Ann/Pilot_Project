@@ -1,6 +1,7 @@
 package com.innotree.pilot.board;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.innotree.pilot.reply.Reply;
 import com.innotree.pilot.user.User;
 import lombok.*;
@@ -32,8 +33,7 @@ public class Board {
     @Column(nullable = true)
     private String photos;
 
-
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

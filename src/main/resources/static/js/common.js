@@ -2,23 +2,32 @@ $(document).ready(function(){
     $("#backButton").on("click",function(){
         history.back();
     }),
+       $("#aioConceptName").on("change",function(){
+           console.log("시작")
+           $.ajax({
+             type: "GET",
+             url: "/testGet",
+             data: [],
+             dataType: 'json',
+             success: function(data){
+                let str = '<tr>'
+                console.log(data)
+                $.each(data,function(index) {
+                    const dataId = data[index].id;
+                    str += '<td></td>'
+                    str += '<td>' + data[index].id + '</td>'
+                    + '<td>' + data[index].boarderType + '</td>'
+                    +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
+                    +'<td>'+ data[index].user.username + '</td>'
+                    +'<td>'+ data[index].creationTime + '</td>'
+                    +'<td>'+  '<a class="btn btn-danger btn-delete"' +'href=/board/delete-board/' + '}>' +'</a>'+'</td>'
 
-    url = "/testGet"
-       $("#testAlert").on("click",function(){
-          $.ajax({
-               type: 'GET',
-                url: '/testGet',
-                dataType: 'json',
-               success: function(list) {
-
-                // ** 자바스크립트 forEach, 제이쿼리 each
-                $(list).each(function(index, item) {
-                    $('#m3').append('<div>' + item.id + ', '
-                    + item.title + ', ' +'</div>');
+                    str += '</tr>'
+//$("#m3").append( '<td>' + data[index].title + '</td>');
                 });
-
-            },
-            });
+                $("#m3").append(str)
+             },
+       });
 });
      $(".btn-delete").on("click", function (e) {
         e.preventDefault();
@@ -35,12 +44,10 @@ $(document).ready(function(){
         e.preventDefault();
         }
     });
-});
-
 function deleteAlert(){
     alert("해당 내용을 삭제합니다.");
 }
-
+});
 //    var status = $('#test option:selected').attr('value');
 //    alert(status.val())
 //     $("#test").val(test).prop("selected",true);

@@ -46,12 +46,10 @@ public class BoardController {
         return "board-page";
     }
 
-//    @GetMapping("/testGet")
-//    public String postTest(String id, String pwd, Model model) {
-//        model.addAttribute("id", id);
-//        model.addAttribute("pwd", pwd);
-//        return "test";
-//    }
+    @GetMapping("/testPage")
+    public String postTest() {
+        return "test";
+    }
 
     @GetMapping("/create-board")
     public String boardCreate(Model model) {
@@ -204,6 +202,11 @@ public class BoardController {
 //        String result2 = org.thymeleaf.util.StringUtils.join(listBoarderType, ",");
 //        return result2;
 
+    }
+
+    @GetMapping("/board/page-board/test")
+    public String noticePage() {
+        return "test";
     }
 
 

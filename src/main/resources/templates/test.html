@@ -3,22 +3,38 @@
 <head th:replace="fragments :: header ">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
+</nav>
+<a th:href="@{/create-board}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
+<select id="aioConceptName">
+    <option value="0">글분류</option>
+    <option> 공지사항(Notice)
+    </option>
+    <option>자주묻는질문(Faq)
+    </option>
+    <option>질문과답변(Qna)
+    </option>
+</select>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">번호</th>
+        <th scope="col">글분류</th>
+        <th scope="col">글제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성날짜</th>
+        <th scope="col">편집</th>
+    </tr>
+    </thead>
+    <tbody id="m3">
 
-<script>
-    const request = new XMLHttpRequest();
-    request.open('GET','https://restcountries.com/v2/name/korea');
-    request.send();
+    </tbody>
+</table>
 
 
-    request.addEventListener('load',function(){
-        console.log(this.responseText);
-        const data = JSON.parse(this.responseText);
-        console.log(data);
-
-        const html = `
-
-        `;
-    });
-</script>
+<div class="text-center">
+    <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
+</div>
 </body>
 </html>
