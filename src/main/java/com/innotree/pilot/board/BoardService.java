@@ -40,11 +40,11 @@ public interface  BoardService extends ReplyService {
     Reply saveReply(Reply reply, int boardId, PilotUserDetails pilotUserDetails);
 
     @Deprecated
-    Page<Board> noticePage(Integer boardPageNum);
+    List<Board> noticePage(Integer boardPageNum);
     @Deprecated
-    Page<Board> faqPage(Integer boardPageNum);
+    List<Board> faqPage(Integer boardPageNum);
     @Deprecated
-    Page<Board> qnaPage(Integer boardPageNum);
+    List<Board> qnaPage(Integer boardPageNum);
 
 
 }

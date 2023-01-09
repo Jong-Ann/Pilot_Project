@@ -131,21 +131,21 @@ public class BoardServiceImpl implements BoardService {
 
     @Deprecated
     @Override
-    public Page<Board> noticePage(Integer boardPageNum) {
-        Pageable pageable = PageRequest.of(boardPageNum - 1, 4);
-        return boardRepository.findNOTICEBoard(pageable);
+    public List<Board> noticePage(Integer boardPageNum) {
+//        Pageable pageable = PageRequest.of(boardPageNum - 1, 4);
+        return boardRepository.findNOTICEBoard();
     }
     @Deprecated
     @Override
-    public Page<Board> faqPage(Integer boardPageNum) {
-        Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
-        return boardRepository.findFAQBoard(pageable);
+    public List<Board> faqPage(Integer boardPageNum) {
+//        Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+        return boardRepository.findFAQBoard();
     }
     @Deprecated
     @Override
-    public Page<Board> qnaPage(Integer boardPageNum) {
-        Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
-        return boardRepository.findQNABoard(pageable);
+    public List<Board> qnaPage(Integer boardPageNum) {
+//        Pageable pageable = PageRequest.of(boardPageNum - 1, 10);
+        return boardRepository.findQNABoard();
     }
 
 
