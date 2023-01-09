@@ -23,16 +23,16 @@ public class testFindByQuery {
 
     @Autowired
     private BoardRepository boardRepository;
-    @Test
-    public void testSearchBoarderType() {
-        Pageable pageable = PageRequest.of(0, 4);
-        Page<Board> findNoticeBoard = boardRepository.findNOTICEBoard(pageable);
-        Page<Board> findQNABoard = boardRepository.findQNABoard(pageable);
-        Page<Board> findFAQBoard = boardRepository.findFAQBoard(pageable);
-        for (Board board : findNoticeBoard) {
-            System.out.println(board.getBoarderType());
-        }
-    }
+//    @Test
+//    public void testSearchBoarderType() {
+//        Pageable pageable = PageRequest.of(0, 4);
+//        Page<Board> findNoticeBoard = boardRepository.findNOTICEBoard(pageable);
+//        Page<Board> findQNABoard = boardRepository.findQNABoard(pageable);
+//        Page<Board> findFAQBoard = boardRepository.findFAQBoard(pageable);
+//        for (Board board : findNoticeBoard) {
+//            System.out.println(board.getBoarderType());
+//        }
+//    }
 
 
 }

@@ -47,7 +47,7 @@ public class BoardController {
     }
 
     @GetMapping("/testPage")
-    public String postTest() {
+    public String postTest(Model model) {
         return "test";
     }
 
@@ -74,21 +74,14 @@ public class BoardController {
             FileService.saveFile(uploadDir, fileName, multipartFile);
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
-        }
-        if(multipartFile.isEmpty()) {
-            if (board.getPhotos() == null) {
-                System.out.println("파일이 없는 상태");
-                Date now = Calendar.getInstance().getTime();
-                board.setCreationTime(now);
-                Board saveBoard = boardService.boardSave(board, pilotUserDetails);
-                System.out.println(saveBoard.getBoarderType());
-            } else {
-                System.out.println("파일이 존재 하는 상태");
-                Date now = Calendar.getInstance().getTime();
-                board.setPhotos(board.getPhotos());
-                board.setCreationTime(now);
-                Board saveBoard = boardService.boardSave(board, pilotUserDetails);
-            }
+        } else {
+            Date now = Calendar.getInstance().getTime();
+            board.setCreationTime(now);
+            board.setPhotos(null);
+            Board saveBoard = boardService.boardSave(board, pilotUserDetails);
+            System.out.println(saveBoard.getBoarderType());
+            model.addAttribute(BoarderType.values());
+            redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
         }
         return "redirect:/board/page-board/1" + "?value=id" + "&direction=descending";
     }
@@ -120,6 +113,14 @@ public class BoardController {
         return "redirect:/board/page-board/1?value=id&direction=descending";
     }
 
+    @GetMapping("/board/another-delete-board/{boardId}")
+    public String anotherBoardDelete(@PathVariable(name = "boardId") Integer id, RedirectAttributes redirectAttributes) {
+        boardService.deleteBoard(id);
+        redirectAttributes.addFlashAttribute("글" + id + "이 삭제되었습니다.");
+        return "redirect:/testPage";
+    }
+
+
 
     @GetMapping("/board/{boardId}")
     public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model, Reply reply) {
@@ -142,11 +143,11 @@ public class BoardController {
     }
 
     @GetMapping("/board/search-board/{pageNumber}")
-    public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model, @RequestParam("word") String word,@RequestParam("value") String value , @RequestParam("direction") String direction) {
+    public String boardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model, @RequestParam("word") String word, @RequestParam("value") String value, @RequestParam("direction") String direction) {
         System.out.println(word);
         System.out.println(value);
         System.out.println(direction);
-        Page<Board> boardList = boardService.boardPage(pageNumber, word , value, direction);
+        Page<Board> boardList = boardService.boardPage(pageNumber, word, value, direction);
         List<Board> boardContents = boardList.getContent();
         String boardValue = "id";
         String boardDirection = "descending";
@@ -161,8 +162,8 @@ public class BoardController {
     }
 
     @GetMapping("/board/page-board/{pageNumber}")
-    public String noneWordBoardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model ,@Param("value") String value, @Param("direction") String direction) {
-        Page<Board> boardList = boardService.noneWordBoardPageSort(pageNumber,value,direction);
+    public String noneWordBoardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model, @Param("value") String value, @Param("direction") String direction) {
+        Page<Board> boardList = boardService.noneWordBoardPageSort(pageNumber, value, direction);
         List<Board> boardContents = boardList.getContent();
         String boardValue = "id";
         String boardDirection = "descending";
@@ -183,8 +184,8 @@ public class BoardController {
 //        model.addAttribute("nowDay", nowDay);
 
     @GetMapping("/board/page-board/{pageNumber}/{BoarderType}")
-    public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType, Model model , @Param("value") String value, @Param("direction") String direction) {
-        Page<Board> boarderTypePage = boardService.boarderTypePage(pageNumber, boarderType,value,direction);
+    public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType, Model model, @Param("value") String value, @Param("direction") String direction) {
+        Page<Board> boarderTypePage = boardService.boarderTypePage(pageNumber, boarderType, value, direction);
         List<Board> boardList = boarderTypePage.getContent();
         String boardValue = "id";
         String boardDirection = "descending";

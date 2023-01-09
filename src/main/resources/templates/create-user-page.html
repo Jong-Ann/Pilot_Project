@@ -28,7 +28,7 @@
             <label class="form-label">역할 구분</label>
             <th:block>
             <div>
-                <input type="radio" name="options" th:value="${roleList[0].id}" th:text="${roleList[0].name}">
+                <input type="radio" name="options" th:value="${roleList[0].id}" th:text="${roleList[0].name}" checked>
                 <input type="radio" name="options" th:value="${roleList[1].id}" th:text="${roleList[1].name}">
             </div>
                 <span id="display"></span>

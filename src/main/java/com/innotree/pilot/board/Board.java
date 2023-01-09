@@ -33,7 +33,7 @@ public class Board {
     @Column(nullable = true)
     private String photos;
 
-    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

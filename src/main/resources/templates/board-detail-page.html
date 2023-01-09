@@ -23,7 +23,7 @@
 
         <img th:if="${board.photos != null}" th:src="@{${board.getImagePath}}"
              style="height:400px; width: 400px;"></img>
-        <img th:if="${board.photos == null}" th:src="@{/img/Innotree.png}"
+        <img th:if="${board.photos == null || board.photos == '' }" th:src="@{/img/Innotree.png}"
              style="height:400px; width: 400px;"></img>
         <br>
 

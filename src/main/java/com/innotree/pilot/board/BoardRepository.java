@@ -15,14 +15,14 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board,Integer> {
     @Deprecated
     @Query("select b from Board b where b.boarderType = 'NOTICE'")
-    Page<Board> findNOTICEBoard(Pageable pageable);
+    List<Board> findNOTICEBoard();
 
     @Deprecated
     @Query("select b from Board b where b.boarderType = 'QNA'")
-    Page<Board> findQNABoard(Pageable pageable);
+    List<Board> findQNABoard();
     @Deprecated
     @Query("select b from Board b where b.boarderType = 'FAQ'")
-    Page<Board> findFAQBoard(Pageable pageable);
+    List<Board> findFAQBoard();
 
     Page<Board> findByBoarderType(BoarderType boarderType,Pageable pageable);
     @Query("select b from Board b WHERE b.contents LIKE %?1% or b.title LIKE %?1%")

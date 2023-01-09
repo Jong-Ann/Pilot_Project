@@ -2,14 +2,18 @@ $(document).ready(function(){
     $("#backButton").on("click",function(){
         history.back();
     }),
-       $("#aioConceptName").on("change",function(){
-           console.log("시작")
+   $("#aioConceptName").on("change",function(){
+
+       let langSelect = document.getElementById("aioConceptName");
+       let selectText = langSelect.options[langSelect.selectedIndex].value;
+       if (selectText === '공지사항'){
            $.ajax({
              type: "GET",
-             url: "/testGet",
+             url: "/board/NOTICE",
              data: [],
              dataType: 'json',
              success: function(data){
+                $("#m3").empty()
                 let str = '<tr>'
                 console.log(data)
                 $.each(data,function(index) {
@@ -20,16 +24,72 @@ $(document).ready(function(){
                     +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
                     +'<td>'+ data[index].user.username + '</td>'
                     +'<td>'+ data[index].creationTime + '</td>'
-                    +'<td>'+  '<a class="btn btn-danger btn-delete"' +'href=/board/delete-board/' + '}>' +'</a>'+'</td>'
-
+                    +'<td>'+  '<a class="btn btn-danger"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'</td>'
+                    +'<td>'+  '<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
                     str += '</tr>'
-//$("#m3").append( '<td>' + data[index].title + '</td>');
+    //$("#m3").append( '<td>' + data[index].title + '</td>');
                 });
                 $("#m3").append(str)
              },
-       });
+            });
+        } else if( selectText === '자주묻는질문'){
+
+                   $.ajax({
+                     type: "GET",
+                     url: "/board/FAQ",
+                     data: [],
+                     dataType: 'json',
+                     success: function(data){
+                     $("#m3").empty()
+                        let str = '<tr>'
+                        console.log(data)
+                        $.each(data,function(index) {
+                            const dataId = data[index].id;
+                            str += '<td></td>'
+                            str += '<td>' + data[index].id + '</td>'
+                            + '<td>' + data[index].boarderType + '</td>'
+                            +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
+                            +'<td>'+ data[index].user.username + '</td>'
+                            +'<td>'+ data[index].creationTime + '</td>'
+                            +'<td>'+  '<a class="btn btn-danger"'+'id="btn-delete-modal"' + 'href="/board/delete-board/' + dataId + '">'+ '삭제' +'</a>'+'</td>'
+                            +'<td>'+  '<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+                            str += '</tr>'
+            //$("#m3").append( '<td>' + data[index].title + '</td>');
+                        });
+                        $("#m3").append(str)
+                     },
+                    });
+            } else if( selectText === '질문과답변') {
+                 $.ajax({
+                 type: "GET",
+                 url: "/board/QNA",
+                 data: [],
+                 dataType: 'json',
+                 success: function(data){
+                    $("#m3").empty()
+                    let str = '<tr>'
+                    console.log(data)
+                    $.each(data,function(index) {
+                        const dataId = data[index].id;
+                        str += '<td></td>'
+                        str += '<td>' + data[index].id + '</td>'
+                        + '<td>' + data[index].boarderType + '</td>'
+                        +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
+                        +'<td>'+ data[index].user.username + '</td>'
+                        +'<td>'+ data[index].creationTime + '</td>'
+                        +'<td>'+  '<a class="btn btn-danger"'+'id="btn-delete-modal"' + 'href="/board/delete-board/' + dataId + '">'+ '삭제' +'</a>'+'</td>'
+                        +'<td>'+  '<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+                        str += '</tr>'
+        //$("#m3").append( '<td>' + data[index].title + '</td>');
+                    });
+                    $("#m3").append(str)
+                 },
+                });
+            }
+   });
 });
-     $(".btn-delete").on("click", function (e) {
+
+     $(".btn-delete-modal").on("click", function (e) {
         e.preventDefault();
         attach = $(this);
         boardId = $(this).attr("boardId");
@@ -44,10 +104,31 @@ $(document).ready(function(){
         e.preventDefault();
         }
     });
+
 function deleteAlert(){
     alert("해당 내용을 삭제합니다.");
 }
-});
+
+// fncInputReset : function(argObj){
+//        // select 초기화
+//        $('#'+argObj).find('select').each(function(){
+//            this.value = '';
+//            tmJs.fncComboSelectAndTextChange(this.id, this.value);  // 콤보박스 값 셋팅
+//        });
+//
+//        // input 초기화
+//        $('#'+argObj).find('input').each(function(){
+//            this.value = '';
+//        });
+//
+//        // textarea 초기화
+//        $('#'+argObj).find('textarea').each(function(){
+//            this.value = '';
+//        });
+//
+//
+//    }
+//fncInputReset();
 //    var status = $('#test option:selected').attr('value');
 //    alert(status.val())
 //     $("#test").val(test).prop("selected",true);

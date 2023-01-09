@@ -19,13 +19,44 @@ public class BoardRestController {
     @Autowired
     private BoardRepository boardRepository;
 
-    @GetMapping("/testGet")
+
+    @GetMapping("/board/all")
     @ResponseBody
-    public ResponseEntity<?> BoardTest(){
+    public ResponseEntity<?> BoardAll(){
         List<Board> boardList = boardRepository.findAll();
+        List<ResponseBoard> result = boardList.stream()
+                .map(ResponseBoard::from)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/board/NOTICE")
+    @ResponseBody
+    public ResponseEntity<?> BoardNOTICE(){
+        List<Board> boardList = boardRepository.findNOTICEBoard();
         List<ResponseBoard> result = boardList.stream()
         .map(ResponseBoard::from)
         .collect(Collectors.toList());
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/board/FAQ")
+    @ResponseBody
+    public ResponseEntity<?> BoardFAQ(){
+        List<Board> boardList = boardRepository.findFAQBoard();
+        List<ResponseBoard> result = boardList.stream()
+                .map(ResponseBoard::from)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/board/QNA")
+    @ResponseBody
+    public ResponseEntity<?> BoardQNA(){
+        List<Board> boardList = boardRepository.findQNABoard();
+        List<ResponseBoard> result = boardList.stream()
+                .map(ResponseBoard::from)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
 }

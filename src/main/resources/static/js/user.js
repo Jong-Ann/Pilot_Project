@@ -13,9 +13,9 @@ let index = {
         let data = {
             username : $("#username").val(),
             password : $("#password").val(),
-            Roles:  $("input[name='options']:checked").val()
+            role:  $("input[name='options']:checked").val()
         };
-        alert(data.Roles)
+        alert(data.Role)
         console.log(data)
         var exp = /[a-z0-9]$/; //영문자와 숫자
         //정규표현식. test(입력값) 규칙에 맞으면 true
