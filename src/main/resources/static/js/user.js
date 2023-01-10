@@ -15,7 +15,6 @@ let index = {
             password : $("#password").val(),
             role:  $("input[name='options']:checked").val()
         };
-        alert(data.Role)
         console.log(data)
         var exp = /[a-z0-9]$/; //영문자와 숫자
         //정규표현식. test(입력값) 규칙에 맞으면 true
@@ -37,35 +36,6 @@ let index = {
               alert(JSON.stringify(error));
           });
         },
-
-        editSave : function(){
-                let data = {
-                    userId : $("#id").val(),
-                    username : $("#username").val(),
-                    password : $("#password").val(),
-                    role : $("input[name='options']:checked").val()
-                };
-                console.log(data)
-                var exp = /[a-z0-9]$/; //영문자와 숫자
-                //정규표현식. test(입력값) 규칙에 맞으면 true
-                if(!exp.test(data.username)){
-                    alert("영문자와 숫자만 입력가능합니다.");
-                    $("#username").focus();
-                    return;
-                }
-                $.ajax({
-                      type: "PUT",
-                      url: `/users/save-user/${data.userId}`,
-                      data:JSON.stringify(data),
-                      contentType:"application/json; charset=utf-8",
-                      dataType: "json"
-                  }).done(function(resp){
-                      alert("해당하는 유저 생성이 완료되었습니다.");
-                      location.href="/users/page-user/1";
-                  }).fail(function(error){
-                      alert(JSON.stringify(error));
-                  });
-            }
 }
 index.init();
 function userDelete(userId) {
@@ -81,6 +51,35 @@ function userDelete(userId) {
                 alert(JSON.stringify(error));
             });
     }
+
+//        editSave : function(){
+//                let data = {
+//                    userId : $("#id").val(),
+//                    username : $("#username").val(),
+//                    password : $("#password").val(),
+//                    role : $("input[name='options']:checked").val()
+//                };
+//                console.log(data)
+//                var exp = /[a-z0-9]$/; //영문자와 숫자
+//                //정규표현식. test(입력값) 규칙에 맞으면 true
+//                if(!exp.test(data.username)){
+//                    alert("영문자와 숫자만 입력가능합니다.");
+//                    $("#username").focus();
+//                    return;
+//                }
+//                $.ajax({
+//                      type: "PUT",
+//                      url: `/users/save-user/${data.userId}`,
+//                      data:JSON.stringify(data),
+//                      contentType:"application/json; charset=utf-8",
+//                      dataType: "json"
+//                  }).done(function(resp){
+//                      alert("해당하는 유저 생성이 완료되었습니다.");
+//                      location.href="/users/page-user/1";
+//                  }).fail(function(error){
+//                      alert(JSON.stringify(error));
+//                  });
+//            }
 
 
 

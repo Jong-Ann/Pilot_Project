@@ -5,16 +5,17 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-light" th:replace="fragments :: navigation">
 </nav>
-<th if="${message!= null}" th:text="${message}"></th>
 <a th:href="@{/create-board}" style="text-decoration: none;"><h3>게시글 작성하기</h3></a>
+<div th:if="${message!=null}" class="alert alert-primary text-center" th:text="${message}"></div>
+<div> 글 분류:
 <select id="aioConceptName">
-    <option value="0">글분류</option>
-    <option value="공지사항">공지사항(Notice)</option>
-    <option value="자주묻는질문">자주묻는질문(Faq)</option>
-    <option value="질문과답변">질문과답변(Qna)</option>
+    <option value="all">글분류</option>
+        <option value="Notice">공지사항(Notice)</option>
+        <option value="자주묻는질문">자주묻는질문(Faq)</option>
+        <option value="질문과답변">질문과답변(Qna)</option>
     </option>
 </select>
-
+</div>
 <table class="table">
     <thead>
     <tr>
@@ -24,7 +25,6 @@
         <th scope="col">글제목</th>
         <th scope="col">작성자</th>
         <th scope="col">작성날짜</th>
-        <th scope="col">삭제</th>
         <th scope="col">편집</th>
     </tr>
     </thead>
@@ -52,6 +52,12 @@
 </div>
 
 
+<script src="/js/board.js"></script>
+<div class="text-center">
+    <h1>
+        <MARQUEE>😊이노트리에 오신 것을 환영합니다😊</MARQUEE>
+    </h1>
+</div>
 <div class="text-center">
     <img th:src="@{/img/innotree.png}" style="margin : 0 auto; width=:350px; height:200px;">
 </div>
