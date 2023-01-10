@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +61,11 @@ public class BoardController {
         return "create-board-page";
     }
 
+    @GetMapping("/test2")
+    public String fileTest(){
+        return "test2";
+    }
+
     @PostMapping("/board/save-board")
     public String boardSave(Model model, Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails, RedirectAttributes redirectAttributes) throws Exception {
         if (!multipartFile.isEmpty()) {
@@ -83,8 +90,10 @@ public class BoardController {
             model.addAttribute(BoarderType.values());
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
         }
-        return "redirect:/board/page-board/1" + "?value=id" + "&direction=descending";
+//        return "redirect:/board/page-board/1" + "?value=id" + "&direction=descending";
+        return "redirect:/testPage";
     }
+
 
 //    @PutMapping("/board/save-board")
 //    public String boardEditSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails,RedirectAttributes redirectAttributes) throws Exception {
@@ -116,7 +125,7 @@ public class BoardController {
     @GetMapping("/board/another-delete-board/{boardId}")
     public String anotherBoardDelete(@PathVariable(name = "boardId") Integer id, RedirectAttributes redirectAttributes) {
         boardService.deleteBoard(id);
-        redirectAttributes.addFlashAttribute("글" + id + "이 삭제되었습니다.");
+        redirectAttributes.addFlashAttribute("message","해당하는 글 " + id + "이(을) 삭제 되었습니다.");
         return "redirect:/testPage";
     }
 
@@ -176,6 +185,21 @@ public class BoardController {
         return "board-page";
     }
 
+
+    @GetMapping("/board/ajax-page-board/{pageNumber}")
+    public String testBoardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model, @Param("value") String value, @Param("direction") String direction) {
+        Page<Board> boardList = boardService.noneWordBoardPageSort(pageNumber, value, direction);
+        List<Board> boardContents = boardList.getContent();
+        String boardValue = "id";
+        String boardDirection = "descending";
+        model.addAttribute("BoarderType", BoarderType.values());
+        model.addAttribute("boardList", boardContents);
+        model.addAttribute("totalPages", boardList.getTotalPages());
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("direction", boardDirection);
+        model.addAttribute("value", boardValue);
+        return "board-page";
+    }
 
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //        Calendar cal = Calendar.getInstance();

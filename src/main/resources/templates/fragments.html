@@ -35,15 +35,13 @@
                     <a class="nav-link" th:href="@{/CreateForm}">회원가입</a>
                 </li>
 
-                <li class="nav-item" sec:isAuthenticated()>
-                    <a class="nav-link" th:href="@{/board/page-board/1?value=id&direction=descending}">글목록</a>
-                </li>
+<!--                <li class="nav-item" sec:isAuthenticated()>-->
+<!--                    <a class="nav-link" th:href="@{/board/page-board/1?value=id&direction=descending}">글목록</a>-->
+<!--                </li>-->
 
                 <li class="nav-item" sec:isAuthenticated()>
-                    <a class="nav-link" th:href="@{/testPage}">테스트</a>
+                    <a class="nav-link" th:href="@{/testPage}">글목록</a>
                 </li>
-
-
 
                 <li class="nav-item" sec:isAuthenticated()>
                     <a class="nav-link"></a>

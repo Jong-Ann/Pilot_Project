@@ -31,7 +31,6 @@
         </select>
     </th:block>
 
-    <script ></script>
 </div>
 <div>
     <div align="right">
@@ -80,7 +79,8 @@
                 <!--                            id="btn-delete" class="btn btn-danger btn-delete">삭제-->
                 <!--                    </button>-->
                 <!--                </form>-->
-                <a class="btn btn-danger btn-delete" th:href="@{'/board/another-delete-board/' + ${board.id}}" th:boardId="${board.id}"  th:if="${#authentication.principal.user.id} == ${board.user.id}">삭제</a>
+<!--                <a class="btn btn-danger btn-delete" th:href="@{'/board/another-delete-board/' + ${board.id}}" th:boardId="${board.id}"  th:if="${#authentication.principal.user.id} == ${board.user.id}">삭제</a>-->
+                <a class="btn btn-danger btn-delete" th:href="@{'/board/delete-delete-board/' + ${board.id}}" th:boardId="${board.id}"  th:if="${#authentication.principal.user.id} == ${board.user.id}">삭제</a>
 <!--                <form th:action="@{'/board/delete-board/' + ${board.id}}" method="post">-->
 <!--                    <input type="hidden" name="_method" value="delete"/>-->
 <!--                    <button type="submit" th:if="${#authentication.principal.user.id} == ${board.user.id}"-->

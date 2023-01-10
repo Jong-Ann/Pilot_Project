@@ -2,14 +2,39 @@ $(document).ready(function(){
     $("#backButton").on("click",function(){
         history.back();
     }),
-   $("#aioConceptName").on("change",function(){
+       $.ajax({
+         type: "GET",
+         url: "/board/all/1",
+         data: [],
+         dataType: 'json',
+         success: function(data){
+            $("#m3").empty()
+            let str = '<tr>'
+            console.log(data)
+            $.each(data,function(index) {
+                const dataId = data[index].id;
+                str += '<td></td>'
+                str += '<td>' + data[index].id + '</td>'
+                + '<td>' +  data[index].boarderType + '</td>'
+                +'<td>'+'<a class="text-decoration=none"; href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
+                +'<td>'+ data[index].user.username + '</td>'
+                +'<td>'+ data[index].creationTime.split('T')[0] + '</td>'
+                +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+                str += '</tr>'
+//$("#m3").append( '<td>' + data[index].title + '</td>');
+            });
+            $("#m3").append(str)
+         },
+        });
 
+   $("#aioConceptName").on("change",function(){
        let langSelect = document.getElementById("aioConceptName");
        let selectText = langSelect.options[langSelect.selectedIndex].value;
        if (selectText === '공지사항'){
+       alert(selectText)
            $.ajax({
              type: "GET",
-             url: "/board/NOTICE",
+             url: "/board/NOTICE/1",
              data: [],
              dataType: 'json',
              success: function(data){
@@ -23,9 +48,9 @@ $(document).ready(function(){
                     + '<td>' + data[index].boarderType + '</td>'
                     +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
                     +'<td>'+ data[index].user.username + '</td>'
-                    +'<td>'+ data[index].creationTime + '</td>'
-                    +'<td>'+  '<a class="btn btn-danger"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'</td>'
-                    +'<td>'+  '<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+                  +'<td>'+ data[index].creationTime.split('T')[0] + '</td>'
+                  +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+
                     str += '</tr>'
     //$("#m3").append( '<td>' + data[index].title + '</td>');
                 });
@@ -33,10 +58,10 @@ $(document).ready(function(){
              },
             });
         } else if( selectText === '자주묻는질문'){
-
+           alert(selectText)
                    $.ajax({
                      type: "GET",
-                     url: "/board/FAQ",
+                     url: "/board/FAQ/1",
                      data: [],
                      dataType: 'json',
                      success: function(data){
@@ -50,9 +75,9 @@ $(document).ready(function(){
                             + '<td>' + data[index].boarderType + '</td>'
                             +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
                             +'<td>'+ data[index].user.username + '</td>'
-                            +'<td>'+ data[index].creationTime + '</td>'
-                            +'<td>'+  '<a class="btn btn-danger"'+'id="btn-delete-modal"' + 'href="/board/delete-board/' + dataId + '">'+ '삭제' +'</a>'+'</td>'
-                            +'<td>'+  '<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+                            +'<td>'+ data[index].creationTime.split('T')[0] + '</td>'
+                            +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+
                             str += '</tr>'
             //$("#m3").append( '<td>' + data[index].title + '</td>');
                         });
@@ -60,9 +85,10 @@ $(document).ready(function(){
                      },
                     });
             } else if( selectText === '질문과답변') {
+               alert(selectText)
                  $.ajax({
                  type: "GET",
-                 url: "/board/QNA",
+                 url: "/board/QNA/1",
                  data: [],
                  dataType: 'json',
                  success: function(data){
@@ -76,20 +102,44 @@ $(document).ready(function(){
                         + '<td>' + data[index].boarderType + '</td>'
                         +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
                         +'<td>'+ data[index].user.username + '</td>'
-                        +'<td>'+ data[index].creationTime + '</td>'
-                        +'<td>'+  '<a class="btn btn-danger"'+'id="btn-delete-modal"' + 'href="/board/delete-board/' + dataId + '">'+ '삭제' +'</a>'+'</td>'
-                        +'<td>'+  '<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+                          +'<td>'+ data[index].creationTime.split('T')[0] + '</td>'
+                          +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+
                         str += '</tr>'
         //$("#m3").append( '<td>' + data[index].title + '</td>');
                     });
                     $("#m3").append(str)
                  },
                 });
+            } else if( selectText === 'all') {
+                  $.ajax({
+                     type: "GET",
+                     url: "/board/all/1",
+                     data: [],
+                     dataType: 'json',
+                     success: function(data){
+                        $("#m3").empty()
+                        let str = '<tr>'
+                        console.log(data)
+                        $.each(data,function(index) {
+                            const dataId = data[index].id;
+                            str += '<td></td>'
+                            str += '<td>' + data[index].id + '</td>'
+                            + '<td>' + data[index].boarderType + '</td>'
+                            +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
+                            +'<td>'+ data[index].user.username + '</td>'
+                             +'<td>'+ data[index].creationTime.split('T')[0] + '</td>'
+                             +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+
+                            str += '</tr>'
+            //$("#m3").append( '<td>' + data[index].title + '</td>');
+                        });
+                        $("#m3").append(str)
+                     },
+                    });
             }
    });
-});
-
-     $(".btn-delete-modal").on("click", function (e) {
+     $(".btn-delete").on("click", function (e) {
         e.preventDefault();
         attach = $(this);
         boardId = $(this).attr("boardId");
@@ -97,13 +147,15 @@ $(document).ready(function(){
         $("#Text").text("해당 하는 게시글 " + boardId +" (을)를 삭제하시겠습니까?");
         $("#Modal").modal("show");
         $("#okButton").attr("href",attach.attr("href"));
-     }),
+     });
     $("[pattern]").on("keyup",function(e) {
         var regExp = new RegExp($(this).attr("pattern"));
         if(!regExp.test(e.key)){
         e.preventDefault();
         }
     });
+});
+
 
 function deleteAlert(){
     alert("해당 내용을 삭제합니다.");
