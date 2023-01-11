@@ -19,7 +19,7 @@ $(document).ready(function(){
                 +'<td>'+'<a class="text-decoration=none"; href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
                 +'<td>'+ data[index].user.username + '</td>'
                 +'<td>'+ data[index].creationTime.split('T')[0] + '</td>'
-                +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
+                +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal1"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
                 str += '</tr>'
 //$("#m3").append( '<td>' + data[index].title + '</td>');
             });
@@ -156,6 +156,9 @@ $(document).ready(function(){
     });
 });
 
+
+const rowsPerPage = 10;
+const rows = document.querySelectorAll("")
 
 function deleteAlert(){
     alert("해당 내용을 삭제합니다.");

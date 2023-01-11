@@ -30,10 +30,28 @@
         <a th:href="@{'/download/' + ${board.downloadImagePath}}" class="btn btn-primary m-3">다운로드</a>
         <span th:if="${#authentication.principal.user.id} == ${board.user.id}">
             <a th:href="@{'/delete/' + ${board.downloadImagePath} + '/' +${boardId}}" th:if="${board.photos!=null}"
-               class="btn btn-danger m-3">삭제</a>
+               class="btn btn-danger btn-delete-photos m-3">삭제</a>
         </span>
         <button type="button" id="backButton" value="뒤로가기" class="btn btn-secondary">뒤로가기</button>
     </form>
+</div>
+
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="Title"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="Text"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <a type="button" class="btn btn-danger" href="" id="okButton">삭제</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="card" style="margin: 0 auto; width:900px; ">
@@ -45,6 +63,7 @@
                     <th:block th:if="${reply.createDate.after(#dates.createToday())}">
                         <div><img th:src="@{/img/New.png}" style="width:25px; height:15px;"></div>
                     </th:block>
+
                     <div>[[${reply.comments}]]</div>
                     <div class="font-weight-bold"> - [[${reply.user.username}]]</div>
                     <div>- 작성날짜 : [[${#dates.format(reply.createDate, 'yyyy-MM-dd HH:mm:ss')}]]</div>
@@ -54,7 +73,7 @@
                     <th:block th:if="${#authentication.principal.user.id} == ${reply.user.id}">
                         <input type="hidden" th:replyId="${reply.id}">
                         <button type="button" th:onclick="replyDelete([[${board.id}]],[[${reply.id}]])"
-                                class="btn btn-danger btn-delete" value="삭제">삭제</button>
+                                class="btn btn-danger btn-delete-reply" value="삭제">삭제</button>
                     </th:block>
                     <!--                    </form>-->
                 </div>
@@ -84,7 +103,6 @@
 </div>
 
 <script type="text/javascript" th:src="@{/js/reply.js}">
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

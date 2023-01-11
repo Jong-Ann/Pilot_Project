@@ -2,6 +2,22 @@ let index = {
     init : function(){
         $("#reply-create-button").on("click",()=>{
             this.replySave();
+        }),
+        $(".btn-delete-photos").on("click", function (e) {
+            e.preventDefault();
+            attach = $(this);
+//            boardId = $(this).attr("boardId");
+            $("#Title").text("주의!!");
+            $("#Text").text("해당 하는 게시글 사진"  +" (을)를 삭제하시겠습니까?");
+            $("#Modal").modal("show");
+            $("#okButton").attr("href",attach.attr("href"));
+         }),
+
+        $("[pattern]").on("keyup",function(e) {
+            var regExp = new RegExp($(this).attr("pattern"));
+            if(!regExp.test(e.key)){
+            e.preventDefault();
+            }
         });
     },
 
@@ -26,24 +42,22 @@ let index = {
             alert(JSON.stringify(error));
         });
         }
-}
+};
 
-
+index.init()
 function replyDelete(boardId,replyId) {
-          $.ajax({
-            type: "DELETE",
-            url: `/delete-reply/${boardId}/${replyId}`,
-            dataType: "json"
-        }).done(function(resp){
-            alert("삭제가 완료되었습니다.");
-            location.reload();
-//            location.href=`/board/ + ${data.boardId}`
-        }).fail(function(error){
-            alert(JSON.stringify(error));
-        });
-    }
-index.init();
-
+                  $.ajax({
+                    type: "DELETE",
+                    url: `/delete-reply/${boardId}/${replyId}`,
+                    dataType: "json"
+                }).done(function(resp){
+                    alert("삭제가 완료되었습니다.");
+                    location.reload();
+        //            location.href=`/board/ + ${data.boardId}`
+                }).fail(function(error){
+                    alert(JSON.stringify(error));
+                });
+          };
 
 //        $.ajax({
 //                type: "POST",
