@@ -3,9 +3,17 @@ let index = {
         $("#save-user").on("click",()=>{
             this.userSave();
         }),
-        $("#edit-user").on("click",()=>{
-            this.editSave();
-        });
+        $(".btn-user-delete").on("click",()=>{
+            e.preventDefault();
+            attach = $(this);
+            boardId = $(this).attr("boardId");
+            $("#Title").text("주의!!");
+            $("#Text").text("해당 하는 게시글 " + boardId +" (을)를 삭제하시겠습니까?");
+            $("#Modal").modal("show");
+            $("#okButton").attr("href",attach.attr("href"));
+         });
+
+        };
     },
 
 

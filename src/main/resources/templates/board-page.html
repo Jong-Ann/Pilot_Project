@@ -110,6 +110,13 @@
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+    function search() {
+        const page = [[${totalPages}]];
+        console.log(page);
+    }
+    search();
+</script>
 
 <th:block th:if="${totalPages>0}">
     <nav aria-label="Page navigation example">
