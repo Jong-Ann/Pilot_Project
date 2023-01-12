@@ -48,9 +48,9 @@ public class BoardController {
         return "board-page";
     }
 
-    @GetMapping("/testPage")
-    public String postTest(Model model) {
-        return "test";
+    @GetMapping("/javascript-page")
+    public String javascriptPage(Model model) {
+        return "javascript-page";
     }
 
     @GetMapping("/create-board")
@@ -91,7 +91,7 @@ public class BoardController {
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
         }
 //        return "redirect:/board/page-board/1" + "?value=id" + "&direction=descending";
-        return "redirect:/testPage";
+        return "redirect:/javascript-page";
     }
 
 

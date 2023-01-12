@@ -13,7 +13,7 @@ let index = {
             $("#okButton").attr("href",attach.attr("href"));
          });
 
-        };
+        }
     },
 
 

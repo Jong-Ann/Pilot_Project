@@ -10,7 +10,6 @@ $(document).ready(function(){
          success: function(data){
             $("#m3").empty()
             let str = '<tr>'
-            console.log(data)
             $.each(data,function(index) {
                 const dataId = data[index].id;
                 str += '<td></td>'
@@ -23,10 +22,49 @@ $(document).ready(function(){
                 str += '</tr>'
 //$("#m3").append( '<td>' + data[index].title + '</td>');
             });
-            $("#m3").append(str)
-         },
-        });
+            $("#m3").append(str);
+            const rowsPerPage = 2;
+            const rows = document.querySelectorAll("#my-table tbody tr");
+            const rowsCount = rows.length;
+            console.log("tr의 개수: " +rows);
+            console.log("trCount: " + rowsCount)
+            const pageCount = Math.ceil(rowsCount / rowsPerPage);
+            const numbers = document.querySelector('#pagination');
+            console.log("페이지의 개수: " + pageCount);
+            console.log("집어넣을 id 값 : " + numbers);
+            for(let i = 1; i<=pageCount; i++){
+                numbers.innerHTML += ' <li class="page-item"><a class="page-link" href="">' +  `${i}` +'</a></li>';
+            };
+            const numberBtn = numbers.querySelectorAll('a');
+            console.log(numberBtn);
 
+            numberBtn.forEach((item,idx)=>{
+                item.addEventListener('click',(e)=>{
+                    e.preventDefault();
+                    const id = item.getAttribute('id');
+                    for(nb of numberBtn) {
+                        nb.classList.remove('active');
+                    }
+                    e.target.classList.add('active');
+                    displayRow(idx);
+                    console.log(idx);
+                })
+            })
+          function displayRow(idx) {
+                let start = idx * rowsPerPage;
+                let end = start + rowsPerPage;
+                let rowsArray = Array.from(rows);
+                console.log(rowsArray);
+                for(ra of rowsArray){
+                    ra.style.display = 'none';
+                }
+                let newRows = rowsArray.slice(start,end);
+                for( nr of newRows){
+                    nr.style.display = '';
+                }
+            }
+         },
+});
    $("#aioConceptName").on("change",function(){
        let langSelect = document.getElementById("aioConceptName");
        let selectText = langSelect.options[langSelect.selectedIndex].value;
@@ -124,17 +162,16 @@ $(document).ready(function(){
                         $.each(data,function(index) {
                             const dataId = data[index].id;
                             str += '<td></td>'
-                            str += '<td>' + data[index].id + '</td>'
+                            str += '<td id="m4">' + data[index].id + '</td>'
                             + '<td>' + data[index].boarderType + '</td>'
                             +'<td>'+'<a href=/board/' + dataId + '>' + data[index].title +'</a>' + '[' + data[index].replySize+']' +'</td>'
-                            +'<td>'+ data[index].user.username + '</td>'
+                            +'<td>'+  data[index].user.username + '</td>'
                              +'<td>'+ data[index].creationTime.split('T')[0] + '</td>'
                              +'<td>'+  '<a class="btn btn-danger m-2"'+'id="btn-delete-modal"' + 'href="/board/another-delete-board/' + dataId + '">'+ '삭제' +'</a>'+'<a class="btn btn-primary"' + 'href=/board/edit-board/'+ dataId + '>'+ '편집' +'</a>'+'</td>'
 
                             str += '</tr>'
             //$("#m3").append( '<td>' + data[index].title + '</td>');
                         });
-                        $("#m3").append(str)
                      },
                     });
             }
@@ -156,9 +193,6 @@ $(document).ready(function(){
     });
 });
 
-
-const rowsPerPage = 10;
-const rows = document.querySelectorAll("")
 
 function deleteAlert(){
     alert("해당 내용을 삭제합니다.");
