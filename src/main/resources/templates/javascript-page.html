@@ -16,7 +16,7 @@
         </option>
     </select>
 </div>
-<table class="table">
+<table class="table" id="my-table">
     <thead>
     <tr>
         <th scope="col">#</th>
@@ -29,30 +29,20 @@
     </tr>
     </thead>
     <tbody id="m3">
-
     </tbody>
 </table>
 
-
-<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="Title"></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <span id="Text"></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <a type="button" class="btn btn-danger" href="" id="okButton">삭제</a>
-            </div>
-        </div>
-    </div>
+<div id="footer" style="text-align : center;">
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center" id="pagination">
+        </ul>
+    </nav>
 </div>
 
+<div id="modal-container">
 
+
+</div>
 
 <script src="/js/board.js"></script>
 <div class="text-center">

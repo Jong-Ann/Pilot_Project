@@ -2,17 +2,13 @@ package com.innotree.pilot.test;
 
 import com.innotree.pilot.board.Board;
 import com.innotree.pilot.board.BoardRepository;
-import com.innotree.pilot.board.BoardService;
 import com.innotree.pilot.board.BoarderType;
 import com.innotree.pilot.reply.Reply;
 import com.innotree.pilot.user.User;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,16 +17,14 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.persistence.EntityManager;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
-public class boardEntityTests {
+public class boardEntityTest {
 
     @Autowired
     private BoardRepository boardRepository;

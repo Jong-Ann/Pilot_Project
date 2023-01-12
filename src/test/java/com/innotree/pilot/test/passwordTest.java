@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-public class PasswordTest {
+public class passwordTest {
 
     @Test
     public void PasswordEncodeTest(){

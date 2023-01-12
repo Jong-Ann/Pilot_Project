@@ -12,8 +12,7 @@ let index = {
             $("#Modal").modal("show");
             $("#okButton").attr("href",attach.attr("href"));
          });
-
-        };
+        }
     },
 
 

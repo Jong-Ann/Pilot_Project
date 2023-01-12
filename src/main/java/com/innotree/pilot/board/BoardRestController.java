@@ -1,8 +1,6 @@
 package com.innotree.pilot.board;
 
 
-import com.innotree.pilot.Response.Message;
-import com.innotree.pilot.Response.StatusEnum;
 import com.innotree.pilot.file.FileService;
 import com.innotree.pilot.security.PilotUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,69 +17,57 @@ import java.util.stream.Collectors;
 
 @RestController
 public class BoardRestController {
-
-
     @Autowired
     private BoardRepository boardRepository;
-
     @Autowired
     private BoardService boardService;
-
-
     @PostMapping("/board/save-board/test")
     public ResponseEntity<?> boardSave(@RequestBody Board board, @RequestParam(name = "image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails) throws Exception {
-        System.out.println("작동합니다." );
-        System.out.println("board : " + board );
-        System.out.println("file : " + multipartFile );
+        System.out.println("작동합니다.");
+        System.out.println("board : " + board);
+        System.out.println("file : " + multipartFile);
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         System.out.println(multipartFile);
         System.out.println(fileName);
         String uploadDir = "board-photos/";
-        boardService.boardSave(board,pilotUserDetails);
-        FileService.saveFile(uploadDir,fileName,multipartFile);
+        boardService.boardSave(board, pilotUserDetails);
+        FileService.saveFile(uploadDir, fileName, multipartFile);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
     @GetMapping("/board/all/1")
     @ResponseBody
-    public ResponseEntity<?> BoardAll(){
+    public ResponseEntity<?> BoardAll() {
         List<Board> boardList = boardRepository.findAll();
         List<ResponseBoard> result = boardList.stream()
                 .map(ResponseBoard::from)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
-
     @GetMapping("/board/NOTICE/{pageNumber}")
     @ResponseBody
-    public ResponseEntity<?> BoardNOTICE(@PathVariable(name = "pageNumber") Integer pageNumber){
+    public ResponseEntity<?> BoardNOTICE(@PathVariable(name = "pageNumber") Integer pageNumber) {
         Page<Board> boardList = boardService.noticePage(pageNumber);
         List<ResponseBoard> result = boardList.stream()
-        .map(ResponseBoard::from)
-        .collect(Collectors.toList());
+                .map(ResponseBoard::from)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
-
     @GetMapping("/board/FAQ/{pageNumber}")
     @ResponseBody
-    public ResponseEntity<?> BoardFAQ(@PathVariable(name = "pageNumber") Integer pageNumber){
+    public ResponseEntity<?> BoardFAQ(@PathVariable(name = "pageNumber") Integer pageNumber) {
         Page<Board> boardList = boardService.faqPage(pageNumber);
         List<ResponseBoard> result = boardList.stream()
                 .map(ResponseBoard::from)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
-
     @GetMapping("/board/QNA/{pageNumber}")
     @ResponseBody
-    public ResponseEntity<?> BoardQNA(@PathVariable(name = "pageNumber") Integer pageNumber){
+    public ResponseEntity<?> BoardQNA(@PathVariable(name = "pageNumber") Integer pageNumber) {
         Page<Board> boardList = boardService.qnaPage(pageNumber);
         List<ResponseBoard> result = boardList.stream()
                 .map(ResponseBoard::from)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
-
 }

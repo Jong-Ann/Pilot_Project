@@ -33,12 +33,10 @@ import java.util.stream.Collectors;
 @Controller
 public class BoardController {
 
-
     @Autowired
     private BoardRepository boardRepository;
     @Autowired
     private BoardService boardService;
-
 
     @GetMapping("/board")
     public String viewBoard(Model model) {
@@ -48,9 +46,9 @@ public class BoardController {
         return "board-page";
     }
 
-    @GetMapping("/testPage")
-    public String postTest(Model model) {
-        return "test";
+    @GetMapping("/javascript-page")
+    public String javascriptPage(Model model) {
+        return "javascript-page";
     }
 
     @GetMapping("/create-board")
@@ -62,7 +60,7 @@ public class BoardController {
     }
 
     @GetMapping("/test2")
-    public String fileTest(){
+    public String fileTest() {
         return "test2";
     }
 
@@ -91,10 +89,8 @@ public class BoardController {
             redirectAttributes.addFlashAttribute("message", "글 " + saveBoard.getId() + " 생성되었습니다.");
         }
 //        return "redirect:/board/page-board/1" + "?value=id" + "&direction=descending";
-        return "redirect:/testPage";
+        return "redirect:/javascript-page";
     }
-
-
 //    @PutMapping("/board/save-board")
 //    public String boardEditSave(Board board, @RequestParam("image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails,RedirectAttributes redirectAttributes) throws Exception {
 //        if (!multipartFile.isEmpty()) {
@@ -125,11 +121,9 @@ public class BoardController {
     @GetMapping("/board/another-delete-board/{boardId}")
     public String anotherBoardDelete(@PathVariable(name = "boardId") Integer id, RedirectAttributes redirectAttributes) {
         boardService.deleteBoard(id);
-        redirectAttributes.addFlashAttribute("message","해당하는 글 " + id + "이(을) 삭제 되었습니다.");
-        return "redirect:/testPage";
+        redirectAttributes.addFlashAttribute("message", "해당하는 글 " + id + "이(을) 삭제 되었습니다.");
+        return "redirect:/javascript-page";
     }
-
-
 
     @GetMapping("/board/{boardId}")
     public String boardDetails(@PathVariable(name = "boardId") Integer id, Model model, Reply reply) {
@@ -185,7 +179,6 @@ public class BoardController {
         return "board-page";
     }
 
-
     @GetMapping("/board/ajax-page-board/{pageNumber}")
     public String testBoardPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model, @Param("value") String value, @Param("direction") String direction) {
         Page<Board> boardList = boardService.noneWordBoardPageSort(pageNumber, value, direction);
@@ -206,7 +199,6 @@ public class BoardController {
 //        cal.add(Calendar.DAY_OF_MONTH,-7);
 //        Date nowDay = cal.getTime();
 //        model.addAttribute("nowDay", nowDay);
-
     @GetMapping("/board/page-board/{pageNumber}/{BoarderType}")
     public String getBoarderType(@PathVariable(name = "pageNumber") Integer pageNumber, @PathVariable(name = "BoarderType") BoarderType boarderType, Model model, @Param("value") String value, @Param("direction") String direction) {
         Page<Board> boarderTypePage = boardService.boarderTypePage(pageNumber, boarderType, value, direction);
@@ -220,20 +212,17 @@ public class BoardController {
         model.addAttribute("totalPages", boarderTypePage.getTotalPages());
         model.addAttribute("direction", boardDirection);
         model.addAttribute("value", boardValue);
-
         return "board-page-boarderType";
-
 //        String result = listBoarderType.stream().map(String::valueOf).collect(Collectors.joining());
 //        String result2 = org.thymeleaf.util.StringUtils.join(listBoarderType, ",");
 //        return result2;
-
     }
 
     @GetMapping("/board/page-board/test")
     public String noticePage() {
         return "test";
     }
-
+}
 
 //
 //    @GetMapping("/board/notice-board/{pageNumber}")
@@ -270,5 +259,3 @@ public class BoardController {
 //        model.addAttribute("pageNumber", pageNumber);
 //        return "board-page";
 //    }
-
-}

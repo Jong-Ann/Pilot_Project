@@ -1,4 +1,4 @@
-package com.innotree.pilot.Response;
+package com.innotree.pilot.response;
 
 public enum StatusEnum {
 
