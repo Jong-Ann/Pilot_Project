@@ -84,11 +84,8 @@ public class boardEntityTest {
 
     @Test
     public void boardPageableSortTest() {
-
-        Sort sort = Sort.by("id").descending();
-        Pageable pageable = PageRequest.of(0, 4, sort);
-
-        Page<Board> boardIterator = boardRepository.findAll(pageable);
+        BoarderType boarderType = BoarderType.NOTICE;
+        List<Board> boardIterator = boardRepository.findByBoarderType(boarderType);
 
         for (Board board : boardIterator) {
             System.out.println("board = " + board.getId());

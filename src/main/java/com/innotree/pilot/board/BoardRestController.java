@@ -23,12 +23,7 @@ public class BoardRestController {
     private BoardService boardService;
     @PostMapping("/board/save-board/test")
     public ResponseEntity<?> boardSave(@RequestBody Board board, @RequestParam(name = "image") MultipartFile multipartFile, @AuthenticationPrincipal PilotUserDetails pilotUserDetails) throws Exception {
-        System.out.println("작동합니다.");
-        System.out.println("board : " + board);
-        System.out.println("file : " + multipartFile);
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        System.out.println(multipartFile);
-        System.out.println(fileName);
         String uploadDir = "board-photos/";
         boardService.boardSave(board, pilotUserDetails);
         FileService.saveFile(uploadDir, fileName, multipartFile);
@@ -43,28 +38,11 @@ public class BoardRestController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
-    @GetMapping("/board/NOTICE/{pageNumber}")
+
+    @GetMapping("/board/{boarderType}/1")
     @ResponseBody
-    public ResponseEntity<?> BoardNOTICE(@PathVariable(name = "pageNumber") Integer pageNumber) {
-        Page<Board> boardList = boardService.noticePage(pageNumber);
-        List<ResponseBoard> result = boardList.stream()
-                .map(ResponseBoard::from)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/board/FAQ/{pageNumber}")
-    @ResponseBody
-    public ResponseEntity<?> BoardFAQ(@PathVariable(name = "pageNumber") Integer pageNumber) {
-        Page<Board> boardList = boardService.faqPage(pageNumber);
-        List<ResponseBoard> result = boardList.stream()
-                .map(ResponseBoard::from)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/board/QNA/{pageNumber}")
-    @ResponseBody
-    public ResponseEntity<?> BoardQNA(@PathVariable(name = "pageNumber") Integer pageNumber) {
-        Page<Board> boardList = boardService.qnaPage(pageNumber);
+    public ResponseEntity<?> BoarderTypeAll(@PathVariable(name = "boarderType") BoarderType boarderType){
+        List<Board> boardList = boardRepository.findByBoarderType(boarderType);
         List<ResponseBoard> result = boardList.stream()
                 .map(ResponseBoard::from)
                 .collect(Collectors.toList());
