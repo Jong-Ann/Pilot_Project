@@ -46,18 +46,23 @@ let index = {
 
 index.init()
 function replyDelete(boardId,replyId) {
-                  $.ajax({
-                    type: "DELETE",
-                    url: `/delete-reply/${boardId}/${replyId}`,
-                    dataType: "json"
-                }).done(function(resp){
-                    alert("삭제가 완료되었습니다.");
-                    location.reload();
-        //            location.href=`/board/ + ${data.boardId}`
-                }).fail(function(error){
-                    alert(JSON.stringify(error));
-                });
-          };
+        $(".btn-delete-reply").on("click", function(){
+               attach = $(this);
+               $("#Title").text("주의!!");
+               $("#Text").text("해당 하는 게시글 사진"  +" (을)를 삭제하시겠습니까?");
+               $("#Modal").modal("show");
+               $("#okButton").attr("href",attach.attr("href"));
+//               $.ajax({
+//                   type: "GET",
+//                   url: `/delete-reply/${boardId}/${replyId}`,
+//                   dataType: "json",
+//                   success : function(resp){
+//                       console.log(resp.message);
+//                    }
+//                });
+    });
+};
+
 
 //        $.ajax({
 //                type: "POST",

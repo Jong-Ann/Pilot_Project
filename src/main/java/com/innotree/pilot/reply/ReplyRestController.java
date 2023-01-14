@@ -29,7 +29,7 @@ public class ReplyRestController {
         return new Message().successMessage();
     }
 
-    @DeleteMapping("/delete-reply/{boardId}/{replyId}")
+    @GetMapping("/delete-reply/{boardId}/{replyId}")
     public ResponseEntity<Message> deleteReply(Reply reply, @PathVariable(name = "boardId") Integer boardId, @PathVariable(name = "replyId") Integer replyId) {
         boardService.deleteReply(replyId);
         return new Message().successMessage();
